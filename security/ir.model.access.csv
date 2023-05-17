@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tms_route,access_tms_route,model_tms_route,,1,1,1,1
+access_tms_route_order,access_tms_route_order,model_tms_route_order,,1,1,1,1
+access_tms_route_order_row,access_tms_route_order_row,model_tms_route_order_row,,1,1,1,1
+access_tms_route_point,access_tms_route_point,model_tms_route_point,,1,1,1,1

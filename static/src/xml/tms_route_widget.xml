@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+    <t t-name="tms.RouteWidget" owl="1">
+        <div>
+            <h1>TMS Route</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Route</th>
+                        <th>Contractor</th>
+                        <th>Implement Number</th>
+                        <th>Transport Company</th>
+                        <th>Arrival Time</th>
+                        <th>Arrival Fact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-field-name="route"><t t-esc="'Маршрут1'"/></td>
+                        <td><t t-esc="'Контрагент1'"/></td>
+                        <td><t t-esc="'Номер1'"/></td>
+                        <td><t t-esc="'Время1'"/></td>
+                        <td><t t-esc="''"/></td>
+                        <td data-custom-boolean="sdgsdg"><t t-esc="'false'"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-group p-2">
+            <button class="btn btn-primary m-2 btn-success" t-on-click="onArrivalButtonClick">Прибыл</button>
+            <button class="btn btn-primary m-2" t-on-click="onReceivedButtonClick">Принял</button>
+            <button class="btn btn-primary m-2" t-on-click="onTransferredButtonClick">Передал</button>
+            <button class="btn btn-primary m-2" t-on-click="onNoClaimsButtonClick">Нет претензий</button>
+        </div>
+    </t>
+</templates>
