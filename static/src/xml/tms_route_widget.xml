@@ -2,36 +2,47 @@
 
 <templates xml:space="preserve">
     <t t-name="tms.RouteWidget" owl="1">
-        <div>
-            <h1>TMS Route</h1>
-            <table class="table table-bordered">
-                <thead>
+        <div class="container">
+            <div class="card mt-2">
+            <div class="card-header">
+                <h2 class="card-title">Информация о заказе</h2>
+            </div>
+                <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
                     <tr>
-                        <th>Route</th>
-                        <th>Contractor</th>
-                        <th>Implement Number</th>
-                        <th>Transport Company</th>
-                        <th>Arrival Time</th>
-                        <th>Arrival Fact</th>
+                        <th>Дата прибытия</th>
+                        <td><t t-esc="state.orders.arrival_date"></t></td>
                     </tr>
-                </thead>
-                <tbody>
                     <tr>
-                        <td data-field-name="route"><t t-esc="'Маршрут1'"/></td>
-                        <td><t t-esc="'Контрагент1'"/></td>
-                        <td><t t-esc="'Номер1'"/></td>
-                        <td><t t-esc="'Время1'"/></td>
-                        <td><t t-esc="''"/></td>
-                        <td data-custom-boolean="sdgsdg"><t t-esc="'false'"/></td>
+                        <th>Дата возврата от клиента</th>
+                        <td><t t-esc="state.orders.returned_client"></t></td>
                     </tr>
-                </tbody>
-            </table>
+                    <tr>
+                        <th>Дата возврата в склад</th>
+                        <td><t t-esc="state.orders.returned_store"></t></td>
+                    </tr>
+                    <tr>
+                        <th>Дата отдачи товара клиенту</th>
+                        <td><t t-esc="state.orders.delivered"></t></td>
+                    </tr>
+                    <tr>
+                        <th>Дата подачи жалобы</th>
+                        <td><t t-esc="state.orders.complaint"></t></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="btn-group p-2">
-            <button class="btn btn-primary m-2 btn-success" t-on-click="onArrivalButtonClick">Прибыл</button>
-            <button class="btn btn-primary m-2" t-on-click="onReceivedButtonClick">Принял</button>
-            <button class="btn btn-primary m-2" t-on-click="onTransferredButtonClick">Передал</button>
-            <button class="btn btn-primary m-2" t-on-click="onNoClaimsButtonClick">Нет претензий</button>
+        </div>
+            <div class="d-flex justify-content-center">
+                <div class="btn-group-vertical p-2" style="width: 100%;">
+                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onArrivalButtonClick">Прибыл к месту назначения</button>
+                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onReturnedClientButtonClick">Принял</button>
+                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onDeliveredButtonClick">Передал</button>
+                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onNoClaimsButtonClick">Нет претензий к доставке</button>
+                </div>
+            </div>
         </div>
     </t>
+
 </templates>

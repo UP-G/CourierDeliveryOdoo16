@@ -17,12 +17,6 @@
                   action="action_tms_route_order_tree"
                   sequence="10"/>
 
-        <menuitem id="menu_tms_route_order_add"
-                  parent="menu_tms_route_order"
-                  name="Tms Route Sheet Order"
-                  action="action_tms_route_order_form"
-                  sequence="10"/>
-
         <menuitem id="menu_tms_route_order_row"
                   name="Tms Route Sheet Order Row"
                   action="action_tms_route_order_row_tree"
@@ -37,12 +31,6 @@
         <menuitem id="menu_tms_route_point"
                   name="Tms Route Sheet Point"
                   action="action_tms_route_point_tree"
-                  sequence="10"/>
-
-        <menuitem id="menu_tms_route_point_add"
-                  parent="menu_tms_route_point"
-                  name="Tms Route Sheet Point"
-                  action="action_tms_route_point_form"
                   sequence="10"/>
 
         <menuitem id="tms_route_buttons"

@@ -5,6 +5,7 @@ import datetime
 
 class TmsRoute(models.Model):
     _name = "tms.route"
+    _description = 'Route'
 
     name = fields.Char(string='name', tracking=True, required=True)
 
@@ -12,6 +13,8 @@ class TmsRoute(models.Model):
     end_time = fields.Datetime(string='end_time')
 
     stock_id = fields.Many2one('res.partner', string='stock_id')
+
+
 
     @api.model
     def action_arrived(self):

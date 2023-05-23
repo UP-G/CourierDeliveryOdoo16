@@ -7,6 +7,7 @@
         <field name="model">tms.route</field>
         <field name="arch" type="xml">
             <tree string="Tms Route Sheet">
+                <field name="id"/>
                 <field name="name"/>
                 <field name="start_time"/>
                 <field name="end_time"/>
@@ -29,6 +30,7 @@
             <form string="Tms form">
                 <sheet>
                     <group>
+                        <field name="id"/>
                         <field name="name"/>
                         <field name="start_time"/>
                         <field name="end_time"/>

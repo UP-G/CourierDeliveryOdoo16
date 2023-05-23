@@ -1,10 +1,11 @@
 /** @odoo-module **/
 
-import {xml, Component} from "@odoo/owl";
+import {Component} from "@odoo/owl";
 import {_lt} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useInputField} from "@web/views/fields/input_field_hook";
+const { useState } = owl;
 import { useService } from "@web/core/utils/hooks";
 var ajax = require('web.ajax');
 var core = require('web.core');
@@ -26,6 +27,14 @@ export class TmsWidget extends Component {
         this.ormService = useService("orm");
         // this.actionService = useService("action");
         this.initializeIndexedDb();
+        // this.getUsers()
+
+        this.state = useState({
+            orders: this.props.action.context,
+        });
+
+        console.log(this.props.action.context);
+
     }
 
     initializeIndexedDb() {
@@ -85,28 +94,29 @@ export class TmsWidget extends Component {
         };
     }
 
-    onArrivalButtonClick(ev) {
-        console.log("Прибыл");
-        ev.preventDefault();
+    // onArrivalButtonClick(ev) {
+    //     console.log("Прибыл");
+    //     ev.preventDefault();
+    //
+    //     let tmsData = {
+    //         responseServer: {},
+    //         sendServerDate: new Date(),
+    //         timeSendDate: new Date(),
+    //         tmsValue: {'action': 'arrived', 'id': '0'}
+    //     };
+    //
+    //     this.saveIndexedDb(tmsData);
+    //
+    //     this.checkOnlineStatus()
+    //         .then((message) => {
+    //             console.log(message);
+    //             this.sendServer();
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         })
+    // }
 
-        let tmsData = {
-            responseServer: {},
-            sendServerDate: new Date(),
-            timeSendDate: new Date(),
-            tmsValue: {'action': 'arrived', 'id': '0'}
-        };
-
-        this.saveIndexedDb(tmsData);
-
-        this.checkOnlineStatus()
-            .then((message) => {
-                console.log(message);
-                this.sendServer();
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-    }
 
 
     checkOnlineStatus() {
@@ -123,7 +133,7 @@ export class TmsWidget extends Component {
         if ((!this.idb_last_start) || (this.now - this.idb_last_start > 30000)) {
             setTimeout(() => {
                 this.sendSavedRoutes();
-            }, 20000000);
+            }, 6000000);
         }
     }
 
@@ -145,11 +155,46 @@ export class TmsWidget extends Component {
             // self.idb_last_start = self.now;
             self.setSendTmsCron();
         }
-
     }
 
     onNoClaimsButtonClick(ev) {
-        console.log("Нет претензий");
+        console.log('smth');
+    }
+
+    async onArrivalButtonClick(ev){
+        // this.saveIndexedDb({'action': 'arrival', 'id': this.state.orders['id']});
+
+        console.log(this.state.orders);
+        const done = await this.ormService.call(
+            "tms.route.order.row",
+            "wasArrival",
+            [this.state.orders['id']]
+        )
+        if (done) {
+            this.state.orders['arrival_date'] = done
+        }
+    }
+    async onReturnedClientButtonClick(ev){
+        console.log(this.state.orders);
+        const done = await this.ormService.call(
+            "tms.route.order.row",
+            "wasReturnedClient",
+            [this.state.orders['id']]
+        )
+        if (done) {
+            this.state.orders['returned_client'] = done
+        }
+    }
+    async onDeliveredButtonClick(ev){
+        console.log(this.state.orders['delivered']);
+        const done = await this.ormService.call(
+            "tms.route.order.row",
+            "wasDelivered",
+            [this.state.orders['id']]
+        )
+        if (done) {
+            this.state.orders['delivered'] = done
+        }
     }
 }
 
