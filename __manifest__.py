@@ -16,6 +16,7 @@
         'web.assets_backend': [
             'tms/static/src/js/*.js',
             'tms/static/src/xml/**/*',
+            'tms/static/src/less/tms.less',
         ],
     },
     'installable': True,
