@@ -1,0 +1,25 @@
+.o_tms_action_nav {}
+
+.o_tms_btn_Arrival,
+.o_tms_btn_Returned,
+.o_tms_btn_Delivered,
+.o_tms_btn_Claims {
+    font-size: 1.5eml
+    display: inline-grid;
+    padding: 0.2em;
+    width: 6em;
+    height: 5em;
+    margin: 0.5em;
+}
+
+.o_tms_btn_Arrival {
+}
+
+.o_tms_btn_Returned {
+}
+
+.o_tms_btn_Delivered {
+}
+
+.o_tms_btn_Claims {
+}

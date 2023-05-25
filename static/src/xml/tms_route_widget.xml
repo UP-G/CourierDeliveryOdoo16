@@ -35,11 +35,11 @@
         </div>
         </div>
             <div class="d-flex justify-content-center">
-                <div class="btn-group-vertical p-2" style="width: 100%;">
-                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onArrivalButtonClick">Прибыл к месту назначения</button>
-                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onReturnedClientButtonClick">Принял</button>
-                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onDeliveredButtonClick">Передал</button>
-                    <button class="btn btn-lg btn-block btn-primary mt-4" t-on-click="onNoClaimsButtonClick">Нет претензий к доставке</button>
+                <div class="o_tms_action_nav" style="width: 100%;">
+                    <button class="o_tms_btn_Arrival btn btn-lg btn-block btn-primary fa fa-cubes mt-4" t-on-click="onArrivalButtonClick" title="Arrived to client and awaiting">Arrived</button>
+                    <button class="o_tms_btn_Delivered btn btn-lg btn-block btn-secondary border fa fa-hourglass-o mt-4" t-on-click="onDeliveredButtonClick" title="Goods delivered to client">Delivered</button>
+                    <button class="o_tms_btn_Returned btn btn-lg btn-block btn-secondary border fa fa-cart-arrow-down mt-4" t-on-click="onReturnedClientButtonClick" title="Returns accepted for delivery to stock">Received</button>
+                    <button class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border fa fa-warning mt-4" t-on-click="onNoClaimsButtonClick" title="Client have no claims">No claims</button>
                 </div>
             </div>
         </div>

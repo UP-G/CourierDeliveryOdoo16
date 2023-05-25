@@ -13,10 +13,13 @@
         'views/tms_menu_views.xml',
     ],
     'assets': {
+        'web._assets_primary_variables': [
+            'tms/static/src/scss/variables.scss',
+        ],
         'web.assets_backend': [
             'tms/static/src/js/*.js',
             'tms/static/src/xml/**/*',
-            'tms/static/src/less/tms.less',
+            'tms/static/src/css/tms_route_widget.css',
         ],
     },
     'installable': True,
