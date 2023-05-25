@@ -13,9 +13,6 @@
         'views/tms_menu_views.xml',
     ],
     'assets': {
-        'web._assets_primary_variables': [
-            'tms/static/src/scss/variables.scss',
-        ],
         'web.assets_backend': [
             'tms/static/src/js/*.js',
             'tms/static/src/xml/**/*',

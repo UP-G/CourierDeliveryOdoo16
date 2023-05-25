@@ -72,15 +72,21 @@ export class TmsWidget extends Component {
         };
     }
 
-    async sendServer() {
-        const done = await this.ormService.call(
-            "tms.route",
-            "action_arrived",
-        )
-        if (done) {
-            console.log(done);
-            this.deleteFieldsInIndexedDb();
-        }
+    async sendServer(id, action) {
+        console.log('Отправлено');
+        // try {
+        //     const done = await this.ormService.call(
+        //         "tms.route.order.row",
+        //         "sendByIndexedDb",
+        //         [[id, action]]
+        //     )
+        //     if (done) {
+        //         console.log(done);
+        //         this.deleteFieldsInIndexedDb();
+        //     }
+        // } catch(error) {
+        //     console.error('Произошла ошибка:', error);
+        // }
     }
 
     deleteFieldsInIndexedDb(){
@@ -133,7 +139,7 @@ export class TmsWidget extends Component {
         if ((!this.idb_last_start) || (this.now - this.idb_last_start > 30000)) {
             setTimeout(() => {
                 this.sendSavedRoutes();
-            }, 6000000);
+            }, 20000);
         }
     }
 
@@ -162,19 +168,29 @@ export class TmsWidget extends Component {
     }
 
     async onArrivalButtonClick(ev){
-        // this.saveIndexedDb({'action': 'arrival', 'id': this.state.orders['id']});
+        this.saveIndexedDb({'action': 'arrival', 'id': this.state.orders['id']});
 
-        console.log(this.state.orders);
-        const done = await this.ormService.call(
-            "tms.route.order.row",
-            "wasArrival",
-            [this.state.orders['id']]
-        )
-        if (done) {
-            this.state.orders['arrival_date'] = done
-        }
+        this.checkOnlineStatus()
+            .then((message) => {
+                console.log(message);
+                this.sendServer();
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+        // const done = await this.ormService.call(
+        //     "tms.route.order.row",
+        //     "wasArrival",
+        //     [this.state.orders['id']]
+        // )
+        // if (done) {
+        //     this.state.orders['arrival_date'] = done
+        // }
     }
     async onReturnedClientButtonClick(ev){
+        this.saveIndexedDb({'action': 'return_cl', 'id': this.state.orders['id']});
+
         console.log(this.state.orders);
         const done = await this.ormService.call(
             "tms.route.order.row",
@@ -183,6 +199,19 @@ export class TmsWidget extends Component {
         )
         if (done) {
             this.state.orders['returned_client'] = done
+            this.deleteFieldsInIndexedDb()
+        }
+    }
+
+    async onReturnedStoreButtonClick(ev){
+        console.log(this.state.orders);
+        const done = await this.ormService.call(
+            "tms.route.order.row",
+            "wasReturnedStore",
+            [this.state.orders['id']]
+        )
+        if (done) {
+            this.state.orders['returned_store'] = done
         }
     }
     async onDeliveredButtonClick(ev){

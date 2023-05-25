@@ -21,13 +21,6 @@
         </field>
     </record>
 
-    <record id="action_tms_route_order_row_tree" model="ir.actions.act_window">
-        <field name="name">tms.route.order.row.sheet</field>
-        <field name="res_model">tms.route.order.row</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_tms_route_order_row_tree"/>
-    </record>
-
     <record id="view_tms_route_order_row_form" model="ir.ui.view">
         <field name="name">tms.route.order.row.form</field>
         <field name="model">tms.route.order.row</field>
@@ -49,11 +42,10 @@
         </field>
     </record>
 
-    <record id="action_tms_route_order_row_form" model="ir.actions.act_window">
+    <record id="action_tms_route_order_row" model="ir.actions.act_window">
         <field name="name">tms.route.order.row.add</field>
         <field name="res_model">tms.route.order.row</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_tms_route_order_row_form"/>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>
 

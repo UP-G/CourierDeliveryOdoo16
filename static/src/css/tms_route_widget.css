@@ -4,7 +4,7 @@
 .o_tms_btn_Returned,
 .o_tms_btn_Delivered,
 .o_tms_btn_Claims {
-    font-size: 1.5eml
+    font-size: 1.5em;
     display: inline-grid;
     padding: 0.2em;
     width: 6em;

@@ -51,4 +51,17 @@ class TmsRouteOrderRow(models.Model):
         record.returned_client = datetime.datetime.now()
         return record.returned_client
 
+    @api.model
+    def wasReturnedStore(self, id):
+        record = self.env['tms.route.order.row'].search([('id', '=', id)], limit=1)
+        record.returned_store = datetime.datetime.now()
+        return record.returned_store
+
+    @api.model
+    def sendByIndexedDb(self, id, action):
+        record = self.env['tms.route.order.row'].search([('id', '=', id)], limit=1)
+        if action == "arrived":
+            record.arrival_date = datetime.datetime.now()
+            return record.arrival_date
+
 
