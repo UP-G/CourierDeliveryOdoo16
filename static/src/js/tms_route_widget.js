@@ -10,6 +10,7 @@ import { useService } from "@web/core/utils/hooks";
 var ajax = require('web.ajax');
 var core = require('web.core');
 // var Model = require('web.DataModel');
+var AbstractAction = require('web.AbstractAction');
 
 export class TmsWidget extends Component {
     dbName = 'tms_db';
@@ -31,10 +32,39 @@ export class TmsWidget extends Component {
 
         this.state = useState({
             orders: this.props.action.context,
+            isContext: !this.isEmpty(this.props.action.context),
+            tmsPoints: {}
         });
 
-        console.log(this.props.action.context);
+        if(!this.state.isContext){
 
+        }
+
+        console.log(this.props.action.context);
+        console.log(this.isEmpty(this.props.action.context));
+        console.log(this.state.isContext);
+        this.showAllPoints();
+        console.log(AbstractAction);
+
+    }
+
+    async showAllPoints(){
+        const done = await this.ormService.call(
+            "tms.route.order.row",
+            "showAllOrders"
+        )
+        if (done) {
+            this.state.tmsPoints = done;
+        }
+    }
+
+    isEmpty(obj) {
+        for (const prop in obj) {
+            if (Object.hasOwn(obj, prop)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     initializeIndexedDb() {
@@ -122,8 +152,6 @@ export class TmsWidget extends Component {
     //             console.error(error);
     //         })
     // }
-
-
 
     checkOnlineStatus() {
         return new Promise((resolve, reject) => {

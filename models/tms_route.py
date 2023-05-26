@@ -19,3 +19,7 @@ class TmsRoute(models.Model):
     @api.model
     def action_arrived(self):
         return datetime.datetime.now()
+
+    @api.model
+    def rpc_test(self):
+        return [{'id': 1, 'name': 'VitalCom'}, {'id': 2, 'name': 'KatyaCom'}]

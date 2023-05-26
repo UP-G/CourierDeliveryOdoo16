@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <template xml:space="preserve">
-    <t t-name="tms.RouteWidget" owl="1">
-        <t t-if="this.state.isContext">
+
+    <t t-name="TmsOrdersList">
+            <t t-call="TmsOrderList2"></t>
+            <t t-call="tmsOrderList3"></t>
+    </t>
+
+    <t t-name="TmsOrderList2">
+        <div class="container">
+        <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Компания</th>
+                            <th>Маршрут</th>
+                            <th>Номер заказа</th>
+                        </tr>
+                     </thead>
+                    <tbody>
+<!--                        <tr t-foreach="this.state.tmsPoints" t-as="point" t-key="point.id">-->
+<!--                            <td t-esc="point.company_name"/>-->
+<!--                            <td t-esc="point.route_name"/>-->
+<!--                            <td t-esc="point.order_num"/>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td t-esc="1"/>
+                            <td t-esc="2"/>
+                            <td t-esc="3"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="tmsOrderList3">
                 <div class="container cdf">
             <div class="card mt-2">
             <div class="card-header">
@@ -13,23 +46,23 @@
                 <table class="table table-bordered">
                     <tr>
                         <th title="Date arrival">Date arrival</th>
-                        <td><t t-esc="state.orders.arrival_date"></t></td>
+                        <td><t t-esc="1"></t></td>
                     </tr>
                     <tr>
                         <th title="Date return from client">Date return from client</th>
-                        <td><t t-esc="state.orders.returned_client"></t></td>
+                        <td><t t-esc="2"></t></td>
                     </tr>
                     <tr>
                         <th title="Date return from store">Date return from store</th>
-                        <td><t t-esc="state.orders.returned_store"></t></td>
+                        <td><t t-esc="3"></t></td>
                     </tr>
                     <tr>
                         <th title="Date deliver">Date deliver</th>
-                        <td><t t-esc="state.orders.delivered"></t></td>
+                        <td><t t-esc="4"></t></td>
                     </tr>
                     <tr>
                         <th title="Date claim">Date claim</th>
-                        <td><t t-esc="state.orders.complaint"></t></td>
+                        <td><t t-esc="5"></t></td>
                     </tr>
                 </table>
             </div>
@@ -41,10 +74,10 @@
                             class="o_tms_btn_Arrival btn btn-lg btn-block btn-secondary border fa fa-clock-o mt-4"
                             t-on-click="onArrivalButtonClick"> Arrival</button>
                     <button title="Return from client"
-                            class="o_tms_btn_Delivered btn btn-lg btn-block btn-secondary border fa fa-shopping-cart mt-4"
+                            class="o_tms_btn_Returned btn btn-lg btn-block btn-secondary border fa fa-shopping-cart mt-4"
                             t-on-click="onReturnedClientButtonClick"> Return from client</button>
                     <button title="Delivered"
-                            class="o_tms_btn_Returned btn btn-lg btn-block btn-secondary border fa fa-cubes  mt-4"
+                            class="o_tms_btn_Delivered btn btn-lg btn-block btn-secondary border fa fa-cubes  mt-4"
                             t-on-click="onDeliveredButtonClick"> Delivered</button>
                     <button title="No claims"
                             class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border fa fa-warning mt-4"
@@ -52,39 +85,5 @@
                 </div>
             </div>
         </div>
-        </t>
-
-        <t t-if="!this.state.isContext">
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Компания</th>
-                            <th>Маршрут</th>
-                            <th>Номер заказа</th>
-                        </tr>
-                     </thead>
-                    <tbody>
-                        <tr t-foreach="this.state.tmsPoints" t-as="point" t-key="point.id">
-                            <td t-esc="point.company_name"/>
-                            <td t-esc="point.route_name"/>
-                            <td t-esc="point.order_num"/>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </t>
     </t>
-
-    <!--    <t t-name="TmsOrdersList">-->
-    <!--        <div>-->
-    <!--            <t t-if="this.state.isContext">-->
-    <!--                <p>Hello</p>-->
-    <!--            </t>-->
-    <!--            <t t-if="!this.state.isContext">-->
-    <!--                <p>Not Hello</p>-->
-    <!--            </t>-->
-    <!--        </div>-->
-    <!--    </t>-->
-
 </template>

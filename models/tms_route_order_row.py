@@ -28,13 +28,14 @@ class TmsRouteOrderRow(models.Model):
         return {
             'name': _('TmsOrderButtons'),
             'type': 'ir.actions.client',
-            'tag': 'tms_route_buttons',
+            'tag': 'tms_deliver_mode',
             'target': 'main',
             'context': self.read()[0],
         }
 
     @api.model
     def wasDelivered(self, id):
+        print(id)
         record = self.env['tms.route.order.row'].search([('id', '=', id)], limit=1)
         record.delivered = datetime.datetime.now()
         return record.delivered
@@ -64,4 +65,24 @@ class TmsRouteOrderRow(models.Model):
             record.arrival_date = datetime.datetime.now()
             return record.arrival_date
 
+    @api.model
+    def showAllOrders(self):
+        query = """SELECT tms_route_point.id, tms_route.name,company_name, order_num FROM tms_route_order_row
+                   INNER JOIN tms_route_order ON tms_route_order_row.route_order_id = tms_route_order.id
+                   inner join tms_route_point ON tms_route_order_row.route_point_id = tms_route_point.id
+                   inner join res_partner ON res_partner.id = tms_route_point.res_partner_id
+                   inner join tms_route ON tms_route.id = tms_route_order.route_id
+                   where driver_id = %s
+                """
+        self.env.cr.execute(query, [self.env.uid])
+
+        # for record in self.env.cr.fetchall():
+        #     print(record)
+
+        return [{'id': i, 'company_name': c, 'route_name': r, 'order_num': o} for i, r, c, o in self.env.cr.fetchall()]
+
+        # return self.env['tms.route.point'].search([]).read()
+
+        # record.delivered = datetime.datetime.now()
+        # return record.delivered
 

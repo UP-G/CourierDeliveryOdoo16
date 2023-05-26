@@ -1,0 +1,384 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tms
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20230514\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-25 09:10+0000\n"
+"PO-Revision-Date: 2023-05-25 09:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__create_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__create_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__create_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__create_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__create_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__create_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:14
+#, python-format
+msgid "Date arrival"
+msgstr "Дата прибытия"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:14
+#, python-format
+msgid "Date return from client"
+msgstr "Дата возврата от клиента"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:22
+#, python-format
+msgid "Date return from store"
+msgstr "Дата возврата в склад"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:26
+#, python-format
+msgid "Date deliver"
+msgstr "Дата отдачи товара клиенту"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:30
+#, python-format
+msgid "Date claim"
+msgstr "Дата подачи жалобы"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:39
+#, python-format
+msgid "Arrival"
+msgstr "Прибыл к месту назначения"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:40
+#, python-format
+msgid "Return from client"
+msgstr "Принял от клиента"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:41
+#, python-format
+msgid "Delivered"
+msgstr "Передал"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "No claims"
+msgstr "Нет претензий к доставке"
+
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__display_name
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__display_name
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__display_name
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__id
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__id
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__id
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__id
+msgid "ID"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route____last_update
+#: model:ir.model.fields,field_description:tms.field_tms_route_order____last_update
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row____last_update
+#: model:ir.model.fields,field_description:tms.field_tms_route_point____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__write_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__write_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__write_uid
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__write_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__write_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__write_date
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: tms
+#: model:ir.model,name:tms.model_tms_route
+msgid "Route"
+msgstr ""
+
+#. module: tms
+#: model:ir.model,name:tms.model_tms_route_order_row
+msgid "Route Row"
+msgstr ""
+
+#. module: tms
+#: model:ir.model,name:tms.model_tms_route_order
+msgid "Route order"
+msgstr ""
+
+#. module: tms
+#: model:ir.model,name:tms.model_tms_route_point
+msgid "Route point"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.client,name:tms.tms_action_route_buttons
+msgid "Routes"
+msgstr ""
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_route
+#: model:ir.ui.menu,name:tms.menu_tms_route_add
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
+msgid "Tms Route Sheet"
+msgstr ""
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_route_order
+msgid "Tms Route Sheet Order"
+msgstr ""
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_route_order_row
+#: model:ir.ui.menu,name:tms.menu_tms_route_order_row_add
+msgid "Tms Route Sheet Order Row"
+msgstr ""
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_route_point
+msgid "Tms Route Sheet Point"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
+msgid "Tms form"
+msgstr ""
+
+#. module: tms
+#. odoo-python
+#: code:addons/tms/models/tms_route_order_row.py:0
+#, python-format
+msgid "TmsOrderButtons"
+msgstr ""
+
+#. module: tms
+#. odoo-python
+#: code:addons/tms/models/tms_route_order.py:0
+#, python-format
+msgid "TmsTreePython"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__arrival_date
+msgid "arrival_time"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__complaint
+msgid "complaint"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__delivered
+msgid "delivered"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__driver_id
+msgid "driver_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__end_time
+msgid "end_time"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__returned_client
+msgid "is_returned_client"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__returned_store
+msgid "is_returned_store"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__name
+msgid "name"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__order_num
+msgid "order_num"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__res_partner_id
+msgid "res_partner_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order__route_id
+#: model:ir.model.fields,field_description:tms.field_tms_route_point__route_id
+msgid "route_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__route_order_id
+msgid "route_order_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__route_point_id
+msgid "route_point_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__start_time
+msgid "start_time"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_route__stock_id
+msgid "stock_id"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_form
+msgid "tms.route.add"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_order_row_form
+msgid "tms.route.order.row.add"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_order_row_tree
+msgid "tms.route.order.row.sheet"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_point_tree
+#: model:ir.actions.act_window,name:tms.action_tms_route_tree
+msgid "tms.route.sheet"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Дата возврата в склад"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Дата возврата от клиента"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Дата отдачи товара клиенту"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Дата подачи жалобы"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Информация о заказе"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_kanban
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+msgid "Маршрут"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Нет претензий к доставке"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_kanban
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+msgid "Номер заказа"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Передал"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Прибыл к месту назначения"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:0
+#, python-format
+msgid "Принял"
+msgstr ""
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_order_tree
+msgid "Текущие маршруты"
+msgstr ""
