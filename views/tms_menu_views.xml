@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <menuitem id="menu_tms_route"
-                  parent="menu_tms_deliver"
-                  name="Tms Route Sheet"
-                  action="action_tms_route"
-                  sequence="10"/>
 
         <menuitem id="menu_tms_route_order"
                   name="Tms Route Sheet Order"
@@ -22,6 +17,12 @@
                   parent="menu_tms_route_order"
                   name="Доставки"
                   sequence="9"/>
+
+        <menuitem id="menu_tms_route"
+                  parent="menu_tms_deliver"
+                  name="Tms Route Sheet"
+                  action="action_tms_route"
+                  sequence="10"/>
 
         <menuitem id="menu_tms_route_order_row"
                   parent="menu_tms_deliver"
