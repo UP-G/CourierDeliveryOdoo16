@@ -124,6 +124,6 @@
         <field name="res_model">tms.route.order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[["driver_id", "=", uid]]</field>
+<!--        <field name="domain">[["driver_id", "=", uid]]</field>-->
     </record>
 </odoo>

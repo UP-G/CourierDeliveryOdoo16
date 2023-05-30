@@ -2,9 +2,7 @@ odoo.define('tms.deliver_mode', function (require) {
     "use strict";
 
     var AbstractAction = require('web.AbstractAction');
-    var ajax = require('web.ajax');
     var core = require('web.core');
-    var Session = require('web.session');
 
     var QWeb = core.qweb;
 
@@ -12,36 +10,68 @@ odoo.define('tms.deliver_mode', function (require) {
         events: {
             "click .o_tms_btn_Arrival": function () {this.onArrivalButtonClick();},
             "click .o_tms_btn_Delivered": function () {this.onDeliveredButtonClick();},
-            "click .o_tms_btn_Returned": function () {this.onReturnedStoreButtonClick();},
-            // "click .o_tms_btn_Claims": function () {this.onDeliveredButtonClick();},
+            "click .o_tms_btn_Returned": function () {this.onReturnedClientButtonClick();},
+            "click .openPoints": function (ev) {this.showRoutePoints(ev)},
+            "click .openOrder": function (ev) {this.showConcreteRoutePoint(ev)},
         },
 
         start: function(){
-            this.$el.html(QWeb.render('TmsOrdersList', {}));
-            console.log('Tmsdelivermode start');
-            var def = this._rpc({
-                model: 'tms.route',
-                method: 'rpc_test',
-            })
-            .then((companies) => {
-                console.log(companies);
-                console.log(this.isEmpty({}));
-            });
+            this.initializeIndexedDb();
+
+            this.RoutesKnown = false; // Предполагаем, что маршруты неизвестны
+            if(!this.RoutesKnown){
+                var def = this._rpc({
+                    model: 'tms.route',
+                    method: 'getRoutesForDriver',
+                })
+                .then((routes) => {
+                    this.$el.html(QWeb.render('TmsRoute', {'routes': routes, 'props': this}));
+                });
+            }
+
+            return Promise.all([def, this._super.apply(this, arguments)]);
         },
 
-        isEmpty: function(obj){
-        for (const prop in obj) {
-            if (Object.hasOwn(obj, prop)) {
-                return false;
-            }
-        }
-        return true;
+        showRoutePoints: function(ev) {
+            var self = this;
+            var routeId = $(ev.currentTarget).closest('div').find('p[data-name]')[0].innerText;
+            var routeName = $(ev.currentTarget).closest('div').find('h5[data-name]')[0].innerText;
+
+            console.log(routeId);
+            console.log(routeName);
+            var def = this._rpc({
+                    model: 'tms.route.point',
+                    method: 'getRoutesPoints',
+                    args: [routeId, ]
+                })
+                .then((points) => {
+                    console.log(points);
+                    this.$el.html(QWeb.render('TmsRoutePoints', {'myProp': this, 'routeName': routeName, 'points': points}));
+                });
+        },
+
+        showConcreteRoutePoint: function(ev) {
+            this.pointOrderName = $(ev.currentTarget).closest('div').find('h5[data-name]')[0].innerText;
+            var pointId = $(ev.currentTarget).closest('div').find('p[data-name]')[0].innerText;
+            self = this;
+            console.log(pointId);
+            var def = this._rpc({
+                    model: 'tms.route.order.row',
+                    method: 'showPoint',
+                    args: [pointId, ]
+                })
+                .then((point) => {
+                    self.point = point[0];
+                    this.$el.html(QWeb.render('TmsPoint', {'orderNum': self.pointOrderName, 'point': self.point}));
+                });
         },
 
         initializeIndexedDb: function() {
             var self = this;
+            this.dbName = 'tms_db';
+            this.storeName = 'tms_store';
 
-            this.requestDB = window.indexedDB.open(this.dbName, 7);
+            this.requestDB = window.indexedDB.open(this.dbName, 3);
 
             this.requestDB.onerror = function (event) {
                 console.log('Error opening database');
@@ -56,149 +86,125 @@ odoo.define('tms.deliver_mode', function (require) {
 
             this.requestDB.onsuccess = function (event) {
                 self.idb = event.target.result;
+                console.log('IDB инициализирована');
             };
 
             this.setSendTmsCron();
         },
 
         saveIndexedDb: function(fieldDb) {
-        let tmsStoreObject = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
-        let requestTms = tmsStoreObject.add(fieldDb);
-        requestTms.onsuccess = function () {
-            console.log("TMS добавлена в хранилище", requestTms.result);
-        };
+            let tmsStoreObject = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
 
-        requestTms.onerror = function () {
-            console.log("Ошибка", requestTms.error);
-        };
-    },
+            let requestTms = tmsStoreObject.add(fieldDb);
 
-        async sendServer(id, action) {
-        console.log('Отправлено');
-        // try {
-        //     const done = await this.ormService.call(
-        //         "tms.route.order.row",
-        //         "sendByIndexedDb",
-        //         [[id, action]]
-        //     )
-        //     if (done) {
-        //         console.log(done);
-        //         this.deleteFieldsInIndexedDb();
-        //     }
-        // } catch(error) {
-        //     console.error('Произошла ошибка:', error);
-        // }
-    },
+            requestTms.onsuccess = function () {
+                console.log("TMS добавлена в хранилище", requestTms.result);
+            };
+
+            requestTms.onerror = function () {
+                console.log("Ошибка", requestTms.error);
+            };
+        },
+
+        async sendServer(dataTms) {
+            console.log('Отправлено');
+            try {
+
+                var def = await this._rpc({
+                model: 'tms.route.order.row',
+                method: 'sendByIndexedDb',
+                args: [dataTms,]
+                })
+                .then((done) => {
+                    console.log(done);
+                    this.deleteFieldsInIndexedDb();
+                    this.$el.html(QWeb.render('TmsPoint', {'orderNum': this.pointOrderName, 'point': this.point}));
+                });
+            } catch(error) {
+                console.error('Произошла ошибка:', error);
+            }
+        },
 
         deleteFieldsInIndexedDb: function(){
-        let objectStore = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
-        var clearRequest = objectStore.clear();
-        clearRequest.onsuccess = function(event) {
-          console.log('Данные успешно удалены из таблицы IndexedDB');
-        };
-        clearRequest.onerror = function(event) {
-          console.error('Ошибка при удалении данных из таблицы IndexedDB', event.target.error);
-        };
-    },
+            let objectStore = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
+            var clearRequest = objectStore.clear();
+            clearRequest.onsuccess = function(event) {
+              console.log('Данные успешно удалены из таблицы IndexedDB');
+            };
+            clearRequest.onerror = function(event) {
+              console.error('Ошибка при удалении данных из таблицы IndexedDB', event.target.error);
+            };
+        },
 
         checkOnlineStatus: function() {
-        return new Promise((resolve, reject) => {
-            if (navigator.onLine) {
-                resolve("Есть подключение к интернету.");
-            } else {
-                reject("Нет подключения к интернету.");
-            }
-        });
+            return new Promise((resolve, reject) => {
+                if (navigator.onLine) {
+                    resolve("Есть подключение к интернету.");
+                } else {
+                    reject("Нет подключения к интернету.");
+                }
+            });
         },
 
         setSendTmsCron: function(){
-            if ((!this.idb_last_start) || (this.now - this.idb_last_start > 30000)) {
             setTimeout(() => {
                 this.sendSavedRoutes();
-            }, 20000);
-        }
+            }, 60000);
         },
 
         sendSavedRoutes: function(){
-        let tms_route = this.idb.transaction(this.storeName, 'readonly').objectStore(this.storeName);
-        let req = tms_route.getAll(undefined);
-        self = this;
-        req.onsuccess = function (event) {
-            let evlist = event.currentTarget.result;
-            console.log(evlist);
-            self.checkOnlineStatus().then((message) => {
-                console.log(message);
-                self.sendServer();
-            })
-                .catch((error) => {
+            let tms_route = this.idb.transaction(this.storeName, 'readonly').objectStore(this.storeName);
+            let req = tms_route.getAll(undefined);
+            self = this;
+            req.onsuccess = function (event) {
+                let evlist = event.currentTarget.result;
+                let dataToSend = self.deleteDublicatesInIndexedDb(evlist);
+                self.checkOnlineStatus().then((message) => {
+                    if(dataToSend.length > 0){
+                        console.log('Идёт отправка на сервер');
+                        self.sendServer(dataToSend);
+                    }
+                }).catch((error) => {
                     console.error(error);
                 });
 
-            // self.idb_last_start = self.now;
-            self.setSendTmsCron();
-        }
-    },
+                self.setSendTmsCron();
+            }
+        },
+
+        deleteDublicatesInIndexedDb: function(data){
+            return data.filter(
+              (item, index, array) =>
+                index === array.findIndex(
+                  (element) =>
+                    element.action === item.action && element.point_id === item.point_id
+                )
+            );
+        },
+
+        getDateForOdoo: function() {
+            const currentDate = new Date();
+            return currentDate.toISOString().slice(0, 19).replace('T', ' ');
+        },
 
         async onArrivalButtonClick(){
-        this.saveIndexedDb({'action': 'arrival', 'id': this.state.orders['id']});
-
-        this.checkOnlineStatus()
-            .then((message) => {
-                console.log(message);
-                this.sendServer();
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-
-        // const done = await this.ormService.call(
-        //     "tms.route.order.row",
-        //     "wasArrival",
-        //     [this.state.orders['id']]
-        // )
-        // if (done) {
-        //     this.state.orders['arrival_date'] = done
-        // }
-    },
-
-        async onReturnedClientButtonClick(){
-            this.saveIndexedDb({'action': 'return_cl', 'id': this.state.orders['id']});
-
-            console.log(this.state.orders);
-            const done = await this.ormService.call(
-                "tms.route.order.row",
-                "wasReturnedClient",
-                [this.state.orders['id']]
-            )
-            if (done) {
-                this.state.orders['returned_client'] = done
-                this.deleteFieldsInIndexedDb()
-            }
+            await this.saveIndexedDb({'action': 'arrival', 'point_id': this.point['id'], 'tms_date': this.getDateForOdoo()});
         },
 
         async onReturnedStoreButtonClick(){
-            console.log(this.state.orders);
-            const done = await this.ormService.call(
-                "tms.route.order.row",
-                "wasReturnedStore",
-                [this.state.orders['id']]
-            )
-            if (done) {
-                this.state.orders['returned_store'] = done
-            }
+            console.log(this.point);
+        },
+
+        async onComplaintButtonClick(){
+            console.log(this.point);
+        },
+
+        async onReturnedClientButtonClick(){
+               await this.saveIndexedDb({'action': 'returned_client', 'point_id': this.point['id'], 'tms_date': this.getDateForOdoo()});
         },
 
         async onDeliveredButtonClick(){
-            console.log('Доставлено');
-
-            var def = this._rpc({
-                model: 'tms.route.order.row',
-                method: 'wasDelivered',
-                args: [2,]
-            })
-            .then((done) => {
-                console.log(done);
-            });
+               await this.saveIndexedDb({'action': 'delivered', 'point_id': this.point['id'], 'tms_date': this.getDateForOdoo()});
         },
     });
 

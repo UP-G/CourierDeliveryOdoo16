@@ -11,15 +11,7 @@ class TmsRouteOrder(models.Model):
     route_id = fields.Many2one('tms.route', required=True, ondelete='restrict', index=True, string='route_id')
     order_num = fields.Char(string='order_num', required=True)
 
-    @api.model
-    def get_orders(self):
-        routes = self.search([('driver_id', '=', self.env.uid)])
-        return routes.read()
-
     def click_button(self):
-        print(self.read())
-
-        # print(public_methods)
         return {
             'name': _('TmsTreePython'),
             'type': 'ir.actions.act_window',

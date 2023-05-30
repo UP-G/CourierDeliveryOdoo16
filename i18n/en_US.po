@@ -94,6 +94,19 @@ msgstr "Передал"
 msgid "No claims"
 msgstr "Нет претензий к доставке"
 
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "Information about the order"
+msgstr "Информация о заказе"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "Points of the route"
+msgstr "Точки маршрута"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_route__display_name

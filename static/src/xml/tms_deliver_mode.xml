@@ -2,67 +2,59 @@
 
 <template xml:space="preserve">
 
-    <t t-name="TmsOrdersList">
-            <t t-call="TmsOrderList2"></t>
-            <t t-call="tmsOrderList3"></t>
+    <t t-name="TmsBase">
+            <t t-call="TmsRoute"></t>
     </t>
 
-    <t t-name="TmsOrderList2">
+    <t t-name="TmsRoute">
         <div class="container">
-        <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Компания</th>
-                            <th>Маршрут</th>
-                            <th>Номер заказа</th>
-                        </tr>
-                     </thead>
-                    <tbody>
-<!--                        <tr t-foreach="this.state.tmsPoints" t-as="point" t-key="point.id">-->
-<!--                            <td t-esc="point.company_name"/>-->
-<!--                            <td t-esc="point.route_name"/>-->
-<!--                            <td t-esc="point.order_num"/>-->
-<!--                        </tr>-->
-                        <tr>
-                            <td t-esc="1"/>
-                            <td t-esc="2"/>
-                            <td t-esc="3"/>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="card-group route">
+    <div class="card route" t-foreach="routes" t-as="route" t-key="route.id">
+        <a href="#">
+            <div class="card-body route openPoints">
+                <h5 data-name="name" class="card-title route" t-esc="route.name"></h5>
+                <p data-name="id" style="display: none;" t-esc="route.id"></p>
+                <div class="card-description route">
+                    <p class="card-text route" t-esc="route.start_time">-</p>
+                <p class="card-text route" t-esc="route.end_time"></p>
+                </div>
+
             </div>
+        </a>
+    </div>
+</div>
         </div>
+
     </t>
 
-    <t t-name="tmsOrderList3">
+    <t t-name="TmsPoint">
                 <div class="container cdf">
             <div class="card mt-2">
             <div class="card-header">
-                <h2 class="card-title">Информация о заказе</h2>
+                <h2 class="card-title" title="Information about the order ">Information about the order <t t-esc="orderNum"></t>  </h2>
             </div>
                 <div class="card">
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr>
                         <th title="Date arrival">Date arrival</th>
-                        <td><t t-esc="1"></t></td>
+                        <td t-esc="point.arrival_date"></td>
                     </tr>
                     <tr>
                         <th title="Date return from client">Date return from client</th>
-                        <td><t t-esc="2"></t></td>
+                        <td><t t-esc="point.returned_client"></t></td>
                     </tr>
                     <tr>
                         <th title="Date return from store">Date return from store</th>
-                        <td><t t-esc="3"></t></td>
+                        <td><t t-esc="point.returned_store"></t></td>
                     </tr>
                     <tr>
                         <th title="Date deliver">Date deliver</th>
-                        <td><t t-esc="4"></t></td>
+                        <td><t t-esc="point.delivered"></t></td>
                     </tr>
                     <tr>
                         <th title="Date claim">Date claim</th>
-                        <td><t t-esc="5"></t></td>
+                        <td><t t-esc="point.complaint"></t></td>
                     </tr>
                 </table>
             </div>
@@ -85,5 +77,32 @@
                 </div>
             </div>
         </div>
+    </t>
+
+    <t t-name="TmsRoutePoints">
+        <div class="container">
+            <div class="card-header">
+                <h2 class="card-title" title="Points of the route">Points of the route "<t t-esc="routeName"></t>"</h2>
+            </div>
+
+
+            <div class="card-group route">
+    <div class="card route" t-foreach="points" t-as="point" t-key="point.id">
+        <a href="#">
+            <div class="card-body route openOrder">
+                <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
+                <p data-name="id" style="display: none;" t-esc="point.id"></p>
+                <div class="card-description route">
+                    <p class="card-text route" t-esc="point.company_name">-</p>
+                    <p class="card-text route" t-esc="point.id"></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+        </div>
+
+
+
     </t>
 </template>
