@@ -71,10 +71,11 @@ odoo.define('tms.deliver_mode', function (require) {
             this.dbName = 'tms_db';
             this.storeName = 'tms_store';
 
-            this.requestDB = window.indexedDB.open(this.dbName, 3);
+            this.requestDB = indexedDB.open(this.dbName, 8);
 
             this.requestDB.onerror = function (event) {
                 console.log('Error opening database');
+		console.log(event);
             };
 
             this.requestDB.onupgradeneeded = function (event) {

@@ -27,3 +27,5 @@ class TmsRoutePoint(models.Model):
                 in self.env.cr.fetchall()]
 
 
+    def name_get(self):
+        return [(record.id, '{partner}, {route}'.format(partner=record.res_partner_id.name, route=record.route_id.name)) for record in self]

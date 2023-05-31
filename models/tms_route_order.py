@@ -20,4 +20,5 @@ class TmsRouteOrder(models.Model):
             'domain': [('route_order_id', '=', self.read()[0]['id'])],
         }
 
-
+    def name_get(self):
+        return [(record.id, '{num}, {route}'.format(num=record.order_num, route=record.route_id.name)) for record in self]
