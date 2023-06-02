@@ -5,14 +5,13 @@
         <field name="model">tms.route.order.row</field>
         <field name="arch" type="xml">
             <tree string="Tms Route Sheet">
-                <field name="id"/>
-                <field name="route_point_id"/>
-                <field name="route_order_id"/>
-                <field name="delivered"/>
-                <field name="returned_client"/>
-                <field name="returned_store"/>
-                <field name="complaint"/>
-                <field name="arrival_date"/>
+                <field name="route_point_id" string="Точка"/>
+                <field name="route_order_id" string="Заказ"/>
+                <field name="delivered" string="Дата доставки"/>
+                <field name="returned_client" string="Дата возврата от клиента"/>
+                <field name="returned_store" string="Дата возврата от склада"/>
+                <field name="complaint" string="Дата жалобы"/>
+                <field name="arrival_date" string="Дата прибытия"/>
 
                 <button name="show_tms_buttons" type="object" class="oe_stat_button"
                                 icon="fa-send">
@@ -36,6 +35,7 @@
                         <field name="returned_store"/>
                         <field name="complaint"/>
                         <field name="arrival_date"/>
+                        <field name="order_type"/>
                     </group>
                 </sheet>
             </form>

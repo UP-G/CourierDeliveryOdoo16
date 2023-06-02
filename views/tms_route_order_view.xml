@@ -115,7 +115,6 @@
     <record id="tms_action_route_buttons" model="ir.actions.client">
         <field name="name">Routes</field>
         <field name="tag">tms_route_buttons</field>
-        <field name="context">{'action': 'action_tms_route_order_tree'}</field>
         <field name="target">main</field>
     </record>
 
@@ -123,7 +122,7 @@
         <field name="name">Текущие маршруты</field>
         <field name="res_model">tms.route.order</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form,kanban</field>
-<!--        <field name="domain">[["driver_id", "=", uid]]</field>-->
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
     </record>
 </odoo>

@@ -7,13 +7,23 @@
 .o_tms_btn_Arrival,
 .o_tms_btn_Returned,
 .o_tms_btn_Delivered,
-.o_tms_btn_Claims {
+.o_tms_btn_Claims,
+.o_tms_btn_Arrival_Loading,
+.o_tms_btn_Departed,
+.o_tms_btn_Finished_Route,
+.o_tms_btn_Returned_Store
+{
     font-size: 1.5em;
     display: inline-grid;
     padding: 0.2em;
     width: 7.8em;
     height: 7em;
     margin: 0.5em;
+}
+
+.tms-card-header{
+    display:flex;
+    justify-content: space-between;
 }
 
 .o_tms_btn_Arrival {

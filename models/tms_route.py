@@ -23,10 +23,10 @@ class TmsRoute(models.Model):
     @api.model
     def getRoutesForDriver(self):
         query = """SELECT id, name, start_time, end_time FROM tms_route
-                   where id in (select DISTINCT route_id from tms_route_order where driver_id = %s)
+                   where id in (select DISTINCT route_id from tms_route_order)
                 """
 
-        self.env.cr.execute(query, [self.env.uid])
+        self.env.cr.execute(query)
 
         return [{'id': id, 'name': name, 'start_time': start_time, 'end_time': end_time} for id, name, start_time, end_time in self.env.cr.fetchall()]
 

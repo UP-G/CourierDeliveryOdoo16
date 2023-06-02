@@ -84,17 +84,22 @@
             <div class="card-header">
                 <h2 class="card-title" title="Points of the route">Points of the route "<t t-esc="routeName"></t>"</h2>
             </div>
+            <t t-call="TmsPointButtons"/>
 
 
             <div class="card-group route">
     <div class="card route" t-foreach="points" t-as="point" t-key="point.id">
         <a href="#">
             <div class="card-body route openOrder">
-                <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
+                <div class="tms-card-header">
+                    <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
+                    <p class="card-title" t-esc="point.order_type"></p>
+                </div>
                 <p data-name="id" style="display: none;" t-esc="point.id"></p>
+                <div t-esc="point.street"></div>
                 <div class="card-description route">
                     <p class="card-text route" t-esc="point.company_name">-</p>
-                    <p class="card-text route" t-esc="point.id"></p>
+                    <p class="card-text route" t-esc="point.contact_address"></p>
                 </div>
             </div>
         </a>
@@ -105,4 +110,24 @@
 
 
     </t>
+
+    <t t-name="TmsPointButtons">
+            <div class="d-flex justify-content-center">
+                <div class="o_tms_action_nav" style="width: 100%;">
+                    <button title="Arrival"
+                            class="o_tms_btn_Arrival_Loading btn btn-lg btn-block btn-secondary border fa fa-cube mt-4"
+                            t-on-click=""> Arrived for loading</button>
+                    <button title="Return from client"
+                            class="o_tms_btn_Departed btn btn-lg btn-block btn-secondary border fa fa-truck mt-4"
+                            t-on-click=""> Departed on route</button>
+                    <button title="Delivered"
+                            class="o_tms_btn_Finished_Route btn btn-lg btn-block btn-secondary border fa fa-check-square-o  mt-4"
+                            t-on-click=""> Finished the route</button>
+                    <button title="No claims"
+                            class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-secondary border fa fa-home mt-4"
+                            t-on-click=""> Returned to the store</button>
+                </div>
+            </div>
+    </t>
+
 </template>

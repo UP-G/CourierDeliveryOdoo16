@@ -12,6 +12,8 @@ class TmsRouteOrderRow(models.Model):
     route_order_id = fields.Many2one('tms.route.order', required=True, ondelete='restrict',
                                      auto_join=True, index=True, string='route_order_id')
 
+    order_type = fields.Char(string='order_type')
+
     arrival_date = fields.Datetime(string='arrival_time')
     returned_client = fields.Datetime(string='is_returned_client')
     returned_store = fields.Datetime(string='is_returned_store')
@@ -74,6 +76,7 @@ class TmsRouteOrderRow(models.Model):
 
     @api.model
     def sendByIndexedDb(self, dataTms):
+        print(dataTms)
         for dataAction in dataTms:
             if dataAction['action'] == 'arrival':
                 record = self.env['tms.route.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
@@ -86,6 +89,18 @@ class TmsRouteOrderRow(models.Model):
                 record.delivered = dataAction['tms_date']
             elif dataAction['action'] == 'complaint':
                 pass
+            elif dataAction['action'] == 'arrival_loading':
+                record = self.env['tms.route.order'].search([('id', '=', dataAction['route_id'])], limit=1)
+                record.arrived_for_loading = dataAction['tms_date']
+            elif dataAction['action'] == 'departed':
+                record = self.env['tms.route.order'].search([('id', '=', dataAction['route_id'])], limit=1)
+                record.departed_on_route = dataAction['tms_date']
+            elif dataAction['action'] == 'finished':
+                record = self.env['tms.route.order'].search([('id', '=', dataAction['route_id'])], limit=1)
+                record.finished_the_route = dataAction['tms_date']
+            elif dataAction['action'] == 'returned_store':
+                record = self.env['tms.route.order'].search([('id', '=', dataAction['route_id'])], limit=1)
+                record.returned_to_the_store = dataAction['tms_date']
             else:
                 raise Exception()
         return 'Success'
