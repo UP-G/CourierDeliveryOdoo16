@@ -103,7 +103,7 @@ class TmsRouteOrderRow(models.Model):
 
     @api.model
     def getRoutesPoints(self, orderId):
-        points = self.search([])
+        points = self.search([('route_order_id', '=', orderId)])
         print(1)
         return [
             {'id': point.id, 'company_name': point.route_point_id.res_partner_id.company_name,
