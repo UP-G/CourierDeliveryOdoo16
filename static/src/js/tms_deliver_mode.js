@@ -27,7 +27,7 @@ odoo.define('tms.deliver_mode', function (require) {
             this.RoutesKnown = false; // Предполагаем, что маршруты неизвестны
             if(!this.RoutesKnown){
                 var def = this._rpc({
-                    model: 'tms.route',
+                    model: 'tms.route.order',
                     method: 'getRoutesForDriver',
                 })
                 .then((routes) => {
