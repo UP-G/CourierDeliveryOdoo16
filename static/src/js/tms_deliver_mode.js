@@ -46,7 +46,7 @@ odoo.define('tms.deliver_mode', function (require) {
             console.log(routeId);
             console.log(routeName);
             var def = this._rpc({
-                    model: 'tms.route.point',
+                    model: 'tms.route.order.row',
                     method: 'getRoutesPoints',
                     args: [routeId, ]
                 })

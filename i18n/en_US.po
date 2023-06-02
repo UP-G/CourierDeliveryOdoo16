@@ -98,8 +98,37 @@ msgstr "Нет претензий к доставке"
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_route_widget.xml:42
 #, python-format
+msgid "Arrived for loading"
+msgstr "прибыл на погрузку"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "Departed on route"
+msgstr "Выехал на маршрут"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "Finished the route"
+msgstr "Закончил маршрут"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
+msgid "Returned to the store"
+msgstr "Вернулся на склад"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_route_widget.xml:42
+#, python-format
 msgid "Information about the order"
 msgstr "Информация о заказе"
+
 
 #. module: tms
 #. odoo-javascript

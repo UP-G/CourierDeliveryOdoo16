@@ -49,12 +49,13 @@ class TmsRouteOrder(models.Model):
             'domain': [('route_order_id', '=', self.read()[0]['id'])],
         }
 
-
+    @api.model
     def getRoutesForDriver(self):
 
         records = self.search([])
+        print(1123)
         # return (record.read())
-        print([{'id': record.id, 'name': record.ordr_num, 'start_time': record.route_id.start_time, 'end_time': record.route_id.end_time} for record in records])
+        print([{'id': record.id, 'name': record.order_num, 'start_time': record.route_id.start_time, 'end_time': record.route_id.end_time} for record in records])
         return [{'id': record.id, 'name': record.order_num, 'start_time': record.route_id.start_time, 'end_time': record.route_id.end_time} for record in records]
 
     def name_get(self):

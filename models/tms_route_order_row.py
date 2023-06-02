@@ -37,17 +37,13 @@ class TmsRouteOrderRow(models.Model):
 
     @api.model
     def showPoint(self, pointId):
-        query = """SELECT id, arrival_date, returned_client, returned_store, delivered, complaint from tms_route_order_row
-                   where route_point_id = %s
-                        """
 
-        self.env.cr.execute(query, [pointId])
+        points = self.search([])
 
-        return [{'id': id, 'arrival_date': arrival_date,
-                 'returned_client': returned_client, 'returned_store': returned_store,
-                 'delivered': delivered, 'complaint': complaint} for
-                id, arrival_date, returned_client, returned_store, delivered, complaint
-                in self.env.cr.fetchall()]
+        return [{'id': point.id, 'arrival_date': point.arrival_date,
+                 'returned_client': point.returned_client, 'returned_store': point.returned_store,
+                 'delivered': point.delivered, 'complaint': point.complaint} for point in points
+                ]
 
 
     # @api.model
@@ -104,4 +100,17 @@ class TmsRouteOrderRow(models.Model):
             else:
                 raise Exception()
         return 'Success'
+
+    @api.model
+    def getRoutesPoints(self, orderId):
+        points = self.search([])
+        print(1)
+        return [
+            {'id': point.id, 'company_name': point.route_point_id.res_partner_id.company_name,
+             'street': point.route_point_id.res_partner_id.street
+             , 'order_type': point.order_type, 'order_num': point.route_order_id.order_num,
+             'arrival_date': point.arrival_date,
+             'returned_client': point.returned_client, 'returned_store': point.returned_store,
+             'delivered': point.delivered, 'complaint': point.complaint} for point in points]
+
 
