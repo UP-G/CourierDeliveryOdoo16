@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20230514\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-05 04:29+0000\n"
-"PO-Revision-Date: 2023-06-05 04:29+0000\n"
+"POT-Creation-Date: 2023-06-05 10:51+0000\n"
+"PO-Revision-Date: 2023-06-05 10:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,17 +38,17 @@ msgid "Company"
 msgstr "Компания"
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__create_uid
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__create_uid
 #: model:ir.model.fields,field_description:tms.field_tms_route__create_uid
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__create_uid
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__create_uid
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__create_date
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__create_date
 #: model:ir.model.fields,field_description:tms.field_tms_route__create_date
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__create_date
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__create_date
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__create_date
 msgid "Created on"
 msgstr ""
@@ -69,7 +69,7 @@ msgstr "Дата прибытия"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Date claim"
-msgstr "Дата подачи жалобы"
+msgstr "Дата жалобы"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
@@ -109,7 +109,7 @@ msgstr "Дата возврата в склад"
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 msgid "Date return to store"
-msgstr "Дата возврата в склад"
+msgstr "Дата возвращения в склад"
 
 #. module: tms
 #. odoo-javascript
@@ -133,9 +133,9 @@ msgid "Departed on route"
 msgstr "На маршруте"
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__display_name
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__display_name
 #: model:ir.model.fields,field_description:tms.field_tms_route__display_name
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__display_name
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__display_name
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__display_name
 msgid "Display Name"
 msgstr ""
@@ -155,9 +155,9 @@ msgid "Finished the route"
 msgstr "Закончил маршрут"
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__id
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__id
 #: model:ir.model.fields,field_description:tms.field_tms_route__id
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__id
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__id
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__id
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
@@ -180,25 +180,25 @@ msgid "Information about the order"
 msgstr "Информация о заказе"
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order____last_update
+#: model:ir.model.fields,field_description:tms.field_tms_order_row____last_update
 #: model:ir.model.fields,field_description:tms.field_tms_route____last_update
-#: model:ir.model.fields,field_description:tms.field_tms_route_order____last_update
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row____last_update
 #: model:ir.model.fields,field_description:tms.field_tms_route_point____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__write_uid
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__write_uid
 #: model:ir.model.fields,field_description:tms.field_tms_route__write_uid
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__write_uid
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__write_uid
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__write_date
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__write_date
 #: model:ir.model.fields,field_description:tms.field_tms_route__write_date
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__write_date
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__write_date
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -215,7 +215,7 @@ msgstr "Название"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No claims"
-msgstr "Без жалоб"
+msgstr "Нет жалоб"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
@@ -259,7 +259,7 @@ msgstr "Точки маршрута"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Return from client"
-msgstr "Возврат от клиента"
+msgstr "Возврат принят"
 
 #. module: tms
 #. odoo-javascript
@@ -267,7 +267,7 @@ msgstr "Возврат от клиента"
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
 msgid "Returned to the store"
-msgstr "Возврат в склад"
+msgstr "Вернулся на склад"
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_route
@@ -278,14 +278,14 @@ msgid "Route"
 msgstr "Маршрут"
 
 #. module: tms
-#: model:ir.model,name:tms.model_tms_route_order_row
+#: model:ir.model,name:tms.model_tms_order_row
 msgid "Route Row"
-msgstr "Поле маршрута"
+msgstr ""
 
 #. module: tms
-#: model:ir.model,name:tms.model_tms_route_order
+#: model:ir.model,name:tms.model_tms_order
 msgid "Route order"
-msgstr "Заказы маршрута"
+msgstr ""
 
 #. module: tms
 #: model:ir.actions.act_window,name:tms.action_tms_route_order_row
@@ -299,6 +299,7 @@ msgstr "Точки маршрута"
 
 #. module: tms
 #: model:ir.actions.act_window,name:tms.action_tms_route
+#: model:ir.ui.menu,name:tms.menu_tms_route
 msgid "Routes"
 msgstr "Маршруты"
 
@@ -331,7 +332,6 @@ msgid "Tms"
 msgstr "TMS"
 
 #. module: tms
-#: model:ir.ui.menu,name:tms.menu_tms_route
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
@@ -349,6 +349,11 @@ msgid "Tms Route Sheet Point"
 msgstr "Точки маршрутного листа"
 
 #. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_order_deliver
+msgid "Tms Route Sheets"
+msgstr "Маршрутные листы"
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
@@ -357,45 +362,45 @@ msgstr ""
 
 #. module: tms
 #. odoo-python
-#: code:addons/tms/models/tms_route_order_row.py:0
+#: code:addons/tms/models/tms_order_row.py:0
 #, python-format
 msgid "TmsOrderButtons"
-msgstr "Кнопки заказов"
+msgstr ""
 
 #. module: tms
 #. odoo-python
-#: code:addons/tms/models/tms_route_order.py:0
+#: code:addons/tms/models/tms_order.py:0
 #, python-format
 msgid "TmsTreePython"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__arrival_date
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__arrival_date
 msgid "arrival_time"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__arrived_for_loading
+#: model:ir.model.fields,field_description:tms.field_tms_order__arrived_for_loading
 msgid "arrived_for_loading"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__complaint
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__complaint
 msgid "complaint"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__delivered
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__delivered
 msgid "delivered"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__departed_on_route
+#: model:ir.model.fields,field_description:tms.field_tms_order__departed_on_route
 msgid "departed_on_route"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__driver_id
+#: model:ir.model.fields,field_description:tms.field_tms_order__driver_id
 msgid "driver_id"
 msgstr ""
 
@@ -405,17 +410,17 @@ msgid "end_time"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__finished_the_route
+#: model:ir.model.fields,field_description:tms.field_tms_order__finished_the_route
 msgid "finished_the_route"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__returned_client
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__returned_client
 msgid "is_returned_client"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__returned_store
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__returned_store
 msgid "is_returned_store"
 msgstr ""
 
@@ -425,13 +430,13 @@ msgid "name"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__order_num
-msgid "order_num"
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__order_id
+msgid "order_id"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__order_type
-msgid "order_type"
+#: model:ir.model.fields,field_description:tms.field_tms_order__order_num
+msgid "order_num"
 msgstr ""
 
 #. module: tms
@@ -440,23 +445,18 @@ msgid "res_partner_id"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__returned_to_the_store
+#: model:ir.model.fields,field_description:tms.field_tms_order__returned_to_the_store
 msgid "returned_to_the_store"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order__route_id
+#: model:ir.model.fields,field_description:tms.field_tms_order__route_id
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__route_id
 msgid "route_id"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__route_order_id
-msgid "route_order_id"
-msgstr ""
-
-#. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_route_order_row__route_point_id
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__route_point_id
 msgid "route_point_id"
 msgstr ""
 
