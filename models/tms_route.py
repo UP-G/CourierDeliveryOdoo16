@@ -8,6 +8,5 @@ class TmsRoute(models.Model):
 
     start_time = fields.Datetime(string='start_time')
     end_time = fields.Datetime(string='end_time')
-    tmz = fields.Char(string='tmz')
 
     stock_id = fields.Many2one('res.partner', string='stock_id')

@@ -7,12 +7,8 @@ class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
 
-    route_point_id = fields.Many2one('tms.route.point', required=True, ondelete='restrict',
-                                     auto_join=True, index=True, string='route_point_id')
-    order_id = fields.Many2one('tms.order', required=True, ondelete='restrict',
-                                     auto_join=True, index=True, string='order_id')
-
-    order_type = fields.Char(string='order_type')
+    route_point_id = fields.Many2one('tms.route.point', required=True, ondelete='restrict', index=True, string='route_point_id')
+    order_id = fields.Many2one('tms.order', required=True, ondelete='restrict', string='order_id')
 
     arrival_date = fields.Datetime(string='arrival_time')
 
@@ -34,7 +30,6 @@ class TmsOrderRow(models.Model):
 
     @api.model
     def showPoint(self, pointId):
-
         points = self.search([])
 
         return [{'id': point.id, 'arrival_date': point.arrival_date,
@@ -42,10 +37,8 @@ class TmsOrderRow(models.Model):
                  'delivered': point.delivered, 'complaint': point.complaint} for point in points
                 ]
 
-
     @api.model
     def saveInDB(self, dataTms):
-        print(dataTms)
         for dataAction in dataTms:
             if dataAction['action'] == 'arrival':
                 record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
@@ -91,3 +84,7 @@ class TmsOrderRow(models.Model):
     #     for record in self:
     #         tz = self.route_order_id.route_id.tmz
     #         record.arrival_date = pytz.utc.localize(self.arrival_date).astimezone(tz)
+
+    def name_get(self):
+        return [(record.id, '{order_num}'.format(order_num=record.order_id.order_num)) for record in self]
+

@@ -34,7 +34,6 @@
                         <field name="start_time" string="Start time"/>
                         <field name="end_time" string="End time"/>
                         <field name="stock_id" string="Store"/>
-                        <field name="tmz" string="tmz"/>
                     </group>
                 </sheet>
             </form>

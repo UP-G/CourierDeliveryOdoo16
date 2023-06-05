@@ -39,7 +39,6 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         showRoutePoints: function(ev) {
-            var self = this;
             var routeId = $(ev.currentTarget).closest('div').find('p[data-name]')[0].innerText;
             var routeName = $(ev.currentTarget).closest('div').find('h5[data-name]')[0].innerText;
 
