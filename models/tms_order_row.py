@@ -71,7 +71,7 @@ class TmsOrderRow(models.Model):
     def getRoutesPoints(self, orderId):
         points = self.search([('order_id.id', '=', orderId)])
         return [
-            {'id': point.id, 'company_name': point.route_point_id.res_partner_id.company_name,
+            {'id': point.id, 'company_name': (point.route_point_id.res_partner_id.company_name or point.route_point_id.res_partner_id.name),
              'street': point.route_point_id.res_partner_id.street
              , 'order_num': point.order_id.order_num,
              'arrival_date': point.arrival_date,
