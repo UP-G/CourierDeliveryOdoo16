@@ -33,7 +33,7 @@
                   parent="menu_tms_deliver"
                   name="Tms Route Sheets"
                   action="action_tms_route_order_tree"
-                  sequence="10"/>
+                  sequence="9"/>
 
         <menuitem id="menu_tms_route_point"
                   parent="menu_tms_settings"
