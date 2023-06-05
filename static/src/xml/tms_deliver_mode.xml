@@ -38,23 +38,23 @@
                 <table class="table table-bordered">
                     <tr>
                         <th title="Date arrival">Date arrival</th>
-                        <td t-esc="point.arrival_date"></td>
+                        <td><t t-esc="point.arrival_date" t-if="point.arrival_date"></t></td>
                     </tr>
                     <tr>
                         <th title="Date return from client">Date return from client</th>
-                        <td><t t-esc="point.returned_client"></t></td>
+                        <td><t t-esc="point.returned_client" t-if="point.returned_client"></t></td>
                     </tr>
                     <tr>
                         <th title="Date return from store">Date return from store</th>
-                        <td><t t-esc="point.returned_store"></t></td>
+                        <td><t t-esc="point.returned_store" t-if="point.returned_store"></t></td>
                     </tr>
                     <tr>
                         <th title="Date deliver">Date deliver</th>
-                        <td><t t-esc="point.delivered"></t></td>
+                        <td><t t-esc="point.delivered" t-if="point.delivered"></t></td>
                     </tr>
                     <tr>
                         <th title="Date claim">Date claim</th>
-                        <td><t t-esc="point.complaint"></t></td>
+                        <td><t t-esc="point.complaint" t-if="point.complaint"></t></td>
                     </tr>
                 </table>
             </div>
@@ -68,9 +68,9 @@
                     <button title="Return from client"
                             class="o_tms_btn_Returned btn btn-lg btn-block btn-secondary border fa fa-shopping-cart mt-4"
                             t-on-click="onReturnedClientButtonClick"> Return from client</button>
-                    <button title="Delivered"
+                    <button title="Delivered to client"
                             class="o_tms_btn_Delivered btn btn-lg btn-block btn-secondary border fa fa-cubes  mt-4"
-                            t-on-click="onDeliveredButtonClick"> Delivered</button>
+                            t-on-click="onDeliveredButtonClick"> Delivered to client</button>
                     <button title="No claims"
                             class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border fa fa-warning mt-4"
                             t-on-click="onNoClaimsButtonClick"> No claims</button>
@@ -82,7 +82,7 @@
     <t t-name="TmsRoutePoints">
         <div class="container">
             <div class="card-header">
-                <h2 class="card-title" title="Points of the route">Points of the route "<t t-esc="routeName"></t>"</h2>
+                <h2 class="card-title" title="Points of the route">Points of the route " <t t-esc="routeName"></t></h2>
             </div>
             <t t-call="TmsPointButtons"/>
 
@@ -93,13 +93,12 @@
             <div class="card-body route openOrder">
                 <div class="tms-card-header">
                     <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
-                    <p class="card-title" t-esc="point.order_type"></p>
                 </div>
                 <p data-name="id" style="display: none;" t-esc="point.id"></p>
-                <div t-esc="point.street"></div>
+                <div t-esc="point.street" t-if="point.street"></div>
                 <div class="card-description route">
-                    <p class="card-text route" t-esc="point.company_name">-</p>
-                    <p class="card-text route" t-esc="point.contact_address"></p>
+                    <p class="card-text route"><t t-esc="point.company_name" t-if="point.company_name"></t></p>
+                    <p class="card-text route"><t t-esc="point.contact_address" t-if="point.contact_address"></t></p>
                 </div>
             </div>
         </a>
@@ -114,16 +113,16 @@
     <t t-name="TmsPointButtons">
             <div class="d-flex justify-content-center">
                 <div class="o_tms_action_nav" style="width: 100%;">
-                    <button title="Arrival"
+                    <button
                             class="o_tms_btn_Arrival_Loading btn btn-lg btn-block btn-secondary border fa fa-cube mt-4"
                             t-on-click=""> Arrived for loading</button>
-                    <button title="Return from client"
+                    <button
                             class="o_tms_btn_Departed btn btn-lg btn-block btn-secondary border fa fa-truck mt-4"
                             t-on-click=""> Departed on route</button>
-                    <button title="Delivered"
+                    <button
                             class="o_tms_btn_Finished_Route btn btn-lg btn-block btn-secondary border fa fa-check-square-o  mt-4"
                             t-on-click=""> Finished the route</button>
-                    <button title="No claims"
+                    <button
                             class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-secondary border fa fa-home mt-4"
                             t-on-click=""> Returned to the store</button>
                 </div>

@@ -1,6 +1,5 @@
 odoo.define('tms.deliver_mode', function (require) {
     "use strict";
-
     var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
 
@@ -22,12 +21,13 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         start: function(){
+
             this.initializeIndexedDb();
 
             this.RoutesKnown = false; // Предполагаем, что маршруты неизвестны
             if(!this.RoutesKnown){
                 var def = this._rpc({
-                    model: 'tms.route.order',
+                    model: 'tms.order',
                     method: 'getRoutesForDriver',
                 })
                 .then((routes) => {
@@ -46,7 +46,7 @@ odoo.define('tms.deliver_mode', function (require) {
             console.log(routeId);
             console.log(routeName);
             var def = this._rpc({
-                    model: 'tms.route.order.row',
+                    model: 'tms.order.row',
                     method: 'getRoutesPoints',
                     args: [routeId, ]
                 })
@@ -62,7 +62,7 @@ odoo.define('tms.deliver_mode', function (require) {
             self = this;
             console.log(pointId);
             var def = this._rpc({
-                    model: 'tms.route.order.row',
+                    model: 'tms.order.row',
                     method: 'showPoint',
                     args: [pointId, ]
                 })
@@ -117,8 +117,8 @@ odoo.define('tms.deliver_mode', function (require) {
             try {
 
                 var def = await this._rpc({
-                model: 'tms.route.order.row',
-                method: 'sendByIndexedDb',
+                model: 'tms.order.row',
+                method: 'saveInDB',
                 args: [dataTms,]
                 })
                 .then((done) => {
@@ -221,14 +221,6 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         async onArrivalLoading(){
-            // var def = await this._rpc({
-            //     model: 'tms.route.order',
-            //     method: 'wasArrivedRorLoading',
-            //     args: [this.route_id,]
-            //     })
-            //     .then((done) => {
-            //         console.log(done);
-            //     });
                await this.saveIndexedDb({'action': 'arrival_loading', 'route_id': this.route_id, 'tms_date': this.getDateForOdoo()});
         },
 

@@ -3,37 +3,38 @@
 
 
     <record id="view_tms_route_tree" model="ir.ui.view">
-        <field name="name">tms.route.tree</field>
+        <field name="name">Routes</field>
         <field name="model">tms.route</field>
         <field name="arch" type="xml">
             <tree string="Tms Route Sheet">
-                <field name="id"/>
-                <field name="name"/>
-                <field name="start_time"/>
-                <field name="end_time"/>
-                <field name="stock_id"/>
+                <field name="id" string="ID"/>
+                <field name="name" string="Name"/>
+                <field name="start_time" string="Start time"/>
+                <field name="end_time" string="End time"/>
+                <field name="stock_id" string="Store"/>
             </tree>
         </field>
     </record>
 
     <record id="action_tms_route" model="ir.actions.act_window">
-        <field name="name">tms.route.sheet</field>
+        <field name="name">Routes</field>
         <field name="res_model">tms.route</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <record id="view_tms_route_form" model="ir.ui.view">
-        <field name="name">tms.route.form</field>
+        <field name="name">Route form</field>
         <field name="model">tms.route</field>
         <field name="arch" type="xml">
             <form string="Tms form">
                 <sheet>
                     <group>
-                        <field name="id"/>
-                        <field name="name"/>
-                        <field name="start_time"/>
-                        <field name="end_time"/>
-                        <field name="stock_id"/>
+                        <field name="id" string="ID"/>
+                        <field name="name" string="Name"/>
+                        <field name="start_time" string="Start time"/>
+                        <field name="end_time" string="End time"/>
+                        <field name="stock_id" string="Store"/>
+                        <field name="tmz" string="tmz"/>
                     </group>
                 </sheet>
             </form>

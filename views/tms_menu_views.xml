@@ -14,12 +14,12 @@
 
         <menuitem id="menu_tms_settings"
                   parent="menu_tms_route_order"
-                  name="Настройки"
+                  name="Settings"
                   sequence="10"/>
 
         <menuitem id="menu_tms_deliver"
                   parent="menu_tms_route_order"
-                  name="Доставки"
+                  name="Delivers"
                   sequence="9"/>
 
         <menuitem id="menu_tms_route_order_row"

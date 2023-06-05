@@ -1,8 +1,5 @@
 from odoo import api, fields, models, _
 
-import datetime
-
-
 class TmsRoute(models.Model):
     _name = "tms.route"
     _description = 'Route'
@@ -11,11 +8,6 @@ class TmsRoute(models.Model):
 
     start_time = fields.Datetime(string='start_time')
     end_time = fields.Datetime(string='end_time')
+    tmz = fields.Char(string='tmz')
 
     stock_id = fields.Many2one('res.partner', string='stock_id')
-
-
-
-    @api.model
-    def action_arrived(self):
-        return datetime.datetime.now()

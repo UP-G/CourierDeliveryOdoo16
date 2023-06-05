@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_tms_route_order_row_tree" model="ir.ui.view">
-        <field name="name">tms.route.order.row.tree</field>
-        <field name="model">tms.route.order.row</field>
+        <field name="name">Route Order Row</field>
+        <field name="model">tms.order.row</field>
         <field name="arch" type="xml">
             <tree string="Tms Route Sheet">
-                <field name="route_point_id" string="Точка"/>
-                <field name="route_order_id" string="Заказ"/>
-                <field name="delivered" string="Дата доставки"/>
-                <field name="returned_client" string="Дата возврата от клиента"/>
-                <field name="returned_store" string="Дата возврата от склада"/>
-                <field name="complaint" string="Дата жалобы"/>
-                <field name="arrival_date" string="Дата прибытия"/>
+                <field name="route_point_id" string="Point"/>
+                <field name="order_id" string="Order"/>
+                <field name="delivered" string="Date deliver"/>
+                <field name="returned_client" string="Date return from client"/>
+                <field name="returned_store" string="Date return to store"/>
+                <field name="complaint" string="Date complaint"/>
+                <field name="arrival_date" string="Date arrival"/>
 
                 <button name="show_tms_buttons" type="object" class="oe_stat_button"
                                 icon="fa-send">
@@ -21,21 +21,20 @@
     </record>
 
     <record id="view_tms_route_order_row_form" model="ir.ui.view">
-        <field name="name">tms.route.order.row.form</field>
-        <field name="model">tms.route.order.row</field>
+        <field name="name">Route order row form</field>
+        <field name="model">tms.order.row</field>
         <field name="arch" type="xml">
             <form string="Tms form">
                 <sheet>
                     <group>
-                        <field name="id"/>
-                        <field name="route_point_id"/>
-                        <field name="route_order_id"/>
-                        <field name="delivered"/>
-                        <field name="returned_client"/>
-                        <field name="returned_store"/>
-                        <field name="complaint"/>
-                        <field name="arrival_date"/>
-                        <field name="order_type"/>
+                        <field name="id" string="ID"/>
+                        <field name="route_point_id" string="Point"/>
+                        <field name="order_id" string="Order"/>
+                        <field name="delivered" string="Date deliver"/>
+                        <field name="returned_client" string="Date return from client"/>
+                        <field name="returned_store" string="Date return to store"/>
+                        <field name="complaint" string="Date complaint"/>
+                        <field name="arrival_date" string="Date arrival"/>
                     </group>
                 </sheet>
             </form>
@@ -43,8 +42,8 @@
     </record>
 
     <record id="action_tms_route_order_row" model="ir.actions.act_window">
-        <field name="name">tms.route.order.row.add</field>
-        <field name="res_model">tms.route.order.row</field>
+        <field name="name">Route order row</field>
+        <field name="res_model">tms.order.row</field>
         <field name="view_mode">tree,form</field>
     </record>
 </odoo>
