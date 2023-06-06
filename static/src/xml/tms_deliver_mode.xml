@@ -98,7 +98,6 @@
                 <div t-esc="point.street" t-if="point.street"></div>
                 <div class="card-description route">
                     <p class="card-text route"><t t-esc="point.company_name" t-if="point.company_name"></t></p>
-                    <p class="card-text route"><t t-esc="point.contact_address" t-if="point.contact_address"></t></p>
                 </div>
             </div>
         </a>

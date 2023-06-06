@@ -98,6 +98,10 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         saveIndexedDb: function(fieldDb) {
+            if(!this.idb) {
+                this.initializeIndexedDb();
+            }
+
             let tmsStoreObject = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
 
             let requestTms = tmsStoreObject.add(fieldDb);
@@ -109,6 +113,7 @@ odoo.define('tms.deliver_mode', function (require) {
             requestTms.onerror = function () {
                 console.log("Ошибка", requestTms.error);
             };
+
         },
 
         async sendServer(dataTms) {
@@ -158,22 +163,27 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         sendSavedRoutes: function(){
-            let tms_route = this.idb.transaction(this.storeName, 'readonly').objectStore(this.storeName);
-            let req = tms_route.getAll(undefined);
-            self = this;
-            req.onsuccess = function (event) {
-                let evlist = event.currentTarget.result;
-                // let dataToSend = self.deleteDublicatesInIndexedDb(evlist);
-                self.checkOnlineStatus().then((message) => {
-                    if(evlist.length > 0){
-                        console.log('Идёт отправка на сервер');
-                        self.sendServer(evlist);
-                    }
-                }).catch((error) => {
-                    console.error(error);
-                });
+            if(!this.idb){
+                this.initializeIndexedDb();
+                let tms_route = this.idb.transaction(this.storeName, 'readonly').objectStore(this.storeName);
+            } else {
+                let tms_route = this.idb.transaction(this.storeName, 'readonly').objectStore(this.storeName);
+                let req = tms_route.getAll(undefined);
+                self = this;
+                req.onsuccess = function (event) {
+                    let evlist = event.currentTarget.result;
+                    // let dataToSend = self.deleteDublicatesInIndexedDb(evlist);
+                    self.checkOnlineStatus().then((message) => {
+                        if (evlist.length > 0) {
+                            console.log('Идёт отправка на сервер');
+                            self.sendServer(evlist);
+                        }
+                    }).catch((error) => {
+                        console.error(error);
+                    });
 
-                self.setSendTmsCron();
+                    self.setSendTmsCron();
+                }
             }
         },
 
