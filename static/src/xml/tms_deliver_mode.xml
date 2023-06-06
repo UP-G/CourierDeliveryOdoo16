@@ -36,6 +36,18 @@
                 <div class="card">
             <div class="card-body">
                 <table class="table table-bordered">
+                     <tr>
+                        <th title="Implemention number">Implemention number</th>
+                        <td><t t-esc="point.impl_num" t-if="point.impl_num"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Phone">Phone</th>
+                        <td><t t-esc="point.phone" t-if="point.phone"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Note">Note</th>
+                        <td><t t-esc="point.note" t-if="point.note"></t></td>
+                    </tr>
                     <tr>
                         <th title="Date arrival">Date arrival</th>
                         <td><t t-esc="point.arrival_date" t-if="point.arrival_date"></t></td>
@@ -92,12 +104,15 @@
         <a href="#">
             <div class="card-body route openOrder">
                 <div class="tms-card-header">
-                    <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
+                    <h5 class="card-title route" t-esc="point.impl_num"></h5>
+                    <h5 data-name="name" style="display: none;" class="card-title route" t-esc="point.order_num"></h5>
                 </div>
                 <p data-name="id" style="display: none;" t-esc="point.id"></p>
                 <div t-esc="point.street" t-if="point.street"></div>
                 <div class="card-description route">
                     <p class="card-text route"><t t-esc="point.company_name" t-if="point.company_name"></t></p>
+                    <p class="card-text route"><t t-esc="point.phone" t-if="point.phone"></t></p>
+                    <p class="card-text route"><t t-esc="point.note" t-if="point.note"></t></p>
                 </div>
             </div>
         </a>
