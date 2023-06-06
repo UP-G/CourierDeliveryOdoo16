@@ -72,34 +72,41 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         initializeIndexedDb: function() {
-            var self = this;
-            this.dbName = 'tms_db';
-            this.storeName = 'tms_store';
+            return new Promise((resolve, reject) => {
+                if (navigator.onLine) {
+                    var self = this;
+                    this.dbName = 'tms_db';
+                    this.storeName = 'tms_store';
 
-            this.requestDB = indexedDB.open(this.dbName, 20);
+                    this.requestDB = indexedDB.open(this.dbName, 20);
 
-            this.requestDB.onerror = function (event) {
-                console.log('Error opening database');
-            };
+                    this.requestDB.onerror = function (event) {
+                        console.log('Error opening database');
+                    };
 
-            this.requestDB.onupgradeneeded = function (event) {
-                self.idb = event.target.result;
-                if (!self.idb.objectStoreNames.contains(self.storeName)) {
-                    var objectStore = self.idb.createObjectStore(self.storeName, {keyPath: 'id', autoIncrement: true});
+                    this.requestDB.onupgradeneeded = function (event) {
+                        self.idb = event.target.result;
+                        if (!self.idb.objectStoreNames.contains(self.storeName)) {
+                            var objectStore = self.idb.createObjectStore(self.storeName, {keyPath: 'id', autoIncrement: true});
+                        }
+                    };
+
+                    this.requestDB.onsuccess = function (event) {
+                        self.idb = event.target.result;
+                        resolve(self.idb);
+                        console.log('IDB инициализирована');
+                    };
+
+                    this.setSendTmsCron();
+                } else {
+                    reject('No db');
                 }
-            };
-
-            this.requestDB.onsuccess = function (event) {
-                self.idb = event.target.result;
-                console.log('IDB инициализирована');
-            };
-
-            this.setSendTmsCron();
+            });
         },
 
-        saveIndexedDb: function(fieldDb) {
-            if(!this.idb) {
-                this.initializeIndexedDb();
+        async saveIndexedDb(fieldDb) {
+            if(!this.idb){
+                 let idb = await this.initializeIndexedDb();
             }
 
             let tmsStoreObject = this.idb.transaction(this.storeName, "readwrite").objectStore(this.storeName);
