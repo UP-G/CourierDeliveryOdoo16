@@ -13,7 +13,6 @@ class TmsOrderRow(models.Model):
     arrival_date = fields.Datetime(string='arrival_time')
     impl_num = fields.Char(string='impl_num')
     returned_client = fields.Datetime(string='is_returned_client')
-    note = fields.Char(string='note')
     returned_store = fields.Datetime(string='is_returned_store')
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
@@ -87,7 +86,7 @@ class TmsOrderRow(models.Model):
              'order_num': point.order_id.order_num,
              'arrival_date': point.arrival_date,
              'impl_num': point.impl_num,
-             'note': point.note,
+             'note': point.route_point_id.res_partner_id.comment,
              'phone': point.route_point_id.res_partner_id.phone,
              'returned_client': point.returned_client,
              'returned_store': point.returned_store,

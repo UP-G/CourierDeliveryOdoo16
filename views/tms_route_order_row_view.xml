@@ -13,7 +13,6 @@
                 <field name="complaint" string="Date complaint"/>
                 <field name="arrival_date" string="Date arrival"/>
                 <field name="impl_num" string="Implemention number"/>
-                <field name="note" string="Note"/>
 
 
                 <button name="show_tms_buttons" type="object" class="oe_stat_button"
@@ -39,7 +38,6 @@
                         <field name="returned_client" string="Date return from client"/>
                         <field name="returned_store" string="Date return to store"/>
                         <field name="complaint" string="Date complaint"/>
-                        <field name="note" string="Note"/>
 
                     </group>
                 </sheet>
