@@ -11,9 +11,9 @@ class TmsOrderRow(models.Model):
     order_id = fields.Many2one('tms.order', required=True, ondelete='restrict', string='order_id')
 
     arrival_date = fields.Datetime(string='arrival_time')
-
+    impl_num = fields.Char(string='impl_num')
     returned_client = fields.Datetime(string='is_returned_client')
-
+    note = fields.Char(string='note')
     returned_store = fields.Datetime(string='is_returned_store')
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
@@ -32,9 +32,16 @@ class TmsOrderRow(models.Model):
     def showPoint(self, pointId):
         points = self.search([])
 
-        return [{'id': point.id, 'arrival_date': point.arrival_date,
-                 'returned_client': point.returned_client, 'returned_store': point.returned_store,
-                 'delivered': point.delivered, 'complaint': point.complaint} for point in points
+        return [{'id': point.id,
+                 'arrival_date': point.arrival_date,
+                 'returned_client': point.returned_client,
+                 'returned_store': point.returned_store,
+                 'delivered': point.delivered,
+                 'complaint': point.complaint,
+                 'phone': point.route_point_id.res_partner_id.phone,
+                 'impl_num': point.impl_num
+                 }
+                for point in points
                 ]
 
     @api.model
@@ -70,13 +77,25 @@ class TmsOrderRow(models.Model):
     @api.model
     def getRoutesPoints(self, orderId):
         points = self.search([('order_id.id', '=', orderId)])
+        for point in points:
+            print(point.route_point_id.res_partner_id.name)
+            print(point.route_point_id.res_partner_id.company_name)
         return [
-            {'id': point.id, 'company_name': (point.route_point_id.res_partner_id.company_name or point.route_point_id.res_partner_id.name),
-             'street': point.route_point_id.res_partner_id.street
-             , 'order_num': point.order_id.order_num,
+            {'id': point.id,
+             'company_name': (point.route_point_id.res_partner_id.company_name or point.route_point_id.res_partner_id.name),
+             'street': point.route_point_id.res_partner_id.street,
+             'order_num': point.order_id.order_num,
              'arrival_date': point.arrival_date,
-             'returned_client': point.returned_client, 'returned_store': point.returned_store,
-             'delivered': point.delivered, 'complaint': point.complaint} for point in points]
+             'impl_num': point.impl_num,
+             'note': point.note,
+             'phone': point.route_point_id.res_partner_id.phone,
+             'returned_client': point.returned_client,
+             'returned_store': point.returned_store,
+             'delivered': point.delivered,
+             'complaint': point.complaint
+             }
+            for point in points
+        ]
 
 
     # @api.onchange("route_order_id.route_id.tmz")
