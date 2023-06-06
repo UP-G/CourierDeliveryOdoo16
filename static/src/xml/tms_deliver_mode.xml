@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<template xml:space="preserve">
+
+    <t t-name="TmsBase">
+            <t t-call="TmsRoute"></t>
+    </t>
+
+    <t t-name="TmsRoute">
+        <div class="container">
+        <div class="card-group route">
+    <div class="card route" t-foreach="routes" t-as="route" t-key="route.id">
+        <a href="#">
+            <div class="card-body route openPoints">
+                <h5 data-name="name" class="card-title route" t-esc="route.name"></h5>
+                <p data-name="id" style="display: none;" t-esc="route.id"></p>
+                <div class="card-description route">
+                    <p class="card-text route" t-esc="route.start_time">-</p>
+                <p class="card-text route" t-esc="route.end_time"></p>
+                </div>
+
+            </div>
+        </a>
+    </div>
+</div>
+        </div>
+
+    </t>
+
+    <t t-name="TmsPoint">
+                <div class="container cdf">
+            <div class="card mt-2">
+            <div class="card-header">
+                <h2 class="card-title" title="Information about the order ">Information about the order <t t-esc="orderNum"></t>  </h2>
+            </div>
+                <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th title="Date arrival">Date arrival</th>
+                        <td><t t-esc="point.arrival_date" t-if="point.arrival_date"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Date return from client">Date return from client</th>
+                        <td><t t-esc="point.returned_client" t-if="point.returned_client"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Date return from store">Date return from store</th>
+                        <td><t t-esc="point.returned_store" t-if="point.returned_store"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Date deliver">Date deliver</th>
+                        <td><t t-esc="point.delivered" t-if="point.delivered"></t></td>
+                    </tr>
+                    <tr>
+                        <th title="Date claim">Date claim</th>
+                        <td><t t-esc="point.complaint" t-if="point.complaint"></t></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
+                    <div class="d-flex justify-content-center">
+                <div class="o_tms_action_nav" style="width: 100%;">
+                    <button title="Arrival"
+                            class="o_tms_btn_Arrival btn btn-lg btn-block btn-secondary border fa fa-clock-o mt-4"
+                            t-on-click="onArrivalButtonClick"> Arrival</button>
+                    <button title="Return from client"
+                            class="o_tms_btn_Returned btn btn-lg btn-block btn-secondary border fa fa-shopping-cart mt-4"
+                            t-on-click="onReturnedClientButtonClick"> Return from client</button>
+                    <button title="Delivered to client"
+                            class="o_tms_btn_Delivered btn btn-lg btn-block btn-secondary border fa fa-cubes  mt-4"
+                            t-on-click="onDeliveredButtonClick"> Delivered to client</button>
+                    <button title="No claims"
+                            class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border fa fa-warning mt-4"
+                            t-on-click="onNoClaimsButtonClick"> No claims</button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="TmsRoutePoints">
+        <div class="container">
+            <div class="card-header">
+                <h2 class="card-title" title="Points of the route">Points of the route " <t t-esc="routeName"></t></h2>
+            </div>
+            <t t-call="TmsPointButtons"/>
+
+
+            <div class="card-group route">
+    <div class="card route" t-foreach="points" t-as="point" t-key="point.id">
+        <a href="#">
+            <div class="card-body route openOrder">
+                <div class="tms-card-header">
+                    <h5 data-name="name" class="card-title route" t-esc="point.order_num"></h5>
+                </div>
+                <p data-name="id" style="display: none;" t-esc="point.id"></p>
+                <div t-esc="point.street" t-if="point.street"></div>
+                <div class="card-description route">
+                    <p class="card-text route"><t t-esc="point.company_name" t-if="point.company_name"></t></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+        </div>
+
+
+
+    </t>
+
+    <t t-name="TmsPointButtons">
+            <div class="d-flex justify-content-center">
+                <div class="o_tms_action_nav" style="width: 100%;">
+                    <button
+                            class="o_tms_btn_Arrival_Loading btn btn-lg btn-block btn-secondary border fa fa-cube mt-4"
+                            t-on-click=""> Arrived for loading</button>
+                    <button
+                            class="o_tms_btn_Departed btn btn-lg btn-block btn-secondary border fa fa-truck mt-4"
+                            t-on-click=""> Departed on route</button>
+                    <button
+                            class="o_tms_btn_Finished_Route btn btn-lg btn-block btn-secondary border fa fa-check-square-o  mt-4"
+                            t-on-click=""> Finished the route</button>
+                    <button
+                            class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-secondary border fa fa-home mt-4"
+                            t-on-click=""> Returned to the store</button>
+                </div>
+            </div>
+    </t>
+
+</template>

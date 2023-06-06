@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <menuitem id="menu_tms_route"
-                  parent="menu_tms_route_order"
-                  name="Tms Route Sheet"
-                  action="action_tms_route_tree"
-                  sequence="10"/>
-
-        <menuitem id="menu_tms_route_add"
-                  parent="menu_tms_route"
-                  name="Tms Route Sheet"
-                  action="action_tms_route_form"
-                  sequence="10"/>
-
         <menuitem id="menu_tms_route_order"
-                  name="Tms Route Sheet Order"
+                  name="Tms"
                   action="action_tms_route_order_tree"
                   sequence="10"/>
 
-        <menuitem id="menu_tms_route_order_row"
+
+        <menuitem id="menu_tms_settings"
                   parent="menu_tms_route_order"
-                  name="Tms Route Sheet Order Row"
-                  action="action_tms_route_order_row_tree"
+                  name="Settings"
                   sequence="10"/>
 
-        <menuitem id="menu_tms_route_order_row_add"
-                  parent="menu_tms_route_order_row"
-                  name="Tms Route Sheet Order Row"
-                  action="action_tms_route_order_row_form"
+        <menuitem id="menu_tms_route"
+                  parent="menu_tms_settings"
+                  name="Routes"
+                  action="action_tms_route"
                   sequence="10"/>
+
+        <menuitem id="menu_tms_deliver"
+                  parent="menu_tms_route_order"
+                  name="Delivers"
+                  sequence="9"/>
+
+        <menuitem id="menu_tms_route_order_row"
+                  parent="menu_tms_deliver"
+                  name="Tms Route Sheet Order Row"
+                  action="action_tms_route_order_row"
+                  sequence="10"/>
+
+        <menuitem id="menu_tms_order_deliver"
+                  parent="menu_tms_deliver"
+                  name="Tms Route Sheets"
+                  action="action_tms_route_order_tree"
+                  sequence="9"/>
 
         <menuitem id="menu_tms_route_point"
-                  parent="menu_tms_route_order"
+                  parent="menu_tms_settings"
                   name="Tms Route Sheet Point"
                   action="action_tms_route_point_tree"
                   sequence="10"/>

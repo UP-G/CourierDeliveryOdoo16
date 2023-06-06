@@ -3,38 +3,37 @@
 
 
     <record id="view_tms_route_tree" model="ir.ui.view">
-        <field name="name">tms.route.tree</field>
+        <field name="name">Routes</field>
         <field name="model">tms.route</field>
         <field name="arch" type="xml">
             <tree string="Tms Route Sheet">
-                <field name="id"/>
-                <field name="name"/>
-                <field name="start_time"/>
-                <field name="end_time"/>
-                <field name="stock_id"/>
+                <field name="id" string="ID"/>
+                <field name="name" string="Name"/>
+                <field name="start_time" string="Start time"/>
+                <field name="end_time" string="End time"/>
+                <field name="stock_id" string="Store"/>
             </tree>
         </field>
     </record>
 
-    <record id="action_tms_route_tree" model="ir.actions.act_window">
-        <field name="name">tms.route.sheet</field>
+    <record id="action_tms_route" model="ir.actions.act_window">
+        <field name="name">Routes</field>
         <field name="res_model">tms.route</field>
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_tms_route_tree"/>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <record id="view_tms_route_form" model="ir.ui.view">
-        <field name="name">tms.route.form</field>
+        <field name="name">Route form</field>
         <field name="model">tms.route</field>
         <field name="arch" type="xml">
             <form string="Tms form">
                 <sheet>
                     <group>
-                        <field name="id"/>
-                        <field name="name"/>
-                        <field name="start_time"/>
-                        <field name="end_time"/>
-                        <field name="stock_id"/>
+                        <field name="id" string="ID"/>
+                        <field name="name" string="Name"/>
+                        <field name="start_time" string="Start time"/>
+                        <field name="end_time" string="End time"/>
+                        <field name="stock_id" string="Store"/>
                     </group>
                 </sheet>
             </form>
@@ -46,13 +45,5 @@
         <field name="tag">tms_route_buttons</field>
         <field name="target">fullscreen</field>
     </record>
-
-    <record id="action_tms_route_form" model="ir.actions.act_window">
-        <field name="name">tms.route.add</field>
-        <field name="res_model">tms.route</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_tms_route_form"/>
-    </record>
-
 </odoo>
 

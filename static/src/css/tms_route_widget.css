@@ -1,0 +1,84 @@
+.o_tms_action_nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.o_tms_btn_Arrival,
+.o_tms_btn_Returned,
+.o_tms_btn_Delivered,
+.o_tms_btn_Claims,
+.o_tms_btn_Arrival_Loading,
+.o_tms_btn_Departed,
+.o_tms_btn_Finished_Route,
+.o_tms_btn_Returned_Store
+{
+    font-size: 1.5em;
+    display: inline-grid;
+    padding: 0.2em;
+    width: 7.8em;
+    height: 7em;
+    margin: 0.5em;
+}
+
+.tms-card-header{
+    display:flex;
+    justify-content: space-between;
+}
+
+.o_tms_btn_Arrival {
+}
+
+.o_tms_btn_Returned {
+}
+
+.o_tms_btn_Delivered {
+}
+
+.o_tms_btn_Claims {
+}
+
+.card-group.route {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .card.route {
+        flex-basis: 48%;
+        border: 1px solid #dee2e6;
+        background-color: white;
+        max-width: 300px;
+        min-width: 240px;
+        height: 6em;
+        margin: 10px;
+
+
+    }
+
+    .card-title.route{
+            color: #212529;
+            font-size: 13px;
+            font-weight: 500;
+            /*margin-bottom: 0;*/
+            /*margin-top: 0;*/
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+    }
+
+    .card-body.route {
+        padding: 6px;
+
+    }
+
+    .card-description.route {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+    }
+
+    .card-text.route {
+        margin-right: 2px;
+        font-size: 0.94791667rem;
+    }
+

@@ -16,7 +16,7 @@
         'web.assets_backend': [
             'tms/static/src/js/*.js',
             'tms/static/src/xml/**/*',
-            'tms/static/src/less/tms.less',
+            'tms/static/src/css/tms_route_widget.css',
         ],
     },
     'installable': True,
