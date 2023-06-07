@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <menuitem id="menu_tms_route_order"
+        <menuitem id="menu_tms"
                   name="Tms"
                   action="action_tms_route_order_tree"
                   sequence="10"/>
 
-
-        <menuitem id="menu_tms_settings"
-                  parent="menu_tms_route_order"
-                  name="Settings"
-                  sequence="10"/>
-
-        <menuitem id="menu_tms_route"
-                  parent="menu_tms_settings"
-                  name="Routes"
-                  action="action_tms_route"
-                  sequence="10"/>
-
         <menuitem id="menu_tms_deliver"
-                  parent="menu_tms_route_order"
+                  parent="menu_tms"
                   name="Delivers"
+                  sequence="9"/>
+
+        <menuitem id="menu_tms_order_deliver"
+                  parent="menu_tms_deliver"
+                  name="Tms Route Sheets"
+                  action="action_tms_route_order_tree"
                   sequence="9"/>
 
         <menuitem id="menu_tms_route_order_row"
@@ -29,10 +23,21 @@
                   action="action_tms_route_order_row"
                   sequence="10"/>
 
-        <menuitem id="menu_tms_order_deliver"
+        <menuitem id="menu_tms_driver_mode"
                   parent="menu_tms_deliver"
-                  name="Tms Route Sheets"
-                  action="action_tms_route_order_tree"
+                  name="TMS Delivery Mode"
+                  action="ir_actions_deliver_mode"
+                  sequence="11"/>
+
+        <menuitem id="menu_tms_settings"
+                  parent="menu_tms"
+                  name="Settings"
+                  sequence="10"/>
+
+        <menuitem id="menu_tms_route"
+                  parent="menu_tms_settings"
+                  name="Routes"
+                  action="action_tms_route"
                   sequence="9"/>
 
         <menuitem id="menu_tms_route_point"
@@ -40,5 +45,6 @@
                   name="Tms Route Sheet Point"
                   action="action_tms_route_point_tree"
                   sequence="10"/>
+
     </data>
 </odoo>
