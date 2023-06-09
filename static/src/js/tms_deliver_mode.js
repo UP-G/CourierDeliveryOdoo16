@@ -12,9 +12,9 @@ odoo.define('tms.deliver_mode', function (require) {
             "click .o_tms_btn_Returned": function () {this.onReturnedClientButtonClick();},
 
             "click .o_tms_btn_Arrival_Loading": function () {this.onArrivalLoading();},
-            "click .o_tms_btn_Departed": function () {this.onArrivalLoading();},
-            "click .o_tms_btn_Finished_Route": function () {this.onArrivalLoading();},
-            "click .o_tms_btn_Returned_Store": function () {this.onArrivalLoading();},
+            "click .o_tms_btn_Departed": function () {this.onDeparted();},
+            "click .o_tms_btn_Finished_Route": function () {this.onFinishedRoute();},
+            "click .o_tms_btn_Returned_Store": function () {this.onReturnedStore();},
 
             "click .openPoints": function (ev) {this.showRoutePoints(ev)},
             "click .openOrder": function (ev) {this.showConcreteRoutePoint(ev)},
