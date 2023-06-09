@@ -7,8 +7,8 @@ class TmsOrder(models.Model):
     _name = "tms.order"
     _description = 'Route order'
 
-    driver_id = fields.Many2one('res.users', required=True, ondelete='restrict', index=True, string='driver_id')
-    route_id = fields.Many2one('tms.route', required=True, ondelete='restrict', index=True, string='route_id')
+    driver_id = fields.Many2one('res.users', ondelete='restrict', index=True, string='driver_id')
+    route_id = fields.Many2one('tms.route', ondelete='restrict', index=True, string='route_id')
     arrived_for_loading = fields.Datetime(string='arrived_for_loading')
     departed_on_route = fields.Datetime(string='departed_on_route')
     finished_the_route = fields.Datetime(string='finished_the_route')

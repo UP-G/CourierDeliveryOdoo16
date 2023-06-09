@@ -7,8 +7,8 @@ class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
 
-    route_point_id = fields.Many2one('tms.route.point', required=True, ondelete='restrict', index=True, string='route_point_id')
-    order_id = fields.Many2one('tms.order', required=True, ondelete='restrict', string='order_id')
+    route_point_id = fields.Many2one('tms.route.point', ondelete='restrict', index=True, string='route_point_id')
+    order_id = fields.Many2one('tms.order', ondelete='restrict', string='order_id')
     arrival_date = fields.Datetime(string='arrival_time')
     impl_num = fields.Char(string='impl_num')
     comment = fields.Char(string='Comment', default='phone;address')
