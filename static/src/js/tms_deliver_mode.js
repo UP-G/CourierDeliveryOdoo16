@@ -2,16 +2,20 @@ odoo.define('tms.deliver_mode', function (require) {
     "use strict";
     var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
-
+    var session = require('web.session');
     var QWeb = core.qweb;
 
     var TmsDeliverMode = AbstractAction.extend({
         events: {
+            "click .o_tms_btn_Checkin": function () {this.onCheckinButtonClick();},
+            "click .o_tms_btn_Checkout": function () {this.onCheckoutButtonClick();},
+
             "click .o_tms_btn_Arrival": function () {this.onArrivalButtonClick();},
             "click .o_tms_btn_Delivered": function () {this.onDeliveredButtonClick();},
             "click .o_tms_btn_Returned": function () {this.onReturnedClientButtonClick();},
+            "click .o_tms_btn_PointList": function () {this.onPointListButtonClick();},
 
-            "click .o_tms_btn_Arrival_Loading": function () {this.onArrivalLoading();},
+            "click .o_tms_btn_RouteList": function () {this.onRouteListClick();},
             "click .o_tms_btn_Departed": function () {this.onDeparted();},
             "click .o_tms_btn_Finished_Route": function () {this.onFinishedRoute();},
             "click .o_tms_btn_Returned_Store": function () {this.onReturnedStore();},
@@ -21,37 +25,80 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         start: function(){
-
-            this.initializeIndexedDb();
-
-            this.RoutesKnown = false; // Предполагаем, что маршруты неизвестны
-            if(!this.RoutesKnown){
-                var def = this._rpc({
+            var self = this;
+            self.initializeIndexedDb();
+            odoo.tms_props = self;  // TODO: for debug
+            odoo.tms_session = session;  // TODO: for debug
+            self.Routes = []; // Предполагаем, что открытые смены водителей неизвестны
+            self.Attendance = {}; // Предполагаем, что открытые смены водителей неизвестны
+            self.Points = []; //
+            if(self.isEmpty(self.Attendance)){
+                var defAtt = self._rpc({
+                    model: 'hr.attendance',
+                    method: 'getDriverAttendance',
+                    args: [[session.uid]],
+                })
+                .then((attendance) => {
+                    self.Attendance = attendance;
+                    console.log('attendance loaded');
+                    self.showInterface('TmsRoute');
+                });
+            }
+            if(self.isEmpty(self.Routes)){
+                var defRoute = self._rpc({
                     model: 'tms.order',
                     method: 'getRoutesForDriver',
                 })
                 .then((routes) => {
-                    this.$el.html(QWeb.render('TmsRoute', {'routes': routes, 'props': this}));
+                    self.Routes = routes;
+                    console.log('Routes loaded');
+                    odoo.tms_routes = routes;
+                    self.showInterface('TmsRoute');
                 });
             }
+            console.log('start 5');
 
-            return Promise.all([def, this._super.apply(this, arguments)]);
+            return Promise.all([defAtt, defRoute, this._super.apply(this, arguments)]);
+        },
+
+        isEmpty: function(obj) {
+            return Object.keys(obj).length === 0;
+        },
+
+        showInterface: function(template) {
+            console.log('show template ' + template);
+            if (template == 'TmsRoute') {
+                this.$el.html(QWeb.render('TmsRoute', {
+                    'routes': this.Routes,
+                    'props': this,
+                    'session': session,
+                    'attendance': this.Attendance,
+                }));
+            } else if (template == 'TmsRoutePoints') {
+                this.$el.html(QWeb.render('TmsRoutePoints', {
+                    'myProp': this, 
+                    'routeName': this.routeName, 
+                    'points': this.Points
+                }));
+            }
         },
 
         showRoutePoints: function(ev) {
             var routeId = $(ev.currentTarget).closest('div').find('p[data-name]')[0].innerText;
-            var routeName = $(ev.currentTarget).closest('div').find('h5[data-name]')[0].innerText;
+            var routeName = $(ev.currentTarget).closest('div').find('h3[data-name]')[0].innerText;
 
             console.log(routeId);
             console.log(routeName);
+            this.route_id = routeId;
+            this.route_name = routeName;
             var def = this._rpc({
                     model: 'tms.order.row',
                     method: 'getRoutesPoints',
                     args: [routeId, ]
                 })
                 .then((points) => {
-                    this.route_id = routeId;
-                    this.$el.html(QWeb.render('TmsRoutePoints', {'myProp': this, 'routeName': routeName, 'points': points}));
+                    this.Points = points;
+                    this.showInterface('TmsRoutePoints');
                 });
         },
 
@@ -236,8 +283,24 @@ odoo.define('tms.deliver_mode', function (require) {
                this.$el.html(QWeb.render('TmsPoint', {'orderNum': this.pointOrderName, 'point': this.point}));
         },
 
-        async onArrivalLoading(){
-               await this.saveIndexedDb({'action': 'arrival_loading', 'route_id': this.route_id, 'tms_date': this.getDateForOdoo()});
+        async onCheckinButtonClick(){
+            // TODO: open new hr.attendance
+//               await this.saveIndexedDb({'action': 'checkin', 'driver_id': session.uid, 'tms_date': this.getDateForOdoo()});
+//            this.showInterface('TmsRoute');
+        },
+
+        async onCheckoutButtonClick(){
+            // TODO: open new hr.attendance
+//               await this.saveIndexedDb({'action': 'checkout', 'driver_id': session.uid, 'tms_date': this.getDateForOdoo()});
+//            this.showInterface('TmsRoute');
+        },
+
+        async onPointListButtonClick(){
+            this.showInterface('TmsRoutePoints');
+        },
+
+        async onRouteListClick(){
+            this.showInterface('TmsRoute');
         },
 
         async onDeparted(){

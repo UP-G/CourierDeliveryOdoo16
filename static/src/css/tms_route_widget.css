@@ -1,3 +1,7 @@
+body {
+    overflow: scroll;
+  }
+
 .o_tms_action_nav {
     display: flex;
     flex-wrap: wrap;
@@ -8,7 +12,10 @@
 .o_tms_btn_Returned,
 .o_tms_btn_Delivered,
 .o_tms_btn_Claims,
-.o_tms_btn_Arrival_Loading,
+.o_tms_btn_RouteList,
+.o_tms_btn_PointList,
+.o_tms_btn_Checkin,
+.o_tms_btn_Checkout,
 .o_tms_btn_Departed,
 .o_tms_btn_Finished_Route,
 .o_tms_btn_Returned_Store
@@ -38,6 +45,22 @@
 .o_tms_btn_Claims {
 }
 
+.o_tms_btn_RouteList {
+}
+
+.o_tms_btn_PointListt {
+}
+
+.o_tms_btn_Checkin {
+}
+
+.o_tms_btn_Checkiout {
+}
+
+.card.route.route-complete{
+    background-color: #132046;
+}
+
 .card-group.route {
         display: flex;
         flex-wrap: wrap;
@@ -47,13 +70,11 @@
     .card.route {
         flex-basis: 48%;
         border: 1px solid #dee2e6;
-        background-color: white;
+        background-color: #48bd75;
         max-width: 300px;
         min-width: 240px;
         height: 6em;
         margin: 10px;
-
-
     }
 
     .card-title.route{
@@ -64,17 +85,24 @@
             /*margin-top: 0;*/
             overflow-wrap: break-word;
             word-wrap: break-word;
+            padding-top: 2px;
+            padding-left: 2px;
     }
 
     .card-body.route {
-        padding: 6px;
+        padding: 0px;
+    }
 
+    .card-driver.route {
+        padding-left: 2px;
     }
 
     .card-description.route {
         display: flex;
         justify-content: space-between;
         margin: 0;
+        padding-left: 2px;
+        padding-right: 2px;
     }
 
     .card-text.route {

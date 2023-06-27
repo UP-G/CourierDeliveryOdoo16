@@ -32,6 +32,30 @@ msgid "Arrived for loading"
 msgstr "Прибыл на погрузку"
 
 #. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+#, python-format
+msgid "Delivery finished"
+msgstr "Завершил доставки"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+#, python-format
+msgid "Points list"
+msgstr "Список адресов"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+#, python-format
+msgid "Routes list"
+msgstr "Список маршрутов"
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_tree
 msgid "Company"
