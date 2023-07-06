@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20230514\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-06 07:30+0000\n"
-"PO-Revision-Date: 2023-06-06 07:30+0000\n"
+"POT-Creation-Date: 2023-06-30 07:06+0000\n"
+"PO-Revision-Date: 2023-06-30 07:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,36 +24,28 @@ msgid "Arrival"
 msgstr "Прибыл"
 
 #. module: tms
-#. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
-#, python-format
 msgid "Arrived for loading"
 msgstr "Прибыл на погрузку"
 
 #. module: tms
-#. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
-#, python-format
-msgid "Delivery finished"
-msgstr "Завершил доставки"
+#: model:ir.model,name:tms.model_hr_attendance
+msgid "Attendance"
+msgstr "Присутствие"
 
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
-msgid "Points list"
-msgstr "Список адресов"
+msgid "Click \"Start shift\" to display orders"
+msgstr "Нажмите на Начать смену чтобы отобразить маршрутные листы"
 
 #. module: tms
-#. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
-#, python-format
-msgid "Routes list"
-msgstr "Список маршрутов"
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__comment
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
+msgid "Comment"
+msgstr ""
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
@@ -238,6 +230,13 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Message"
+msgstr ""
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
 msgid "Name"
@@ -254,9 +253,21 @@ msgstr "Нет жалоб"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "No route sheets"
+msgstr "Нет маршрутных листов"
+
+#. module: tms
+#. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
+#, python-format
+msgid "Not assigned"
+msgstr ""
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Note"
 msgstr "Примечания"
@@ -295,6 +306,13 @@ msgstr "Точки"
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
+msgid "Points list"
+msgstr "Список адресов"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
 msgid "Points of the route"
 msgstr "Точки маршрута"
 
@@ -319,7 +337,7 @@ msgstr "Возврат принят"
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
 msgid "Returned to the store"
-msgstr "Возврат в склад"
+msgstr "Вернулся на склад"
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_route
@@ -356,15 +374,28 @@ msgid "Routes"
 msgstr "Маршруты"
 
 #. module: tms
-#: model:ir.actions.act_window,name:tms.action_tms_route_order_tree
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Routes list"
+msgstr "Список маршрутов"
+
+#. module: tms
 #: model:ir.actions.client,name:tms.tms_action_route_buttons
-msgid "Routes order"
-msgstr "Заказы маршрутов"
+msgid "Routes order buttons"
+msgstr "Кнопки заказы маршрутов"
 
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_settings
 msgid "Settings"
 msgstr "Настройки"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Start shift"
+msgstr "Начать смену"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
@@ -373,15 +404,37 @@ msgid "Start time"
 msgstr "Время начала"
 
 #. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Stop shift"
+msgstr "Закрыть смену"
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
 msgid "Store"
 msgstr "Склад"
 
 #. module: tms
-#: model:ir.ui.menu,name:tms.menu_tms_route_order
+#: model:ir.actions.client,name:tms.ir_actions_deliver_mode
+msgid "TMS Deliver Mode"
+msgstr "ТМС режим доставки"
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms_driver_mode
+msgid "TMS Delivery Mode"
+msgstr "ТМС режим доставки"
+
+#. module: tms
+#: model:ir.actions.act_window,name:tms.action_tms_route_order_tree
+msgid "TMS Routes order"
+msgstr "Заказы маршрутов"
+
+#. module: tms
+#: model:ir.ui.menu,name:tms.menu_tms
 msgid "Tms"
-msgstr "TMS"
+msgstr ""
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
@@ -485,11 +538,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:tms.field_tms_route__name
 msgid "name"
 msgstr ""
-
-#. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_order_row__note
-msgid "note"
-msgstr "Примечания"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__order_id

@@ -12,8 +12,48 @@
                 <field name="departed_on_route" string="Departed on route"/>
                 <field name="finished_the_route" string="Finished the route"/>
                 <field name="returned_to_the_store" string="Returned to the store"/>
-                <button name="getRows" type="object" class="oe_stat_button" icon="fa-car"></button>
+                <!-- <button name="getRows" type="object" class="oe_stat_button" icon="fa-car"></button> -->
             </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_route_order_form" model="ir.ui.view">
+        <field name="name">Route order form</field>
+        <field name="model">tms.order</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="driver_id" string="ID"/>
+                        <field name="route_id" string="route"/>
+                        <field name="arrived_for_loading" string="arrived for load date"/>
+                        <field name="departed_on_route" string="departed on route date"/>
+                        <field name="finished_the_route" string="finish date"/>
+                        <field name="returned_to_the_store" string="return to store"/>
+                        <field name="order_num" string="order number"/>
+                    </group>
+                    <notebook>
+                        <page string="orders rows">
+                            <field name="order_row_ids">
+                                <tree string="Tree String">
+                                    <field name="route_point_id" string="Point"/>
+                                    <field name="impl_num" string="Implemention number"/>
+                                    <field name="delivered" string="Date deliver"/>
+                                    <field name="arrival_date" string="Date arrival"/>
+                                    <field name="comment" string="Comment"/>
+                                </tree>
+                                <form>
+                                    <field name="route_point_id" string="Point"/>
+                                    <field name="impl_num" string="Implemention number"/>
+                                    <field name="delivered" string="Date deliver"/>
+                                    <field name="arrival_date" string="Date arrival"/>
+                                    <field name="comment" string="Comment"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
         </field>
     </record>
 

@@ -128,8 +128,6 @@
     font-weight: bold;
 }
 
-
-
 .o_mrp_tray_scan_warning_icon, .o_mrp_tray_scan_info_icon,.o_mrp_tray_scan_success_icon {
     font-size: 2.0em;
     margin: 3px 10px 6px 0px;
@@ -228,13 +226,13 @@
 
     p {
         text-align: left;
-        margin: 3rem 0;
+        margin: 0rem 0;
     }
 
     > button {
-        font-size: 1.2em;
+        font-size: 100vh;
+        line-height: 100vh;
         margin-bottom: 2rem;
-        width: 100%;
     }
 
     > button:last-child {
@@ -280,3 +278,7 @@
         width: 80%;
     }
 }
+
+.o_tms_btn:not(:last-child) { 
+    margin-bottom: 20px; 
+  }
