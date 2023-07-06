@@ -60,9 +60,9 @@
                             <p data-name="id" style="display: none;" t-esc="route.id"></p>
                             <div class="card-description route">
                                 <p class="o_tms_card-text route" t-if="route.start_time" t-esc="'Date start: ' + route.start_time"></p>
-                                <p t-if="!route.start_time">No start time for the route</p>
+                                <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
                                 <p class="o_tms_card-text route" t-if="route.end_time" t-esc="'Date end: ' + route.end_time"></p>
-                                <p t-if="!route.end_time">No end time for the route</p>
+                                <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
                             </div>
                             <div class="card-driver route">
                                 <p class="mb-1" t-if="route.driver_id" t-esc="route.driver_name"></p>
@@ -110,7 +110,7 @@
     </t>
 
     <t t-name="TmsPoint">
-        <div class="container cdf">
+        <div class="container o_tms_card_point">
             <div class="card mt-2">
                 <div class="card-header">
                     <h2 class="card-title" title="Information about the order ">Information about the order <t t-esc="context.concretePoint.pointOrderName"></t></h2>
@@ -166,6 +166,8 @@
     <!--  Buttons templates   -->
 
     <t t-name="TmsRouteButtons">
+            <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today" 
+            t-esc="'Number of hours worked during the current shift: ' + context.attendance.hours_today"></p>
         <div class="o_tms_action_start">
             <button t-attf-class="o_tms_attendance_sign btn btn-{{ context.attendance.check_out ? 'warning' : 'success' }} align-self-center px-5 py-3 mt-4 mb-2 {{ context.attendance.check_out == null ? 'disabled' : '' }}">
                 <span class="align-middle fs-2 text-white" t-if="!context.attendance.check_out">Start shift</span>
@@ -176,12 +178,10 @@
             <i class='fa fa-refresh'></i>
         </button>
         </div>
-        <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today" 
-            t-esc="'Number of hours worked during the current shift: ' + context.attendance.hours_today"></p>
     </t>
 
     <t t-name="TmsRoutePointsButtons">
-            <div class="d-flex justify-content-center">
+            <div class="o_tms_route_point_btn">
                 <div class="o_tms_action_nav" style="width: 100%;">
                     <button
                     type="button"

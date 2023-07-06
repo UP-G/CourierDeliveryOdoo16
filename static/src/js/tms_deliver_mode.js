@@ -4,7 +4,6 @@ odoo.define('tms.deliver_mode', function (require) {
     var core = require('web.core');
     var session = require('web.session');
     var field_utils = require('web.field_utils');
-    var Dialog = require('web.Dialog');
     var TmsDeliverMode = AbstractAction.extend({
         events: {
             "click .o_tms_btn_Checkin": function () {this.onCheckinButtonClick();},
@@ -50,7 +49,7 @@ odoo.define('tms.deliver_mode', function (require) {
                 cacheLoadTime: new Date(),
                 attendance: {
                     check_out: null,
-                    tz_user: null,
+                    tz_user: 'Europe/Moscow',
                 },
                 routes: [],
                 routePoints: {
@@ -89,7 +88,7 @@ odoo.define('tms.deliver_mode', function (require) {
 
         initDeliveryMode: async function(){
             await this.initializeIndexedDbv2();
-            await this.putRoutesInCache();
+            //await this.putRoutesInCache();
             // await this.loadLastState(); //Закомментить, если нужно возвращаться на главную, а не на последнюю до перезагрузки/выхода страницу
             await this.loadEmployee();
             await this.loadRoutes();
@@ -97,27 +96,28 @@ odoo.define('tms.deliver_mode', function (require) {
             this.showInterfaceActual();
         },
 
-        // loadAttendance: async function (){
-        //     if(this.isEmpty(this.tmsContext.attendance)){
-        //         let attendance = await this.getAttendanceByController();
-        //         await this.setAttendanceState(attendance);
-        //         console.log('attendance loaded');
-        //         // this.showInterface('TmsRoute');
-        //     }
-        // },
-
         loadRoutes: async function (){
             let cache_routes = await this.loadRoutesCache();
             delete cache_routes.id;
             this.routes = cache_routes;
             console.log(cache_routes)
 
-            let routes = cache_routes.map(function (route) {
+            let routes = cache_routes.map((route) => {
                 let newRoute = Object.assign({}, route);
+                
+                if(route.start_time){
+                    let new_start_time = new Date(route.start_time);
+                    newRoute.start_time = new_start_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+                }
+                if(route.end_time){
+                    let new_end_time = new Date(route.end_time);
+                    newRoute.end_time = new_end_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user}); 
+                }
+                
                 delete newRoute.points;
                 return newRoute;
             });
-
+            console.log(routes);
             this.setRoutesState(routes);
         },
 
@@ -130,7 +130,8 @@ odoo.define('tms.deliver_mode', function (require) {
                 getRequest.onsuccess = (event) => {
                     var data = event.target.result;
                     this.cacheLoadTime = new Date();
-                    resolve(data[0]);
+                    let result = data[0] !== undefined ? data[0] : [];
+                    resolve(result);
                 };
 
                 getRequest.onerror = function (event) {
@@ -226,7 +227,6 @@ odoo.define('tms.deliver_mode', function (require) {
         showRoutePoints: async function(ev) {
             this.tmsContext.routePoints.routeId = ev.currentTarget.getAttribute("id");
 
-
             let route = this.routes.find((route) => {
                 return route.id === parseInt(this.tmsContext.routePoints.routeId);
             });
@@ -248,21 +248,26 @@ odoo.define('tms.deliver_mode', function (require) {
         showConcreteRoutePoint: async function(ev) {
             this.tmsContext.concretePoint.pointId = ev.currentTarget.getAttribute("id");
 
+            console.log(this.routes);
             let routePoint = null;
             this.routes.forEach( (route) => {
                 var foundPoint = route.points.find((point) => {
                     return point.id === parseInt(this.tmsContext.concretePoint.pointId);
                 });
                 if (foundPoint) {
+                    if(foundPoint.delivered){
+                        let new_deliver_date = new Date(foundPoint.delivered);
+                        foundPoint.delivered = new_deliver_date.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+                    }
                     routePoint = foundPoint;
                     return;
                 }
             });
 
             this.tmsContext.concretePoint.pointOrderName = routePoint.impl_num;
-            this.tmsContext.concretePoint.deliveryAddress = routePoint.street
-            this.tmsContext.concretePoint.phone = routePoint.phone
-            
+            this.tmsContext.concretePoint.deliveryAddress = routePoint.street;
+            this.tmsContext.concretePoint.phone = routePoint.phone;
+
             this.setConcretePointState(routePoint);
             this.showInterfaceActual();
         },
@@ -539,6 +544,9 @@ odoo.define('tms.deliver_mode', function (require) {
 
         getDateForOdoo: function() {
             const currentDate = new Date();
+            // console.log(currentDate);
+            // console.log(this.tmsContext.attendance.tz_user);
+            // console.log(currentDate.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user}));
             // return currentDate.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
             return currentDate.toISOString().slice(0, 19).replace('T', ' ');
         },
@@ -631,12 +639,12 @@ odoo.define('tms.deliver_mode', function (require) {
 
         async onReturnedClientButtonClick(){
             
-                this.tmsContext.concretePoint.point['returned_client'] = this.getDateForOdoo();
+                this.tmsContext.concretePoint.point['returned_client'] = this.getDateTranformByTz();
                 await this.saveIndexedDbv2(this.database.idb_stores.tms_order_row,
                     {
                         'action': 'returned_client',
                         'point_id': this.tmsContext.concretePoint.point['id'],
-                        'tms_date': this.tmsContext.concretePoint.point['returned_client'],
+                        'tms_date': this.getDateForOdoo(),
                         'sent': false,
                     });
                 this.showInterfaceActual();
@@ -652,12 +660,12 @@ odoo.define('tms.deliver_mode', function (require) {
 
         async onDeliveredButtonClick(){
             
-                this.tmsContext.concretePoint.point['delivered'] = this.getDateForOdoo();
+                this.tmsContext.concretePoint.point['delivered'] = this.getDateTranformByTz();
                 await this.saveIndexedDbv2(this.database.idb_stores.tms_order_row,
                     {
                         'action': 'delivered',
                         'point_id': this.tmsContext.concretePoint.point['id'],
-                        'tms_date': this.tmsContext.concretePoint.point['delivered'],
+                        'tms_date': this.getDateForOdoo(),
                         'sent': false,
                     });
                 
@@ -711,8 +719,8 @@ odoo.define('tms.deliver_mode', function (require) {
             
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.departed_on_route = this.getDateForOdoo();
-                        this.tmsContext.routePoints.departedOnRoute = this.getDateForOdoo();
+                        route.departed_on_route = this.getDateTranformByTz();
+                        this.tmsContext.routePoints.departedOnRoute = this.getDateTranformByTz();
                         this.showInterfaceActual();
                     }
                 });
@@ -733,13 +741,18 @@ odoo.define('tms.deliver_mode', function (require) {
                 
         },
 
+        getDateTranformByTz(){
+           const currentDate = new Date();
+           return currentDate.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+        },
+
         async onFinishedRoute(){
             
 
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.finished_the_route = this.getDateForOdoo();
-                        this.tmsContext.routePoints.finishedTheRoute = this.getDateForOdoo();
+                        route.finished_the_route = this.getDateTranformByTz();
+                        this.tmsContext.routePoints.finishedTheRoute = this.getDateTranformByTz();
                         this.showInterfaceActual();
                     }
                 });
@@ -764,8 +777,8 @@ odoo.define('tms.deliver_mode', function (require) {
             
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.returned_to_the_store = this.getDateForOdoo();
-                        this.tmsContext.routePoints.returnedToTheStore= this.getDateForOdoo();
+                        route.returned_to_the_store = this.getDateTranformByTz();
+                        this.tmsContext.routePoints.returnedToTheStore= this.getDateTranformByTz();
                         this.showInterfaceActual();
                     }
                 });

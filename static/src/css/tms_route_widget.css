@@ -4,17 +4,30 @@
 
 .container {
     max-width: max-content;
-    /* flex: 1 0 auto; */
+    flex: 1 0 auto;
     overflow-y: auto;
 }
 
+.o_tms_card_point {
+    /* flex: 1 0 auto; */
+}
+
+.o_tms_action_start,
 .o_tms_action_nav {
-    position: relative;
+    position: sticky;
     bottom: 0px;
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
     justify-content: space-around;
+    background-color: #f8f9fa;
+    /* margin-bottom: 2%; */
+}
+
+.o_tms_route_point_btn {
+    position: sticky;
+    width: 100%;
+    bottom: 0;
     background-color: #f8f9fa;
 }
 
@@ -50,6 +63,12 @@
     }
 }
 
+/* Фикс скролла */
+html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll) { 
+    overflow: auto;
+}
+
+
 .tms-card-header{
     display:flex;
     justify-content: space-between;
@@ -79,7 +98,7 @@
 .o_tms_btn_Checkiout {
 }
 
-.o_tms_action_start {
+/* .o_tms_action_start {
     max-width: 100%;
     max-height: 150px;
     min-height: 125px;
@@ -87,20 +106,26 @@
     overflow-y: auto;
     margin-left: auto;
     margin-right: auto;
-    /* padding-left: 16px; */
     padding-right: 16px;
-}
+} */
 
 .card.route.route-complete{
     background-color: #132046;
 }
 
-.card-group.route,
+.card-group.route {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
 .card-group.point-route {
+        /* margin-bottom: 20%; */
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
+
+
 
 .o_tms_card-group.hepler {
     margin-top: 10px;

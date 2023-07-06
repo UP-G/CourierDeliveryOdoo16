@@ -15,7 +15,7 @@ class TmsOrder(models.Model):
     returned_to_the_store = fields.Datetime(string='returned_to_the_store')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
-    order_row_ids = fields.One2many('tms.order.row', 'order_id', string = 'implimentions of order')
+    order_row_ids = fields.One2many('tms.order.row', 'order_id', string = 'implimentions of order') #ondelete='cascade'
 
     _sql_constraints = [
         ('unique_order_num', 'UNIQUE (order_num)', 'An Order Number must be unique!'),
