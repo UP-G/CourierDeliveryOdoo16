@@ -53,7 +53,7 @@
             <t t-foreach="context.routes" t-as="route" t-key="route.id">
                 <div t-attf-class="card route bg-{{ route.departed_on_route ?
                 (route.finished_the_route ? (!route.returned_to_the_store ? 'warning' : 'black') : 'success')
-                : 'white' }} d-{{ context.filter.showClosedRoute and route.returned_to_the_store ? 'none' : '' }}">
+                : 'white' }} d-{{ context.filter.showClosedRoute ? (route.returned_to_the_store ? '' : 'none') : (route.returned_to_the_store ? 'none' : '') }}">
                     <a href="#">
                         <div t-attf-id="{{route.id}}" t-attf-class="card-body route points {{route.name}}">
                             <h3 data-name="name" class="card-title route" t-esc="route.name"></h3>
