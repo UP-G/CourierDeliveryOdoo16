@@ -51,6 +51,7 @@ odoo.define('tms.deliver_mode', function (require) {
                 attendance: {
                     check_out: null,
                     tz_user: 'Europe/Moscow',
+                    hours_today: 0,
                 },
                 routes: [],
                 routePoints: {
@@ -104,24 +105,22 @@ odoo.define('tms.deliver_mode', function (require) {
             let cache_routes = await this.loadRoutesCache();
             delete cache_routes.id;
             this.routes = cache_routes;
-            console.log(cache_routes)
 
             let routes = cache_routes.map((route) => {
                 let newRoute = Object.assign({}, route);
-                
+
                 if(route.start_time){
                     let new_start_time = new Date(route.start_time);
                     newRoute.start_time = new_start_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
                 }
                 if(route.end_time){
                     let new_end_time = new Date(route.end_time);
-                    newRoute.end_time = new_end_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user}); 
+                    newRoute.end_time = new_end_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
                 }
-                
+
                 delete newRoute.points;
                 return newRoute;
             });
-            console.log(routes);
             this.setRoutesState(routes);
         },
 
@@ -159,7 +158,8 @@ odoo.define('tms.deliver_mode', function (require) {
                 await this.setAttendanceState({'check_out': 'check_out',
             'tz_user': employees[0].tz})
             } else {
-                this.tmsContext.attendance.check_out = false
+                this.tmsContext.attendance.check_out = false;
+                this.tmsContext.attendance.tz_user = employees[0].tz;
             }
 
             await this.showInterfaceActual()
@@ -731,11 +731,13 @@ odoo.define('tms.deliver_mode', function (require) {
                 this.putRoutesInCache();
                 console.log(attendance)
                 if (attendance.check_out == false) {
-                    await this.setAttendanceState({'check_out': 'check_out'});
+                    this.tmsContext.attendance.check_out = 'check_out';
+                    // await this.setAttendanceState({'check_out': 'check_out'});
                 } else {
                     await this.setAttendanceState({
                         'check_out': false,
-                        'hours_today': field_utils.format.float_time(attendance.worked_hours)
+                        'tz_user': this.tmsContext.attendance.tz_user,
+                        'hours_today': field_utils.format.float_time(attendance.worked_hours),
                     });
                 }
                 this.showInterfaceActual();
@@ -769,7 +771,7 @@ odoo.define('tms.deliver_mode', function (require) {
                 });
 
                 this.tmsContext.routePoints.routeDepartClick = true;
-                
+
         },
 
         getDateTranformByTz(){
@@ -778,7 +780,7 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         async onFinishedRoute(){
-            
+
 
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
@@ -787,9 +789,9 @@ odoo.define('tms.deliver_mode', function (require) {
                         this.showInterfaceActual();
                     }
                 });
-                
+
                 this.setRoutesState(this.routes);
-                
+
                 this.saveRoutesInCache(this.routes);
 
                 await this.saveIndexedDbv2(this.database.idb_stores.tms_order,
@@ -800,12 +802,12 @@ odoo.define('tms.deliver_mode', function (require) {
                         'sent': false,
                     });
                 this.tmsContext.routePoints.routeFinishClick = true;
-                
-           
+
+
         },
 
         async onReturnedStore(){
-            
+
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
                         route.returned_to_the_store = this.getDateTranformByTz();
@@ -826,8 +828,8 @@ odoo.define('tms.deliver_mode', function (require) {
                         'sent': false,
                     });
                 this.tmsContext.routePoints.routeReturnClick = true;
-            
-                
+
+
         },
 
     });
