@@ -23,7 +23,8 @@ odoo.define('tms.deliver_mode', function (require) {
             "click .o_tms_concrete-point-event": function (ev) {this.showConcreteRoutePoint(ev)},
 
             "click .o_tms_attendance_sign": function() {this.onUpdateAttendanceStatus()},
-            "click .o_tms_update_routes": function() {this.onUpdateCacheClick()}
+            "click .o_tms_update_routes": function() {this.onUpdateCacheClick()},
+            "click .o_tms_dropdown_item.closed_routes": function() {this.onShowClosedRoute()},
         },
 
         willStart: async function () {
@@ -71,6 +72,9 @@ odoo.define('tms.deliver_mode', function (require) {
                     routeReturnClientClick: false,
                     point: {},
                 },
+                filter: {
+                    showClosedRoute: false
+                }
             };
 
             this.routes = [];
@@ -655,6 +659,17 @@ odoo.define('tms.deliver_mode', function (require) {
         async onUpdateCacheClick(){
             await this.putRoutesInCache();
             await this.loadRoutes();
+            this.showInterfaceActual();
+        },
+
+        async onShowClosedRoute() {
+            console.log(this.tmsContext.filter.showClosedRoute)
+            if (this.tmsContext.filter.showClosedRoute) {
+                this.tmsContext.filter.showClosedRoute = false
+            } else {
+                this.tmsContext.filter.showClosedRoute = true
+            }
+
             this.showInterfaceActual();
         },
 

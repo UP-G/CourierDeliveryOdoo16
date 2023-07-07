@@ -270,6 +270,28 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
   width: 80%;
 }
 
+.dropdown-toggle::after {
+    display: none;
+}
+
+.o_tms_filter_routes {
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: normal;
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    /* width: 600px; */
+    margin: 2px;
+    max-width: 23%;
+    max-height: 140px;
+    min-height: 50px;
+    min-width: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
 .o_tms_update_routes.event {
     border: none;
     padding: 12px 16px;
