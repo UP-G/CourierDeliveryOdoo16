@@ -260,8 +260,24 @@ odoo.define('tms.deliver_mode', function (require) {
                 });
                 if (foundPoint) {
                     if(foundPoint.delivered){
-                        let new_deliver_date = new Date(foundPoint.delivered);
-                        foundPoint.delivered = new_deliver_date.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+                        if (/^\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}:\d{2}$/.test(foundPoint.delivered)) {
+                            console.log('Дата доставки уже в нужном формате');
+                        } else if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(foundPoint.delivered)) {
+                            let new_deliver_date = new Date(foundPoint.delivered);
+                            foundPoint.delivered = new_deliver_date.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+                        } else {
+                            console.log("Некорректный формат даты доставки");
+                        }
+                    }
+                    if(foundPoint.returned_client){
+                        if (/^\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}:\d{2}$/.test(foundPoint.returned_client)) {
+                            console.log('Дата возврата уже в нужном формате');
+                        } else if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(foundPoint.returned_client)) {
+                            let new_returned_date = new Date(foundPoint.returned_client);
+                            foundPoint.returned_client = new_returned_date.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
+                        } else {
+                            console.log("Некорректный формат даты возврата");
+                        }
                     }
                     routePoint = foundPoint;
                     return;
