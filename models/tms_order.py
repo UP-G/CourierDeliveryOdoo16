@@ -49,20 +49,18 @@ class TmsOrder(models.Model):
     def getRoutesAndPoints(self, user_id, tz_user=None):
         if not user_id:
             return #Если нет user_id ничего не возращять
-        records = self.sudo().search(["|", ('driver_id', '=', user_id),
-				('driver_id', '=', None)])
+        
+        today = date.today()
+        today_start = datetime.combine(today, datetime.min.time())
+
+        records = self.search([('driver_id', '=', user_id), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
+         		"|", ('returned_to_the_store', '>=', today_start),
+         		('returned_to_the_store', '=', None)])
         
         if tz_user:
             current_timezone = pytz.timezone(tz_user)
         else:
             current_timezone = pytz.timezone('Europe/Moscow')
-        # today = date.today() #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
-        # today_start = datetime.combine(today, datetime.min.time())
-
-        # records = self.search(["|", ('driver_id', '=', user_id),
-		# 		('driver_id', '=', None),
-		# 		"|", ('returned_to_the_store', '>=', today_start),
-		# 		('returned_to_the_store', '=', None)])
 
         result = []
 
@@ -88,7 +86,7 @@ class TmsOrder(models.Model):
 
             record_routes = {
                 'id': record.id,
-                'name': record.order_num,
+                'name': record.order_num + ", " + record.route_id.name if record.route_id.name else record.order_num,
                 'start_time': record.route_id.start_time.astimezone(current_timezone) if record.route_id.start_time else False,
                 'end_time': record.route_id.end_time.astimezone(current_timezone) if record.route_id.end_time else False,
                 'arrived_for_loading': record.arrived_for_loading,
