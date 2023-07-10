@@ -3,13 +3,14 @@
     'category': 'Technical',
     'sequence': -100,
     'author': 'TrackMotors',
-    'depends': ["web", "bus", "base", "mail"],
+    'depends': ["web", "bus", "base", "mail", "hr_attendance"],
     'data': [
         'security/ir.model.access.csv',
         'views/tms_route_view.xml',
         'views/tms_route_order_view.xml',
         'views/tms_route_order_row_view.xml',
         'views/tms_route_point.xml',
+        'views/tms_deliver_view.xml',
         'views/tms_menu_views.xml',
     ],
     'assets': {

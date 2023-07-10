@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ir_actions_deliver_mode" model="ir.actions.client">
+        <field name="name">TMS Deliver Mode</field>
+        <field name="tag">tms_deliver_mode</field>
+    </record>
+</odoo>
+
