@@ -45,8 +45,11 @@
                 <div t-elif="context.attendance.check_out and context.routes.length == 0">
                     No route sheets
                 </div>
-                <div t-elif="context.attendance.check_out and context.routes.length >= 0">
+                <div t-elif="!context.filter.showClosedRoute and context.attendance.check_out and context.routes.length >= 0">
                     Select Work Order to display delivery points
+                </div>
+                <div t-elif="context.filter.showClosedRoute">
+                    Your closed orders for today
                 </div>
             </div>
             <div class="card-group route" t-if="context.attendance.check_out">
@@ -59,9 +62,9 @@
                             <h3 data-name="name" class="card-title route" t-esc="route.name"></h3>
                             <p data-name="id" style="display: none;" t-esc="route.id"></p>
                             <div class="card-description route">
-                                <p class="o_tms_card-text route" t-if="route.start_time">Date start: <t t-esc="route.start_time"/></p>
+                                <p class="o_tms_card-text route" t-if="route.start_time">Estimated start date of the route: <t t-esc="route.start_time"/></p>
                                 <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
-                                <p class="o_tms_card-text route" t-if="route.end_time">Date end: <t t-esc="route.end_time"/></p>
+                                <p class="o_tms_card-text route" t-if="route.end_time">Estimated end date of the route: <t t-esc="route.end_time"/></p>
                                 <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
                             </div>
                             <div class="card-driver route">
@@ -174,12 +177,14 @@
                 <i t-attf-class="fa fa-4x fa-sign-{{ context.attendance.check_out ? 'out' : 'in' }} align-middle"/>
                 <span class="align-middle fs-2" t-if="context.attendance.check_out">Stop shift</span>
             </button>
-            <button type="button" class="o_tms_update_routes event btn btn-primary">
-            <i class='fa fa-refresh'></i>
+            <t t-if="context.attendance.check_out">
+                <button type="button" class="o_tms_update_routes event btn btn-primary">
+                <i class='fa fa-refresh'></i>
         </button>
             <button type="button" class="o_tms_filter_routes btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-filter"></i>
             </button>
+            </t>
             <ul class="o_tms_dropdown_menu dropdown-menu">
                 <li><a class="o_tms_dropdown_item closed_routes dropdown-item" href="#">
                     <i class="fa fa-check" t-if="context.filter.showClosedRoute" />Today's closed routes</a></li>
