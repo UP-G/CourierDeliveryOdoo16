@@ -781,7 +781,6 @@ odoo.define('tms.deliver_mode', function (require) {
 
         async onFinishedRoute(){
 
-
                 this.routes.forEach((route)=> {
                     if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
                         route.finished_the_route = this.getDateTranformByTz();

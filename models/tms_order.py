@@ -53,7 +53,7 @@ class TmsOrder(models.Model):
         today = date.today()
         today_start = datetime.combine(today, datetime.min.time())
 
-        records = self.search([('driver_id', '=', user_id), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
+        records = self.search([('route_id.stock_id.user_ids.id', 'in', [user_id]), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
          		"|", ('returned_to_the_store', '>=', today_start),
          		('returned_to_the_store', '=', None)])
         
