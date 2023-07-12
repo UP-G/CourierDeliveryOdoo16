@@ -13,6 +13,7 @@ class TmsOrder(models.Model):
     departed_on_route = fields.Datetime(string='departed_on_route')
     finished_the_route = fields.Datetime(string='finished_the_route')
     returned_to_the_store = fields.Datetime(string='returned_to_the_store')
+    notes = fields.Char(string='notes ofr order')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
     order_row_ids = fields.One2many('tms.order.row', 'order_id', string = 'implimentions of order') #ondelete='cascade'
