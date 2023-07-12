@@ -16,6 +16,7 @@ class TmsOrderRow(models.Model):
     returned_store = fields.Datetime(string='is_returned_store')
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
+    note = fields.Char(string='note for order row')
     partner_key = fields.Many2one('res.partner', string='counterparty')
 
     def show_tms_buttons(self):

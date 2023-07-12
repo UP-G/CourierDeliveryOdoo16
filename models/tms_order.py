@@ -75,7 +75,7 @@ class TmsOrder(models.Model):
                  'order_num': point.order_id.order_num,
                  'arrival_date': point.arrival_date,
                  'impl_num': point.impl_num,
-                 'note': point.route_point_id.res_partner_id.comment,
+                 'note': point.note,
                  'phone': point.comment.split(';')[0],
                  'returned_client': point.returned_client.astimezone(current_timezone) if point.returned_client else False,
                  'returned_store': point.returned_store,
