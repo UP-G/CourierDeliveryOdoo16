@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <tree multi_edit="1">
                 <field name="name" string="driver name"/>
-                <field name="driver_id" string="dirver_id"/>
+                <field name="driver_id" string="driver_id"/>
+                <field name="ref_key" string="ref_key"/>
             </tree>
         </field>
     </record>
@@ -21,6 +22,7 @@
                     <group>
                         <field name="name" string="driver name"/>
                         <field name="driver_id" string="dirver_id"/>
+                        <field name="ref_key" string="ref_key"/>
                     </group>
                 </sheet>
             </form>

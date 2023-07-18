@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_delivery_tree" model="ir.ui.view">
+        <field name="name">Delivery</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <header>
+                <button name="add_orders_from_delivery" string="Test"
+                        class="btn-primary" type="object"/>
+            </header>
+            <tree multi_edit="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="route_id"/>
+                <field name="order_num"/>
+                <field name="loaded_in_orders"/>
+                <field name="driver_key"/>
+                <field name="carrier_key"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_delivery_form" model="ir.ui.view">
+        <field name="name">Delivery</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <header>
+                    <button id="create_order" name="add_orders_from_delivery" string="Add test" class="btn-primary" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="route_id"/>
+                        <field name="order_num"/>
+                        <field name="loaded_in_orders"/>
+                        <field name="driver_key"/>
+                        <field name="carrier_key"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_delivery_search" model="ir.ui.view">
+        <field name="name">delivery.search</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group By">
+                    <filter string="Stock" name="group_by_stock" context="{'group_by': 'route_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_tms_delivery_tree" model="ir.actions.act_window" >
+        <field name="name">TMS Delivery</field>
+        <field name="res_model">tms.delivery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

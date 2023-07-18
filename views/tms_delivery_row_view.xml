@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_delivery_row_tree" model="ir.ui.view">
+        <field name="name">Delivery Row</field>
+        <field name="model">tms.delivery.row</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <header>
+                    <button name="action_create_tms_order" string="Create Order"
+                            class="btn-primary" type="object"/>
+                </header>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="order_row_id"/>
+                <field name="delivery_id"/>
+                <field name="impl_num"/>
+                <field name="comment"/>
+                <field name="selected_1c"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="tms_delivery_row_search" model="ir.ui.view">
+        <field name="name">delivery.row.search</field>
+        <field name="model">tms.delivery.row</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="impl_num"/>
+                <filter name="filter_actual" string="No selected 1C and no driver yet"
+                        domain="['&amp;', ('selected_1c', '=', False),
+                        ('driver_key', '=', False),
+                        ('order_row_id', '=', False),
+                        ('create_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Stock" name="group_by_stock" context="{'group_by': 'stock_id'}"/>
+                    <filter string="Delivery" name="group_by_delivery" context="{'group_by': 'delivery_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="view_tms_delivery_row_form" model="ir.ui.view">
+        <field name="name">Delivery Row</field>
+        <field name="model">tms.delivery.row</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="order_row_id"/>
+                        <field name="delivery_id"/>
+                        <field name="impl_num"/>
+                        <field name="comment"/>
+                        <field name="selected_1c"/>
+                        <field name="driver_key"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_tms_delivery_row_tree" model="ir.actions.act_window" >
+        <field name="name">TMS Delivery Row</field>
+        <field name="res_model">tms.delivery.row</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_filter_actual': 1,
+            'search_default_group_by_stock': 1,
+            'search_default_group_by_delivery': 1}</field>
+    </record>
+</odoo>

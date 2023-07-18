@@ -21,6 +21,7 @@
                     <group>
                         <field name="name" string="Company name"/>
                         <field name="contact_info" string="Company contact information"/>
+                        <field name="ref_key" string="ref_key"/>
                     </group>
                     <notebook>
                         <page string="assigned routes">
@@ -28,14 +29,10 @@
                                 <tree string="Tree String">
                                     <field name="name" string="route name"/>
                                     <field name="carrier_id" string="carrier company"/>
-                                    <field name="carrier_driver_id" string="driver"/>
-                                    <field name="route_id" string="route"/>
                                 </tree>
                                 <form>
                                     <field name="name" string="route name"/>
                                     <field name="carrier_id" string="carrier company"/>
-                                    <field name="carrier_driver_id" string="driver"/>
-                                    <field name="route_id" string="route"/>
                                 </form>
                             </field>
                         </page>

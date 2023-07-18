@@ -6,9 +6,8 @@ class TmsCarrierDriver(models.Model):
     _description = 'Carrier driver'
 
     name = fields.Char(string='Name', tracking=True, required=True)
-    ref_key= fields.Caher(string="driver key")
-    inn = fields.Caher(string="inn")
-    tm_code= fields.Char(string='tm code')
-    snils = fields.Caher(string="snils")
-    tm_code = fields.Caher(string="tm code")
+    ref_key= fields.Char(string="driver key")
+    inn = fields.Char(string="inn")
+    snils = fields.Char(string="snils")
+    tm_code = fields.Char(string="tm code")
     driver_id = fields.Many2one('res.users', string='Driver id')

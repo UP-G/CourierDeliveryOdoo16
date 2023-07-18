@@ -16,7 +16,8 @@ class TmsOrder(models.Model):
     notes = fields.Char(string='notes ofr order')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
-    order_row_ids = fields.One2many('tms.order.row', 'order_id', string = 'implimentions of order') #ondelete='cascade'
+    carrier_id = fields.Many2one('tms.carrier', index=True, string='carrier_id')
+    order_row_ids = fields.One2many('tms.order.row', 'order_id', string='implimentions of order') #ondelete='cascade'
 
     _sql_constraints = [
         ('unique_order_num', 'UNIQUE (order_num)', 'An Order Number must be unique!'),
