@@ -83,7 +83,8 @@ class TmsOrder(models.Model):
                  'returned_client': point.returned_client.astimezone(current_timezone) if point.returned_client else False,
                  'returned_store': point.returned_store,
                  'delivered': point.delivered.astimezone(current_timezone) if point.delivered else False,
-                 'complaint': point.complaint
+                 'complaint': point.complaint,
+                 'order_row_type': point.order_row_type if point.order_row_type else ('return' if 'Возврат' in point.impl_num else False),
                  }
                 for point in points
             ]

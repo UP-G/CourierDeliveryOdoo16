@@ -2,7 +2,6 @@ from odoo import api, fields, models, _
 from odoo.tools import pytz
 import datetime
 
-
 class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
@@ -17,7 +16,13 @@ class TmsOrderRow(models.Model):
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
     note = fields.Char(string='note for order row')
+    order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
+                                      string='Type of row')
+    comment_driver = fields.Text(string='Comment from driver') #Коментарий водителя
+    cancel_delivery = fields.Datetime(string='Date cancel of delivery') #Дата отмены от выполнения точки
+
     partner_key = fields.Many2one('res.partner', string='counterparty')
+    cancellation_ids = fields.Many2many('tms.order.cancellation') # Теги причины отмены
 
     def show_tms_buttons(self):
 

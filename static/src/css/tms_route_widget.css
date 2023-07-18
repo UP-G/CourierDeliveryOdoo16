@@ -68,7 +68,6 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
     overflow: auto;
 }
 
-
 .tms-card-header{
     display:flex;
     justify-content: space-between;
@@ -124,8 +123,6 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
-
 
 .o_tms_card-group.hepler {
     margin-top: 10px;
@@ -309,6 +306,64 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
     bottom: 0;
     right: 0;
 }
+
+.o_tms_modal_confirmation {
+    z-index: 1040;
+}
+
+.o_tms_modal_confirmation.modal-header {
+    border-bottom: 0;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.o_tms_modal_confirmation.modal-body {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.o_tms_modal_confirmation.modal-footer {
+    border-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.o_tms_modal_btn_cancel {
+    display: flex;
+}
+
+.o_tms_modal_btn_cancel p {
+    flex: 1 1 auto;
+    margin: 0 5px;
+    font-size: 2rem;
+}
+
+.o_tms_modal_btn_cancel i {
+    flex: 1 1 auto;
+    margin: 6px 5px;
+    font-size: 2rem;
+}
+
+.o_tms_modal_btn_ok {
+    display: flex;
+}
+
+.o_tms_modal_btn_ok p {
+    flex: 1 1 auto;
+    margin: 0 5px;
+    font-size: 2rem;
+}
+
+.o_tms_modal_btn_ok i {
+    flex: 1 1 auto;
+    margin: 6px 5px;
+    font-size: 2rem;
+}
+
+/* .o_tms_modal_confirmation.modal-dialog {
+    display: none;
+} */
 
     /* table {
         table-layout:fixed; width:450px;

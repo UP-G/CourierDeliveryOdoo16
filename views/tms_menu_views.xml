@@ -68,5 +68,11 @@
                   name="carrier drivers"
                   action="action_tms_carrier_drivers_tree"
                   sequence="12"/>
+
+        <menuitem id="menu_tms_order_cancellation"
+                  parent="menu_tms_settings"
+                  name="Tag for cancellation"
+                  action="action_tms_order_cancellation"
+                  sequence="11"/>
     </data>
 </odoo>

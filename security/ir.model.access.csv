@@ -6,3 +6,4 @@ access_tms_route_point,access_tms_route_point,model_tms_route_point,,1,1,1,1
 access_tms_carrier,access_tms_carrier,model_tms_carrier,,1,1,1,1
 access_tms_carrier_route,access_tms_carrier_route,model_tms_carrier_route,,1,1,1,1
 access_tms_carrier_driver,access_tms_carrier_driver,model_tms_carrier_driver,,1,1,1,1
+access_tms_order_cancellation,access_tms_order_cancellation,model_tms_order_cancellation,,1,1,1,1

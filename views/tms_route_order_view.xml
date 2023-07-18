@@ -39,15 +39,19 @@
                                     <field name="route_point_id" string="Point"/>
                                     <field name="impl_num" string="Implemention number"/>
                                     <field name="delivered" string="Date deliver"/>
-                                    <field name="arrival_date" string="Date arrival"/>
+                                    <field name="returned_client" string="Date return from client"/>
                                     <field name="comment" string="Comment"/>
                                 </tree>
                                 <form>
-                                    <field name="route_point_id" string="Point"/>
-                                    <field name="impl_num" string="Implemention number"/>
-                                    <field name="delivered" string="Date deliver"/>
-                                    <field name="arrival_date" string="Date arrival"/>
-                                    <field name="comment" string="Comment"/>
+                                    <group>
+                                        <field name="route_point_id" string="Point" nolabel="0"/>
+                                        <field name="impl_num" string="Implemention number" nolabel="0"/>
+                                        <field name="arrival_date" string="Date arrival" nolabel="0"/>
+                                        <field name="delivered" string="Date deliver" nolabel="0"/>
+                                        <field name="returned_client" string="Date return from client" nolabel="0"/>
+                                        <field name="returned_store" string="Date return to store" nolabel="0"/>
+                                        <field name="comment" string="Comment" class="o_field_widget o_quick_editable" nolabel="0"/>
+                                    </group>
                                 </form>
                             </field>
                         </page>

@@ -15,7 +15,6 @@
                 <field name="impl_num" string="Implemention number"/>
                 <field name="comment" string="Comment"/>
 
-
                 <button name="show_tms_buttons" type="object" class="oe_stat_button"
                                 icon="fa-send">
                         </button>
@@ -40,7 +39,7 @@
                         <field name="returned_store" string="Date return to store"/>
                         <field name="complaint" string="Date complaint"/>
                         <field name="comment" string="Comment"/>
-
+                        <field name="cancellation_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
