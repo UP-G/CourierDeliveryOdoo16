@@ -5,10 +5,6 @@
         <field name="name">Delivery</field>
         <field name="model">tms.delivery</field>
         <field name="arch" type="xml">
-            <header>
-                <button name="add_orders_from_delivery" string="Test"
-                        class="btn-primary" type="object"/>
-            </header>
             <tree multi_edit="1">
                 <field name="id"/>
                 <field name="name"/>
