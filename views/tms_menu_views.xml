@@ -46,6 +46,7 @@
                   action="action_tms_route_point_tree"
                   sequence="10"/>
 
+<<<<<<< HEAD
         <menuitem id="menu_tms_carriers"
                   parent="menu_tms"
                   name="carriers"
@@ -86,5 +87,6 @@
                   name="Tms Delivery Row"
                   action="action_tms_delivery_row_tree"
                   sequence="10"/>
+
     </data>
 </odoo>
