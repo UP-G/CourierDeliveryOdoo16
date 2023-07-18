@@ -462,7 +462,7 @@ msgstr ""
 #. module: tms
 #: model:ir.actions.act_window,name:tms.action_tms_route_order_row
 msgid "Route order row"
-msgstr "Поля заказов"
+msgstr "Точки заказов"
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_route_point
@@ -559,7 +559,7 @@ msgstr "Маршрутные листы"
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_route_order_row
 msgid "Tms Route Sheet Order Row"
-msgstr "Поля заказов маршрутного листа"
+msgstr "Точки заказов маршрутного листа"
 
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_route_point
