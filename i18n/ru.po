@@ -46,7 +46,7 @@ msgstr "Присутствие"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Click \"Start shift\" to display orders"
-msgstr "Нажмите на Начать смену чтобы отобразить маршрутные листы"
+msgstr "Нажмите \"<b>Начало смены</b>\", чтобы отобразить маршрутные листы"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__comment
@@ -202,7 +202,7 @@ msgstr "Время окончания"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Estimated end date of the route:"
-msgstr "Предполагаемое время завершение маршрута"
+msgstr "Завершить до: "
 
 #. module: tms
 #. odoo-javascript
@@ -210,7 +210,7 @@ msgstr "Предполагаемое время завершение маршр�
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Estimated start date of the route:"
-msgstr "Предполагаемое время начала маршрута"
+msgstr "Начать до: "
 
 #. module: tms
 #. odoo-javascript
@@ -311,7 +311,7 @@ msgstr "Нет жалоб"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No end time for the route"
-msgstr "Нет времени окончания для этого маршрута"
+msgstr "Завершить до: не указано"
 
 #. module: tms
 #. odoo-javascript
@@ -327,7 +327,7 @@ msgstr "Нет маршрутных листов"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No start time for the route"
-msgstr "Нет времени начала по этому маршруту"
+msgstr "Начать до: не указано"
 
 #. module: tms
 #. odoo-javascript
