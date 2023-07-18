@@ -10,4 +10,4 @@ class TmsCarrier(models.Model):
     ref_key = fields.Char(string='carrier key')
     carrier_route_ids = fields.One2many('tms.carrier.route', 'carrier_id', string='Carrier route ids')
     
-    _sql_constraints= [('unique_driver_name', 'unique(name)', 'Name must by unique')]
+    _sql_constraints= [('unique_carrier_name', 'unique(name)', 'Name must by unique')]
