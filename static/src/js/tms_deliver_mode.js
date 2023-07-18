@@ -728,7 +728,8 @@ odoo.define('tms.deliver_mode', function (require) {
 
         async onUpdateAttendanceStatus(){
                 let attendance = await this.getAttendanceByController();
-                this.putRoutesInCache();
+                await this.putRoutesInCache();
+                await this.loadRoutes();
                 console.log(attendance)
                 if (attendance.check_out == false) {
                     this.tmsContext.attendance.check_out = 'check_out';
