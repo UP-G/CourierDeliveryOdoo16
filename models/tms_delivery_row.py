@@ -11,6 +11,8 @@ class TmsDeliveryRow(models.Model):
     selected_1c = fields.Boolean(string='Selected by 1C')
     order_row_id = fields.Many2one('tms.order.row', string='Order row id')
     delivery_id = fields.Many2one('tms.delivery', string='Delivery id')
+    order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
+                                      string='Type of row')
 
     driver_key = fields.Char(string='Driver key', compute='_compute_driver_key', store=True)
     stock_id = fields.Char(string='Stock id', compute='_compute_stock_id', store=True)
