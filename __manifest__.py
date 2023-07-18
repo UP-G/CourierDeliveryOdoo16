@@ -7,6 +7,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/tms_route_view.xml',
+        'views/tms_carrier_view.xml',
+        'views/tms_carrier_route_view.xml',
+        'views/tms_carrier_driver_view.xml',
         'views/tms_route_order_view.xml',
         'views/tms_route_order_row_view.xml',
         'views/tms_route_point.xml',

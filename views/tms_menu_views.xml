@@ -46,5 +46,27 @@
                   action="action_tms_route_point_tree"
                   sequence="10"/>
 
+        <menuitem id="menu_tms_carriers"
+                  parent="menu_tms"
+                  name="carriers"
+                  sequence="11"/>
+
+        <menuitem id="menu_tms_carrier_companys"
+                  parent="menu_tms_carriers"
+                  name="carrier"
+                  action="action_tms_carrier_tree"
+                  sequence="10"/>
+
+        <menuitem id="menu_tms_carrier_route"
+                  parent="menu_tms_carriers"
+                  name="carrier routes"
+                  action="action_tms_carrier_route_tree"
+                  sequence="11"/>
+
+        <menuitem id="menu_tms_carrier_drivers"
+                  parent="menu_tms_carriers"
+                  name="carrier drivers"
+                  action="action_tms_carrier_drivers_tree"
+                  sequence="12"/>
     </data>
 </odoo>

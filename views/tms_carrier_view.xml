@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_carrier_tree" model="ir.ui.view">
+        <field name="name">carrier company</field>
+        <field name="model">tms.carrier</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="name" string="Company name"/>
+                <field name="contact_info" string="Company contact information"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_carrier_form" model="ir.ui.view">
+        <field name="name">carrier company form</field>
+        <field name="model">tms.carrier</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="name" string="Company name"/>
+                        <field name="contact_info" string="Company contact information"/>
+                    </group>
+                    <notebook>
+                        <page string="assigned routes">
+                            <field name="carrier_route_ids">
+                                <tree string="Tree String">
+                                    <field name="name" string="route name"/>
+                                    <field name="carrier_id" string="carrier company"/>
+                                    <field name="carrier_driver_id" string="driver"/>
+                                    <field name="route_id" string="route"/>
+                                </tree>
+                                <form>
+                                    <field name="name" string="route name"/>
+                                    <field name="carrier_id" string="carrier company"/>
+                                    <field name="carrier_driver_id" string="driver"/>
+                                    <field name="route_id" string="route"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_action_carrier_buttons" model="ir.actions.client">
+        <field name="name">carriers buttons</field>
+        <field name="tag">tms_carrier_buttons</field>
+        <field name="target">main</field>
+    </record>
+
+    <record id="action_tms_carrier_tree" model="ir.actions.act_window" >
+        <field name="name">TMS carrier</field>
+        <field name="res_model">tms.carrier</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
