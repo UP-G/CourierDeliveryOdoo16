@@ -5,7 +5,7 @@ import datetime
 class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
-    _order = 'arrival_date, impl_num, id'
+    _order = 'order_id, arrival_date, impl_num, id'
 
     route_point_id = fields.Many2one('tms.route.point', index=True, string='route_point_id')
     order_id = fields.Many2one('tms.order', string='order_id')
