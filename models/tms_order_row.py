@@ -5,6 +5,7 @@ import datetime
 class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
+    _order = 'arrival_date, impl_num, id'
 
     route_point_id = fields.Many2one('tms.route.point', index=True, string='route_point_id')
     order_id = fields.Many2one('tms.order', string='order_id')
@@ -45,7 +46,7 @@ class TmsOrderRow(models.Model):
                 'delivered': points.delivered,
                 'complaint': points.complaint,
                 'phone': points.route_point_id.res_partner_id.phone,
-                'impl_num': points.impl_num
+                'impl_num': points.impl_num,
                 }
 
     # @api.model
@@ -112,8 +113,15 @@ class TmsOrderRow(models.Model):
                 record.delivered = dataAction['tms_date']
             elif dataAction['action'] == 'complaint':
                 pass
-            else:
-                raise Exception()
+            elif dataAction['action'] == 'cancelOrderRow': #Отмена точки маршрута
+                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
+                record.update({
+                    'cancel_delivery': dataAction['tms_date'],
+                    'cancellation_ids': [(6, 0, [dataAction['tagCanceledId']])],
+                    'comment_driver': dataAction['driverComment'],
+                })
+            # else:
+            #     raise Exception()
         return 'Success'
 
     @api.model
@@ -133,8 +141,8 @@ class TmsOrderRow(models.Model):
              'phone': point.comment.split(';')[0],
              'returned_client': point.returned_client,
              'returned_store': point.returned_store,
-             'delivered': point.delivered,
-             'complaint': point.complaint
+             'delivered': point.delivered, #Время доставки заказа
+             'complaint': point.complaint,
              }
             for point in points
         ]
