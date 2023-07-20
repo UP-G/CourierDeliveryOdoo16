@@ -99,21 +99,24 @@ class TmsOrderRow(models.Model):
         return 'Success'
 
     @api.model
-    def saveDatesTmsOrderRow(self, dataTmsOrderRow):
+    def saveDatesTmsOrderRow(self, dataTmsOrderRow, user_id):
         for dataAction in dataTmsOrderRow:
+            record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
+            #Вынести в метод
+            if not record.order_id.departed_on_route: #Если дата начала маршрута пустая, то при выполненном заказе проставляем её.
+                record.order_id.departed_on_route = dataAction['tms_date']
+            if not record.order_id.driver_id: #Если не назначен водитель, то заполняем его
+                record.order_id.driver_id = user_id
+
             if dataAction['action'] == 'arrival':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.arrival_date = dataAction['tms_date']
             elif dataAction['action'] == 'returned_client':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.returned_client = dataAction['tms_date']
             elif dataAction['action'] == 'delivered':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.delivered = dataAction['tms_date']
             elif dataAction['action'] == 'complaint':
                 pass
             elif dataAction['action'] == 'cancelOrderRow': #Отмена точки маршрута
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.update({
                     'cancel_delivery': dataAction['tms_date'],
                     'cancellation_ids': [(6, 0, [dataAction['tagCanceledId']])],
@@ -122,7 +125,7 @@ class TmsOrderRow(models.Model):
             # else:
             #     raise Exception()
         return 'Success'
-
+    
     @api.model
     def getRoutesPoints(self, orderId):
         points = self.search([('order_id.id', '=', orderId)])

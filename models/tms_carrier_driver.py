@@ -5,8 +5,7 @@ class TmsCarrierDriver(models.Model):
     _name = "tms.carrier.driver"
     _description = 'Carrier driver'
 
-    name = fields.Char(string='Name', tracking=True, required=True)
-    ref_key= fields.Char(string="driver key")
+    name = fields.Char(string='Name', required=True)
     inn = fields.Char(string="inn")
     snils = fields.Char(string="snils")
     tm_code = fields.Char(string="tm code")

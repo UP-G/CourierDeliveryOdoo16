@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <tree multi_edit="1">
                 <field name="name" string="Company name"/>
-                <field name="contact_info" string="Company contact information"/>
+                <field name="tc_type" string="transport type"/>
+                
             </tree>
         </field>
     </record>
@@ -20,8 +21,7 @@
                 <sheet>
                     <group>
                         <field name="name" string="Company name"/>
-                        <field name="contact_info" string="Company contact information"/>
-                        <field name="ref_key" string="ref_key"/>
+                        <field name="tc_type" string="transport type"/>
                     </group>
                     <notebook>
                         <page string="assigned routes">

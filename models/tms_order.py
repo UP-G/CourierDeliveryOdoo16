@@ -86,6 +86,7 @@ class TmsOrder(models.Model):
                  'delivered': point.delivered.astimezone(current_timezone) if point.delivered else False,
                  'complaint': point.complaint,
                  'order_row_type': point.order_row_type if point.order_row_type else ('return' if 'Возврат' in point.impl_num else False),
+                 'cancel_delivery': point.cancel_delivery.astimezone(current_timezone) if point.cancel_delivery else False, #Время отмены заказа
                  }
                 for point in points
             ]
@@ -109,7 +110,7 @@ class TmsOrder(models.Model):
         return result
     
     @api.model
-    def saveDatesTmsOrder(self, saveDatesTmsOrder):
+    def saveDatesTmsOrder(self, saveDatesTmsOrder, user_id):
         for dataAction in saveDatesTmsOrder:
             if dataAction['action'] == 'arrival_loading':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
@@ -117,6 +118,8 @@ class TmsOrder(models.Model):
             elif dataAction['action'] == 'departed':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.departed_on_route = dataAction['tms_date']
+                if not record.driver_id:
+                    record.driver_id = user_id
             elif dataAction['action'] == 'finished':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.finished_the_route = dataAction['tms_date']

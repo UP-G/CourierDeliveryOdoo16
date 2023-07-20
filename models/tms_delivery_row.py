@@ -5,7 +5,7 @@ class TmsDeliveryRow(models.Model):
     _name = "tms.delivery.row"
     _description = 'Delivery row'
 
-    name = fields.Char(string='Name', tracking=True, required=True)
+    name = fields.Char(string='Name', tracking=True)
     impl_num = fields.Char(string='Implemention Number', tracking=True, required=True)
     comment = fields.Char(string='Comment', tracking=True, required=True)
     selected_1c = fields.Boolean(string='Selected by 1C')
@@ -14,12 +14,12 @@ class TmsDeliveryRow(models.Model):
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
                                       string='Type of row')
 
-    driver_key = fields.Char(string='Driver key', compute='_compute_driver_key', store=True)
+    # driver_key = fields.Char(string='Driver key', compute='_compute_driver_key', store=True)
     stock_id = fields.Char(string='Stock id', compute='_compute_stock_id', store=True)
-    @api.depends('delivery_id.driver_key')
-    def _compute_driver_key(self):
-        for record in self:
-            record.driver_key = record.delivery_id.driver_key
+    # @api.depends('delivery_id.driver_key')
+    # def _compute_driver_key(self):
+    #     for record in self:
+    #         record.driver_key = record.delivery_id.driver_key
 
     @api.depends('delivery_id.route_id.stock_id')
     def _compute_stock_id(self):
@@ -53,7 +53,7 @@ class TmsDeliveryRow(models.Model):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Create Order',
+            'name': _('Create Order'),
             'res_model': 'tms.order.wizard',
             'view_mode': 'form',
             'target': 'new',

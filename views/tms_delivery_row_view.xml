@@ -10,13 +10,13 @@
                     <button name="action_create_tms_order" string="Create Order"
                             class="btn-primary" type="object"/>
                 </header>
-                <field name="id"/>
-                <field name="name"/>
-                <field name="order_row_id"/>
-                <field name="delivery_id"/>
-                <field name="impl_num"/>
-                <field name="comment"/>
-                <field name="selected_1c"/>
+                <field name="id" string="Id"/>
+                <field name="name" string="Name"/>
+                <field name="order_row_id" string="Order row id"/>
+                <field name="delivery_id" string="Delivery id"/>
+                <field name="impl_num" string="Implemention number"/>
+                <field name="comment" string="Comment"/>
+                <field name="selected_1c" string="Selected 1c"/>
             </tree>
         </field>
     </record>
@@ -29,7 +29,6 @@
                 <field name="impl_num"/>
                 <filter name="filter_actual" string="No selected 1C and no driver yet"
                         domain="['&amp;', ('selected_1c', '=', False),
-                        ('driver_key', '=', False),
                         ('order_row_id', '=', False),
                         ('create_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),]"/>
                 <group expand="0" string="Group By">
@@ -48,13 +47,13 @@
             <form string="Tms form">
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="order_row_id"/>
-                        <field name="delivery_id"/>
-                        <field name="impl_num"/>
-                        <field name="comment"/>
-                        <field name="selected_1c"/>
-                        <field name="driver_key"/>
+                    <field name="name" string="Name"/>
+                    <field name="order_row_id" string="Order row id"/>
+                    <field name="delivery_id" string="Delivery id"/>
+                    <field name="impl_num" string="Implemention number"/>
+                    <field name="comment" string="Comment"/>
+                    <field name="selected_1c" string="Selected 1c"/>
+                        <!-- <field name="driver_key"/> -->
                     </group>
                 </sheet>
             </form>

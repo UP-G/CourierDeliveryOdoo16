@@ -46,7 +46,6 @@
                   action="action_tms_route_point_tree"
                   sequence="10"/>
 
-<<<<<<< HEAD
         <menuitem id="menu_tms_carriers"
                   parent="menu_tms"
                   name="carriers"
