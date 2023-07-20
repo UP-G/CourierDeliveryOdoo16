@@ -291,6 +291,14 @@ odoo.define('tms.deliver_mode', function (require) {
                 }
             }
 
+            if (!this.tmsContext.routePoints.departedOnRoute) { //Если кнопка в ТЗ уже нажата, но дата начала маршрута ещё не стоит, то проставляем её
+                let index_cur_route = this.routes.findIndex(obj => obj.id === parseInt(this.tmsContext.routePoints.routeId))
+                this.routes[index_cur_route].departed_on_route = this.action.object.field.tms_date
+                this.tmsContext.routePoints.departedOnRoute = this.action.object.field.tms_date;
+                this.setRoutesState(this.routes);
+                this.saveRoutesInCache(this.routes);
+            }
+
             if (this.action.type === 'departed' || 
             this.action.type === 'finished' ||
             this.action.type === 'returned_store') {
@@ -915,6 +923,7 @@ odoo.define('tms.deliver_mode', function (require) {
 
         async onRouteListClick(){
             this.setPointsState([]);
+            console.log(this.routes)
             this.showInterfaceActual();
         },
 
