@@ -18,7 +18,7 @@
     <!--  Data and card templates   -->
     <t t-name="TmsRoute">
         <div class="container">
-            <div class="o_tms_card-group hepler">
+            <div class="o_tms_card-group helper">
                 <div t-if="context.attendance.check_out == null">
                     For this user, an employee is not created. Please contact your manager
                 </div>
@@ -46,10 +46,12 @@
                                 <p data-name="id" style="display: none;" t-esc="route.id"></p>
                                 <div class="card-description route">
                                     <p class="o_tms_card-text route" t-if="route.start_time">Estimated start date of the route: 
+                                        
                                         <t t-esc="route.start_time"/>
                                     </p>
                                     <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
                                     <p class="o_tms_card-text route" t-if="route.end_time">Estimated end date of the route: 
+                                        
                                         <t t-esc="route.end_time"/>
                                     </p>
                                     <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
@@ -72,12 +74,17 @@
                     <t t-esc="context.routePoints.routeName"></t>
                 </h2>
             </div>
+            <div class="o_tms_card-group-route helper">
+                <div t-if="context.filter.showClosedRouteRow and context.routePoints.checkAllFinishOrder">
+                    All orders are closed. Click the "Undelivered" button to display closed route points
+                </div>
+            </div>
             <div class="card-group point-route" >
                 <t t-foreach="context.routePoints.points" t-as="point" t-key="point.id">
-                    <div t-attf-class="card point-route bg-{{ point.delivered or point.returned_client ? 'black' :
+                    <div t-attf-class="card point-route bg-{{ point.delivered or point.returned_client or point.cancel_delivery ? 'black' :
                 (context.routePoints.departedOnRoute ?
                 (context.routePoints.finishedTheRoute ? (!context.routePoints.returnedToTheStore ? 'warning' : 'black') : 'success')
-                : 'white') }}">
+                : 'white') }} {{context.filter.showClosedRouteRow ? ((point.delivered or point.returned_client or point.cancel_delivery) ? 'd-none' : '') : ((!point.delivered and !point.returned_client and !point.cancel_delivery) ? 'd-none' : '')}}">
                         <a href="#">
                             <div class="card-body point-route o_tms_concrete-point-event" t-attf-id="{{point.id}}">
                                 <div class="tms-card-header">
@@ -102,6 +109,16 @@
                     </div>
                 </t>
             </div>
+            <div class="o_tms_buttons_filtered">
+            <button type="button" class="o_tms_button_filtered closed-route-row btn-lg btn btn-primary">
+                <t t-if="context.filter.showClosedRouteRow">
+                    Undelivered
+                </t>
+                <t t-if="!context.filter.showClosedRouteRow">
+                    Delivered
+                </t>
+            </button>
+            </div>
         </div>
     </t>
     <t t-name="TmsPoint">
@@ -109,6 +126,7 @@
             <div class="card mt-2">
                 <div class="card-header">
                     <h2 class="card-title" title="Information about the order ">Information about the order 
+                        
                         <t t-esc="context.concretePoint.pointOrderName"></t>
                     </h2>
                 </div>
@@ -160,6 +178,12 @@
                                     <t t-esc="context.concretePoint.point.delivered" t-if="context.concretePoint.point.delivered"></t>
                                 </td>
                             </tr>
+                            <tr t-if="context.concretePoint.point.cancel_delivery">
+                                <th title="Date cancel for order" scope="row">Date cancel for order</th>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.cancel_delivery"></t>
+                                </td>
+                            </tr>
                             <tr style="display: none">
                                 <th title="Date claim" scope="row">Date claim</th>
                                 <td>
@@ -176,6 +200,7 @@
     <t t-name="TmsRouteButtons">
         <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today"
             >Number of hours worked during the current shift: 
+            
             <t t-esc="context.attendance.hours_today"/>
         </p>
         <div class="o_tms_action_start">
@@ -196,6 +221,7 @@
                 <li>
                     <a class="o_tms_dropdown_item closed_routes dropdown-item" href="#">
                         <i class="fa fa-check" t-if="context.filter.showClosedRoute" />Today's closed routes
+                    
                     </a>
                 </li>
             </ul>
@@ -226,7 +252,7 @@
                 </button>
                 <button
                     type="button"
-                            t-attf-class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-{{!context.routePoints.returnedToTheStore and context.routePoints.finishedTheRoute  ? 'primary' : ' disabled'}} border">
+                            t-attf-class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-{{!context.routePoints.returnedToTheStore and context.routePoints.finishedTheRoute ? 'primary' : ' disabled'}} border">
                     <i class='fa fa-home'></i>
                     <p>Returned to the store</p>
                 </button>
@@ -241,6 +267,12 @@
                     <i class='fa fa-mail-reply'></i>
                     <p>Points list</p>
                 </button>
+                <button title="Cancel the order"
+                            t-attf-class="o_tms_btn_Cancel_row btn btn-lg btn-block {{context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client
+                             ? 'disabled' : ''}} btn-secondary border">
+                    <i class='fa fa-exclamation-triangle'></i>
+                    <p>Cancel the order</p>
+                </button>
                 <button title="Arrival"
                             class="o_tms_btn_Arrival btn btn-lg btn-block btn-secondary border"
                             style='display: none;'>
@@ -248,13 +280,13 @@
                     <p>Arrival</p>
                 </button>
                 <button title="Return from client"
-                            t-attf-class="o_tms_btn_Returned btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type == 'return' and context.concretePoint.point.returned_client == false
+                            t-attf-class="o_tms_btn_Returned btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type == 'return' and context.concretePoint.point.returned_client == false and !context.concretePoint.point.cancel_delivery
                             ? 'primary' : ' disabled'}} border">
                     <i class='fa fa-shopping-cart'></i>
                     <p>Return from client</p>
                 </button>
                 <button title="Delivered to client"
-                            t-attf-class="o_tms_btn_Delivered btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type != 'return' and context.concretePoint.point.delivered == false
+                            t-attf-class="o_tms_btn_Delivered btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type != 'return' and context.concretePoint.point.delivered == false and !context.concretePoint.point.cancel_delivery
                              ? 'primary' : ' disabled'}} border">
                     <i class='fa fa-cubes'></i>
                     <p>Delivered to client</p>
@@ -273,65 +305,75 @@
         <div t-if="widget.confirmation">
             <t t-call="TmsModalConfirm"/>
         </div>
-        <div t-if="true">
+        <div t-if="widget.feedBack">
             <t t-call="TmsModalFeedBack" />
         </div>
     </t>
-
     <t t-name="TmsModalFeedBack">
-        <div t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-{{ widget.feedback ? 'block' : 'none' }}" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content w-100">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">The reason for the cancellation</label>
-            <select class="form-select" id="selectionList" aria-label="Default select example">
-            <t t-foreach="context.cancellation" t-as="item">
-  <option t-attf-id="{{item.id}}"><t t-esc="item.name" /></option>
-             </t>
-</select>
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Comment:</label>
-            <textarea class="form-control" id="feedback-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="o_tms_modal_feedback modal-footer">
-        <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
-        <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <div t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-{{ widget.feedBack ? 'block' : 'none' }}" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+            <div class="o_tms_feedback modal-dialog">
+                <div class="o_tms_feedback modal-content w-100">
+                    <div class="o_tms_feedback modal-header">
+                        <h1 class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">The reason for the cancellation</label>
+                                <select class="form-select" id="selectionList" aria-label="Default select example">
+                                    <t t-foreach="context.cancellation" t-as="item">
+                                        <option t-attf-id="{{item.id}}" t-attf-value="{{item.comment_is_required}}">
+                                            <t t-esc="item.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Comment:</label>
+                                <textarea class="o_tms_feedback_form-control" id="feedback-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="o_tms_modal_feedback modal-footer">
+                    <p class="col-form-label">Comment is necessarily</p>
+                        <div class="o_tms_modal_feedback buttons">
+                            <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
+                            <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </t>
-
-<!-- Модальное окно для потверждения действий -->
+    <!-- Модальное окно для потверждения действий -->
     <t t-name="TmsModalConfirm">
         <div t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-{{ widget.confirmation ? 'block' : 'none' }}" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
             <div class="o_tms_modal_confirmation modal-dialog modal-dialog-centered" role="document">
                 <div class="o_tms_modal_confirmation modal-content w-100">
                     <div class="o_tms_modal_confirmation modal-header">
                         <h5 class="o_tms_modal_confirmation modal-title" id="confirmationModalLabel">
-                        <t t-if="action.type == 'delivered'">Please confirm the delivery of the order</t>
-                        <t t-if="action.type == 'returned'">Please confirm the returned of the order</t>
-                        <t t-if="action.type == 'departed'">Please confirm the start of the route</t>
-                        <t t-if="action.type == 'finished'">Please confirm the end of the route</t>
-                        <t t-if="action.type == 'returned_store'">Please confirm the returned to the store</t>
+                            <t t-if="action.type == 'delivered'">Please confirm the delivery of the order</t>
+                            <t t-if="action.type == 'returned'">Please confirm the returned of the order</t>
+                            <t t-if="action.type == 'departed'">Please confirm the start of the route</t>
+                            <t t-if="action.type == 'finished'">Please confirm the end of the route</t>
+                            <t t-if="action.type == 'returned_store'">Please confirm the returned to the store</t>
                         </h5>
                     </div>
                     <div class="o_tms_modal_confirmation modal-body">
-                    <t t-esc="context.concretePoint.point.impl_num" />
+                        <p>
+                        <t t-esc="context.concretePoint.point.impl_num" />
+                        <t t-esc="context.routePoints.routeName" />
+                        </p>
                     </div>
                     <div class="o_tms_modal_confirmation modal-footer">
                         <button type="button" t-attf-class="o_tms_modal_btn_ok btn btn-success">
-                            <i class='fa fa-thumbs-o-up'></i><p>Ok</p></button>
+                            <i class='fa fa-thumbs-o-up'></i>
+                            <p>Ok</p>
+                        </button>
                         <button type="button" class="o_tms_modal_btn_cancel btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="fa fa-times"></i><p>Cancel</p></button>
+                            <i class="fa fa-times"></i>
+                            <p>Cancel</p>
+                        </button>
                     </div>
                 </div>
             </div>
