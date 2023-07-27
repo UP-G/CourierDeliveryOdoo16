@@ -1,14 +1,15 @@
 from odoo import api, fields, models, _
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import pytz
-
+#self.env['tms.delivery'].add_orders_from_delivery()
 class TmsOrder(models.Model):
     _name = "tms.order"
     _description = 'Route order'
 
     driver_id = fields.Many2one('res.users', index=True, string='driver_id')
     route_id = fields.Many2one('tms.route', index=True, string='route_id')
+    date_create_1c = fields.Datetime(string='Date create from 1C')
     arrived_for_loading = fields.Datetime(string='arrived_for_loading')
     departed_on_route = fields.Datetime(string='departed_on_route')
     finished_the_route = fields.Datetime(string='finished_the_route')
@@ -16,7 +17,8 @@ class TmsOrder(models.Model):
     notes = fields.Char(string='notes ofr order')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
-    carrier_id = fields.Many2one('tms.carrier', index=True, string='carrier_id')
+    carrier_id = fields.Many2one('tms.carrier', index=True, string='Carrier ids')
+    carrier_driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
     order_row_ids = fields.One2many('tms.order.row', 'order_id', string='implimentions of order') #ondelete='cascade'
 
     _sql_constraints = [
@@ -54,13 +56,22 @@ class TmsOrder(models.Model):
         
         today = date.today()
         today_start = datetime.combine(today, datetime.min.time())
+        carrier_driver_user = self.env['tms.carrier.driver'].search([('user_id', '=', user_id)])
+        company_user = self.env['tms.carrier.route'].search([('driver_id', '=', carrier_driver_user.id)])
+        carrier_ids = [r['carrier_id']['id'] for r in company_user]
 
-        records = self.search([
+        records = self.env['tms.order'].search([('create_date', '>=',today_start - timedelta(days=10)),
                         '|',('driver_id','=',user_id),
                             '&',('driver_id', '=', None),
-                                ('route_id.stock_id.user_ids.id', '=', user_id), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
+                                ('carrier_id.id', 'in', carrier_ids), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
          		"|", ('returned_to_the_store', '>=', today_start),
          		('returned_to_the_store', '=', None)])
+        # records = self.search([('create_date', '>=',today_start - timedelta(days=10)),
+        #                 '|',('driver_id','=',user_id),
+        #                     '&',('driver_id', '=', None),
+        #                         ('route_id.stock_id.user_ids.id', '=', user_id), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
+        #  		"|", ('returned_to_the_store', '>=', today_start),
+        #  		('returned_to_the_store', '=', None)])
         
         if tz_user:
             current_timezone = pytz.timezone(tz_user)
@@ -136,6 +147,10 @@ class TmsOrder(models.Model):
 
     def name_get(self):
         return [(record.id, '{num}, {number}, {date} ({route})'.format(num=record.order_num, route=record.route_id.name, number=record.order_num, date=record.order_date)) for record in self]
+
+    def unlink(self):
+        self.order_row_ids.unlink()
+        result = super(TmsOrder, self).unlink()    
 
 class TMSAttendance(models.Model):
     _inherit = "hr.attendance"

@@ -6,9 +6,8 @@
         <field name="model">tms.carrier.driver</field>
         <field name="arch" type="xml">
             <tree multi_edit="1">
-                <field name="name" string="driver name"/>
-                <field name="tm_code" string="tm code"/>
-                <field name="driver_id" string="driver_id"/>
+                    <field name="name" string="driver name"/>
+                    <field name="user_id" string="dirver_id"/>
             </tree>
         </field>
     </record>
@@ -21,10 +20,7 @@
                 <sheet>
                     <group>
                         <field name="name" string="driver name"/>
-                        <field name="tm_code" string="tm code"/>
-                        <field name="inn" string="inn"/>
-                        <field name="snils" string="snils"/>
-                        <field name="driver_id" string="dirver_id"/>
+                        <field name="user_id" string="dirver_id"/>
                     </group>
                 </sheet>
             </form>

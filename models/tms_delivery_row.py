@@ -14,12 +14,15 @@ class TmsDeliveryRow(models.Model):
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
                                       string='Type of row')
 
-    # driver_key = fields.Char(string='Driver key', compute='_compute_driver_key', store=True)
+    carrier_driver_id = fields.Char(string='Carrier driver id', compute='_compute_driver_id', store=True)
+    
+
+    @api.depends('delivery_id.carrier_driver_id')
+    def _compute_driver_id(self):
+        for record in self:
+            record.carrier_driver_id = record.delivery_id.carrier_driver_id.id
+
     stock_id = fields.Char(string='Stock id', compute='_compute_stock_id', store=True)
-    # @api.depends('delivery_id.driver_key')
-    # def _compute_driver_key(self):
-    #     for record in self:
-    #         record.driver_key = record.delivery_id.driver_key
 
     @api.depends('delivery_id.route_id.stock_id')
     def _compute_stock_id(self):

@@ -31,6 +31,7 @@
                         <field name="finished_the_route" string="finish date"/>
                         <field name="returned_to_the_store" string="return to store"/>
                         <field name="order_num" string="order number"/>
+                        <field name="carrier_id" string="carrier_id"/>
                     </group>
                     <notebook>
                         <page string="orders rows">

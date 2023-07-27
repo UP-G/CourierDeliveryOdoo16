@@ -9,4 +9,3 @@ class TmsCarrier(models.Model):
     tc_type=fields.Char(string='transport company type')
     code = fields.Char(string='code')
     carrier_route_ids = fields.One2many('tms.carrier.route', 'carrier_id', string='Carrier route ids')
-    

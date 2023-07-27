@@ -816,6 +816,7 @@ odoo.define('tms.deliver_mode', function (require) {
         async onUpdateCacheClick(){
             await this.putRoutesInCache();
             await this.loadRoutes();
+            await this.loadCancellationOrderRow()
             this.showInterfaceActual();
         },
 
