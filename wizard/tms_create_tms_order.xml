@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="create_tms_order_wizard" model="ir.ui.view">
+            <field name="name">tms.order.wizard.view.tree</field>
+            <field name="model">tms.order.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <p>The selected orders will be combined into a single delivery document</p>
+                        <group>
+                            <field name="order_name" string="Order name"/>
+                            <field name="carrier_id" string="Carrier"/>
+                            <field name="driver_id" string="Driver" attrs="{'invisible': [('carrier_id', '=', False)]}"/>
+                        </group>
+                        <separator/>
+
+                        <p>Selected Points:</p>
+                        <field name="point_ids" string="Selected Points"/>
+                    </sheet>
+
+                    <footer>
+                        <button name="add_order" type="object" class="btn-primary" string="Add order"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_create_tms_order" model="ir.actions.act_window">
+            <field name="name">Order Wizard</field>
+            <field name="res_model">tms.order.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="create_tms_order_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

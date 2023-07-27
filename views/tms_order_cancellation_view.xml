@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tms_order_cancellation_tree" model="ir.ui.view">
+        <field name="name">Reasons for cancellation</field>
+        <field name="model">tms.order.cancellation</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="name" optional="show" />
+                <field name="comment_is_required" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+     <record id="view_tms_order_cancellation_form" model="ir.ui.view">
+        <field name="name">tms.order.cancellation.form</field>
+        <field name="model">tms.order.cancellation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="comment_is_required"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_tms_order_cancellation">
+        <field name="name">Reasons for cancellation</field>
+        <field name="res_model">tms.order.cancellation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_carrier_route_tree" model="ir.ui.view">
+        <field name="name">assigned routes for carrier</field>
+        <field name="model">tms.carrier.route</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="name" string="route name"/>
+                <field name="carrier_id" string="carrier company"/>
+                <field name="driver_id" string="driver"/>
+                <field name="route_id" string="route"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_carrier_route_form" model="ir.ui.view">
+        <field name="name">assigned routes for carrier form</field>
+        <field name="model">tms.carrier.route</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="name" string="route name"/>
+                        <field name="carrier_id" string="carrier company"/>
+                        <field name="driver_id" string="driver"/>
+                        <field name="route_id" string="route"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_action_carrier_route_buttons" model="ir.actions.client">
+        <field name="name">carriers route buttons</field>
+        <field name="tag">tms_carrier_route_buttons</field>
+        <field name="target">main</field>
+    </record>
+
+    <record id="action_tms_carrier_route_tree" model="ir.actions.act_window" >
+        <field name="name">TMS carrier routes</field>
+        <field name="res_model">tms.carrier.route</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

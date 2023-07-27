@@ -10,3 +10,4 @@ class TmsRoute(models.Model):
     end_time = fields.Datetime(string='end_time')
 
     stock_id = fields.Many2one('res.partner', string='stock_id')
+

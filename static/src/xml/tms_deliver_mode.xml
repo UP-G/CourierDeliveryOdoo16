@@ -1,41 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <template xml:space="preserve">
-
-<!-- Base templates. Структуру не менять (Разве что в TmsMessage можно подключить другие шаблоны или разделить их)  -->
-
+    <!-- Base templates. Структуру не менять (Разве что в TmsMessage можно подключить другие шаблоны или разделить их)  -->
     <t t-name="TmsBase">
         <t t-call="TmsMessage"/>
         <t t-call="TmsContent"/>
-		<t t-call="TmsButtons"/>
-    </t>
-
+        <t t-call="TmsButtons"/></t>
     <t t-name="TmsMessage">
-        <t t-call="TmsMessageSmth"/>
-    </t>
-
+        <t t-call="TmsMessageSmth"/></t>
     <t t-name="TmsButtons">
         <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPointButtons"/>
-
         <t t-elif="context.routePoints.points.length" t-call="TmsRoutePointsButtons"/>
-
-        <t t-elif="context.routes.length >= 0" t-call="TmsRouteButtons"/>
-    </t>
-
+        <t t-elif="context.routes.length >= 0" t-call="TmsRouteButtons"/></t>
     <t t-name="TmsContent">
-
         <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPoint"/>
-
         <t t-elif="context.routePoints.points.length" t-call="TmsRoutePoints"/>
-
-        <t t-elif="context.routes.length >= 0" t-call="TmsRoute"/>
-
-    </t>
-
-<!--  Data and card templates   -->
-
+        <t t-elif="context.routes.length >= 0" t-call="TmsRoute"/></t>
+    <!--  Data and card templates   -->
     <t t-name="TmsRoute">
         <div class="container">
-            <div class="o_tms_card-group hepler">
+            <div class="o_tms_card-group helper">
                 <div t-if="context.attendance.check_out == null">
                     For this user, an employee is not created. Please contact your manager
                 </div>
@@ -53,111 +36,159 @@
                 </div>
             </div>
             <div class="card-group route" t-if="context.attendance.check_out">
-            <t t-foreach="context.routes" t-as="route" t-key="route.id">
-                <div t-attf-class="card route bg-{{ route.departed_on_route ?
+                <t t-foreach="context.routes" t-as="route" t-key="route.id">
+                    <div t-attf-class="card route bg-{{ route.departed_on_route ?
                 (route.finished_the_route ? (!route.returned_to_the_store ? 'warning' : 'black') : 'success')
                 : 'white' }} d-{{ context.filter.showClosedRoute ? (route.returned_to_the_store ? '' : 'none') : (route.returned_to_the_store ? 'none' : '') }}">
-                    <a href="#">
-                        <div t-attf-id="{{route.id}}" t-attf-class="card-body route points {{route.name}}">
-                            <h3 data-name="name" class="card-title route" t-esc="route.name"></h3>
-                            <p data-name="id" style="display: none;" t-esc="route.id"></p>
-                            <div class="card-description route">
-                                <p class="o_tms_card-text route" t-if="route.start_time">Estimated start date of the route: <t t-esc="route.start_time"/></p>
-                                <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
-                                <p class="o_tms_card-text route" t-if="route.end_time">Estimated end date of the route: <t t-esc="route.end_time"/></p>
-                                <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
+                        <a href="#">
+                            <div t-attf-id="{{route.id}}" t-attf-class="card-body route points {{route.name}}">
+                                <h3 data-name="name" class="card-title route" t-esc="route.name"></h3>
+                                <p data-name="id" style="display: none;" t-esc="route.id"></p>
+                                <div class="card-description route">
+                                    <p class="o_tms_card-text route" t-if="route.start_time">Estimated start date of the route: 
+                                        
+                                        <t t-esc="route.start_time"/>
+                                    </p>
+                                    <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
+                                    <p class="o_tms_card-text route" t-if="route.end_time">Estimated end date of the route: 
+                                        
+                                        <t t-esc="route.end_time"/>
+                                    </p>
+                                    <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
+                                </div>
+                                <div class="card-driver route">
+                                    <p class="mb-1" t-if="route.driver_id" t-esc="route.driver_name"></p>
+                                    <p t-if="!route.driver_id">Not assigned</p>
+                                </div>
                             </div>
-                            <div class="card-driver route">
-                                <p class="mb-1" t-if="route.driver_id" t-esc="route.driver_name"></p>
-                                <p t-if="!route.driver_id">Not assigned</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 </t>
             </div>
         </div>
     </t>
-
     <t t-name="TmsRoutePoints">
         <div class="container">
             <div class="card-header">
-                <h2 class="card-title" title="Points of the route">Points of the route " <t t-esc="context.routePoints.routeName"></t></h2>
+                <h2 class="card-title" title="Points of the route">Points of the route " 
+                    <t t-esc="context.routePoints.routeName"></t>
+                </h2>
             </div>
-
+            <div class="o_tms_card-group-route helper">
+                <div t-if="context.filter.showClosedRouteRow and context.routePoints.checkAllFinishOrder">
+                    All orders are closed. Click the "Undelivered" button to display closed route points
+                </div>
+            </div>
             <div class="card-group point-route" >
                 <t t-foreach="context.routePoints.points" t-as="point" t-key="point.id">
-                <div t-attf-class="card point-route bg-{{ point.delivered or point.returned_client ? 'black' :
+                    <div t-attf-class="card point-route bg-{{ point.delivered or point.returned_client or point.cancel_delivery ? 'black' :
                 (context.routePoints.departedOnRoute ?
                 (context.routePoints.finishedTheRoute ? (!context.routePoints.returnedToTheStore ? 'warning' : 'black') : 'success')
-                : 'white') }}">
-                    <a href="#">
-                        <div class="card-body point-route o_tms_concrete-point-event" t-attf-id="{{point.id}}">
-                            <div class="tms-card-header">
-                                <h5 class="card-title point-route" t-esc="point.impl_num"></h5>
-                                <h5 data-name="name" style="display: none;" class="card-title point-route" t-esc="point.order_num"></h5>
+                : 'white') }} {{context.filter.showClosedRouteRow ? ((point.delivered or point.returned_client or point.cancel_delivery) ? 'd-none' : '') : ((!point.delivered and !point.returned_client and !point.cancel_delivery) ? 'd-none' : '')}}">
+                        <a href="#">
+                            <div class="card-body point-route o_tms_concrete-point-event" t-attf-id="{{point.id}}">
+                                <div class="tms-card-header">
+                                    <h5 class="card-title point-route" t-esc="point.impl_num"></h5>
+                                    <h5 data-name="name" style="display: none;" class="card-title point-route" t-esc="point.order_num"></h5>
+                                </div>
+                                <p data-name="id" style="display: none;" t-esc="point.id"></p>
+                                <div class="o_tms_card-street point-route" t-esc="point.street" t-if="point.street"></div>
+                                <div class="card-description point-route">
+                                    <p class="o_tms_card-text point-route">
+                                        <t t-esc="point.company_name" t-if="point.company_name"></t>
+                                    </p>
+                                    <p class="o_tms_card-text point-route">
+                                        <t t-esc="point.phone" t-if="point.phone"></t>
+                                    </p>
+                                    <p class="o_tms_card-text point-route">
+                                        <t t-esc="point.note" t-if="point.note"></t>
+                                    </p>
+                                </div>
                             </div>
-                            <p data-name="id" style="display: none;" t-esc="point.id"></p>
-                            <div class="o_tms_card-street point-route" t-esc="point.street" t-if="point.street"></div>
-                            <div class="card-description point-route">
-                                <p class="o_tms_card-text point-route"><t t-esc="point.company_name" t-if="point.company_name"></t></p>
-                                <p class="o_tms_card-text point-route"><t t-esc="point.phone" t-if="point.phone"></t></p>
-                                <p class="o_tms_card-text point-route"><t t-esc="point.note" t-if="point.note"></t></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 </t>
+            </div>
+            <div class="o_tms_buttons_filtered">
+            <button type="button" class="o_tms_button_filtered closed-route-row btn-lg btn btn-primary">
+                <t t-if="context.filter.showClosedRouteRow">
+                    Undelivered
+                </t>
+                <t t-if="!context.filter.showClosedRouteRow">
+                    Delivered
+                </t>
+            </button>
             </div>
         </div>
     </t>
-
     <t t-name="TmsPoint">
         <div class="container o_tms_card_point">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h2 class="card-title" title="Information about the order ">Information about the order <t t-esc="context.concretePoint.pointOrderName"></t></h2>
+                    <h2 class="card-title" title="Information about the order ">Information about the order 
+                        
+                        <t t-esc="context.concretePoint.pointOrderName"></t>
+                    </h2>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-bordered">
-                             <!-- <tr>
-                                <th title="Implemention number">Implemention number</th>
-                                <td><t t-esc="context.concretePoint.point.impl_num" t-if="context.concretePoint.point.impl_num"></t></td>
-                            </tr> -->
+                            <!-- <tr><th title="Implemention number">Implemention number</th><td><t t-esc="context.concretePoint.point.impl_num" t-if="context.concretePoint.point.impl_num"></t></td></tr> -->
                             <tr>
                                 <th title="Delivery Address" scope="row">Delivery Address</th>
-                                <td><t t-esc="context.concretePoint.deliveryAddress" t-if="context.concretePoint.deliveryAddress"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.deliveryAddress" t-if="context.concretePoint.deliveryAddress"></t>
+                                </td>
                             </tr>
                             <tr>
                                 <th title="Phone" scope="row">Phone</th>
-                                <td><t t-esc="context.concretePoint.phone" t-if="context.concretePoint.phone"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.phone" t-if="context.concretePoint.phone"></t>
+                                </td>
                             </tr>
                             <tr>
                                 <th title="Note" scope="row">Note</th>
-                                <td><t t-esc="context.concretePoint.point.note" t-if="context.concretePoint.point.note"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.note" t-if="context.concretePoint.point.note"></t>
+                                </td>
                             </tr>
                             <tr style='display: none;'>
                                 <th title="Date arrival" 
                                 scope="row"
                                 >Date arrival</th>
-                                <td><t t-esc="context.concretePoint.point.arrival_date" t-if="context.concretePoint.point.arrival_date"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.arrival_date" t-if="context.concretePoint.point.arrival_date"></t>
+                                </td>
                             </tr>
-                            <tr t-if="context.concretePoint.point.impl_num.includes('Возврат')">
+                            <tr t-if="context.concretePoint.point.order_row_type == 'return'">
                                 <th title="Date return from client" scope="row">Date return from client</th>
-                                <td><t t-esc="context.concretePoint.point.returned_client" t-if="context.concretePoint.point.returned_client"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.returned_client" t-if="context.concretePoint.point.returned_client"></t>
+                                </td>
                             </tr>
                             <tr style="display: none">
                                 <th title="Date return from store" scope="row">Date return from store</th>
-                                <td><t t-esc="context.concretePoint.point.returned_store" t-if="context.concretePoint.point.returned_store"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.returned_store" t-if="context.concretePoint.point.returned_store"></t>
+                                </td>
                             </tr>
-                            <tr t-if="!context.concretePoint.point.impl_num.includes('Возврат')">
+                            <tr t-if="context.concretePoint.point.order_row_type != 'return'">
                                 <th title="Date deliver" scope="row">Date deliver</th>
-                                <td><t t-esc="context.concretePoint.point.delivered" t-if="context.concretePoint.point.delivered"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.delivered" t-if="context.concretePoint.point.delivered"></t>
+                                </td>
+                            </tr>
+                            <tr t-if="context.concretePoint.point.cancel_delivery">
+                                <th title="Date cancel for order" scope="row">Date cancel for order</th>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.cancel_delivery"></t>
+                                </td>
                             </tr>
                             <tr style="display: none">
                                 <th title="Date claim" scope="row">Date claim</th>
-                                <td><t t-esc="context.concretePoint.point.complaint" t-if="context.concretePoint.point.complaint"></t></td>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.complaint" t-if="context.concretePoint.point.complaint"></t>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -165,12 +196,13 @@
             </div>
         </div>
     </t>
-
     <!--  Buttons templates   -->
-
     <t t-name="TmsRouteButtons">
-            <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today"
-            >Number of hours worked during the current shift: <t t-esc="context.attendance.hours_today"/></p>
+        <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today"
+            >Number of hours worked during the current shift: 
+            
+            <t t-esc="context.attendance.hours_today"/>
+        </p>
         <div class="o_tms_action_start">
             <button t-attf-class="o_tms_attendance_sign btn btn-{{ context.attendance.check_out ? 'warning' : 'success' }} align-self-center px-5 py-3 mt-4 mb-2 {{ context.attendance.check_out == null ? 'disabled' : '' }}">
                 <span class="align-middle fs-2 text-white" t-if="!context.attendance.check_out">Start shift</span>
@@ -179,78 +211,172 @@
             </button>
             <t t-if="context.attendance.check_out">
                 <button type="button" class="o_tms_update_routes event btn btn-primary">
-                <i class='fa fa-refresh'></i>
-        </button>
-            <button type="button" class="o_tms_filter_routes btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-filter"></i>
-            </button>
+                    <i class='fa fa-refresh'></i>
+                </button>
+                <button type="button" class="o_tms_filter_routes btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-filter"></i>
+                </button>
             </t>
             <ul class="o_tms_dropdown_menu dropdown-menu">
-                <li><a class="o_tms_dropdown_item closed_routes dropdown-item" href="#">
-                    <i class="fa fa-check" t-if="context.filter.showClosedRoute" />Today's closed routes</a></li>
+                <li>
+                    <a class="o_tms_dropdown_item closed_routes dropdown-item" href="#">
+                        <i class="fa fa-check" t-if="context.filter.showClosedRoute" />Today's closed routes
+                    
+                    </a>
+                </li>
             </ul>
         </div>
     </t>
-
     <t t-name="TmsRoutePointsButtons">
-            <div class="o_tms_route_point_btn">
-                <div class="o_tms_action_nav" style="width: 100%;">
-                    <button
+        <div class="o_tms_route_point_btn">
+            <div class="o_tms_action_nav" style="width: 100%;">
+                <button
                     type="button"
                             t-attf-class="o_tms_btn_RouteList btn btn-lg btn-block btn-secondary border">
-                            <i class='fa fa-mail-reply'></i>
-							<p>Routes list</p></button>
-                    <button
+                    <i class='fa fa-mail-reply'></i>
+                    <p>Routes list</p>
+                </button>
+                <button
                     type="button"
                             t-attf-class="o_tms_btn_Departed btn btn-lg btn-block btn-{{context.routePoints.departedOnRoute ? ' disabled' : 'primary'}} border"
-							><i class='fa fa-truck'></i>
-							<p>Departed on route</p></button>
-                    <button
+							>
+                    <i class='fa fa-truck'></i>
+                    <p>Departed on route</p>
+                </button>
+                <button
                     type="button"
                             t-attf-class="o_tms_btn_Finished_Route btn btn-lg btn-block btn-{{ !context.routePoints.departedOnRoute ? 
                             ' disabled' : (!context.routePoints.finishedTheRoute and context.routePoints.checkAllFinishOrder ? 'primary' : ' disabled')}} border">
-                            <i class='fa fa-check-square-o'></i>
-							<p>Finished the route</p></button>
-                    <button
+                    <i class='fa fa-check-square-o'></i>
+                    <p>Finished the route</p>
+                </button>
+                <button
                     type="button"
-                            t-attf-class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-{{!context.routePoints.returnedToTheStore and context.routePoints.finishedTheRoute  ? 'primary' : ' disabled'}} border">
-                            <i class='fa fa-home'></i>
-							<p>Returned to the store</p></button>
-                </div>
+                            t-attf-class="o_tms_btn_Returned_Store btn btn-lg btn-block btn-{{!context.routePoints.returnedToTheStore and context.routePoints.finishedTheRoute ? 'primary' : ' disabled'}} border">
+                    <i class='fa fa-home'></i>
+                    <p>Returned to the store</p>
+                </button>
             </div>
-    </t>
-
-    <t t-name="TmsPointButtons">
-        <div class="d-flex justify-content-center">
-                <div class="o_tms_action_nav" style="width: 100%;">
-				    <button
-                            class="o_tms_btn_PointList btn btn-lg btn-block btn-secondary border"> 
-							<i class='fa fa-mail-reply'></i><p>Points list</p></button>
-                    <button title="Arrival"
-                            class="o_tms_btn_Arrival btn btn-lg btn-block btn-secondary border"
-                            style='display: none;'>
-							<i class='fa fa-clock-o'></i><p>Arrival</p></button>
-                    <button title="Return from client"
-                            t-attf-class="o_tms_btn_Returned btn btn-lg btn-block btn-{{ context.concretePoint.point.impl_num.includes('Возврат') and context.concretePoint.point.returned_client == false
-                            ? 'primary' : ' disabled'}} border">
-							<i class='fa fa-shopping-cart'></i><p>Return from client</p></button>
-
-                    <button title="Delivered to client"
-                            t-attf-class="o_tms_btn_Delivered btn btn-lg btn-block btn-{{ !context.concretePoint.point.impl_num.includes('Возврат') and context.concretePoint.point.delivered == false
-                             ? 'primary' : ' disabled'}} border">
-							<i class='fa fa-cubes'></i><p>Delivered to client</p></button>
-
-                    <button title="No claims"
-                            class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border"
-                            style="display: none;"> 
-							<i class='fa fa-warning'></i><p>No claims</p></button>
-                </div>
         </div>
     </t>
-
-<!--  Message templates  -->
-
-    <t t-name="TmsMessageSmth" style='display: none'>
+    <t t-name="TmsPointButtons">
+        <div class="d-flex justify-content-center">
+            <div class="o_tms_action_nav" style="width: 100%;">
+                <button
+                            class="o_tms_btn_PointList btn btn-lg btn-block btn-secondary border">
+                    <i class='fa fa-mail-reply'></i>
+                    <p>Points list</p>
+                </button>
+                <button title="Cancel the order"
+                            t-attf-class="o_tms_btn_Cancel_row btn btn-lg btn-block {{context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client
+                             ? 'disabled' : ''}} btn-secondary border">
+                    <i class='fa fa-exclamation-triangle'></i>
+                    <p>Cancel the order</p>
+                </button>
+                <button title="Arrival"
+                            class="o_tms_btn_Arrival btn btn-lg btn-block btn-secondary border"
+                            style='display: none;'>
+                    <i class='fa fa-clock-o'></i>
+                    <p>Arrival</p>
+                </button>
+                <button title="Return from client"
+                            t-attf-class="o_tms_btn_Returned btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type == 'return' and context.concretePoint.point.returned_client == false and !context.concretePoint.point.cancel_delivery
+                            ? 'primary' : ' disabled'}} border">
+                    <i class='fa fa-shopping-cart'></i>
+                    <p>Return from client</p>
+                </button>
+                <button title="Delivered to client"
+                            t-attf-class="o_tms_btn_Delivered btn btn-lg btn-block btn-{{ context.concretePoint.point.order_row_type != 'return' and context.concretePoint.point.delivered == false and !context.concretePoint.point.cancel_delivery
+                             ? 'primary' : ' disabled'}} border">
+                    <i class='fa fa-cubes'></i>
+                    <p>Delivered to client</p>
+                </button>
+                <button title="No claims"
+                            class="o_tms_btn_Claims btn btn-lg btn-block btn-secondary border"
+                            style="display: none;">
+                    <i class='fa fa-warning'></i>
+                    <p>No claims</p>
+                </button>
+            </div>
+        </div>
     </t>
-
+    <!--  Message templates  -->
+    <t t-name="TmsMessageSmth">
+        <div t-if="widget.confirmation">
+            <t t-call="TmsModalConfirm"/>
+        </div>
+        <div t-if="widget.feedBack">
+            <t t-call="TmsModalFeedBack" />
+        </div>
+    </t>
+    <t t-name="TmsModalFeedBack">
+        <div t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-{{ widget.feedBack ? 'block' : 'none' }}" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+            <div class="o_tms_feedback modal-dialog">
+                <div class="o_tms_feedback modal-content w-100">
+                    <div class="o_tms_feedback modal-header">
+                        <h1 class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">The reason for the cancellation</label>
+                                <select class="form-select" id="selectionList" aria-label="Default select example">
+                                    <t t-foreach="context.cancellation" t-as="item">
+                                        <option t-attf-id="{{item.id}}" t-attf-value="{{item.comment_is_required}}">
+                                            <t t-esc="item.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Comment:</label>
+                                <textarea class="o_tms_feedback_form-control" id="feedback-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="o_tms_modal_feedback modal-footer">
+                    <p class="col-form-label">Comment is necessarily</p>
+                        <div class="o_tms_modal_feedback buttons">
+                            <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
+                            <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <!-- Модальное окно для потверждения действий -->
+    <t t-name="TmsModalConfirm">
+        <div t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-{{ widget.confirmation ? 'block' : 'none' }}" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
+            <div class="o_tms_modal_confirmation modal-dialog modal-dialog-centered" role="document">
+                <div class="o_tms_modal_confirmation modal-content w-100">
+                    <div class="o_tms_modal_confirmation modal-header">
+                        <h5 class="o_tms_modal_confirmation modal-title" id="confirmationModalLabel">
+                            <t t-if="action.type == 'delivered'">Please confirm the delivery of the order</t>
+                            <t t-if="action.type == 'returned'">Please confirm the returned of the order</t>
+                            <t t-if="action.type == 'departed'">Please confirm the start of the route</t>
+                            <t t-if="action.type == 'finished'">Please confirm the end of the route</t>
+                            <t t-if="action.type == 'returned_store'">Please confirm the returned to the store</t>
+                        </h5>
+                    </div>
+                    <div class="o_tms_modal_confirmation modal-body">
+                        <p>
+                        <t t-esc="context.concretePoint.point.impl_num" />
+                        <t t-esc="context.routePoints.routeName" />
+                        </p>
+                    </div>
+                    <div class="o_tms_modal_confirmation modal-footer">
+                        <button type="button" t-attf-class="o_tms_modal_btn_ok btn btn-success">
+                            <i class='fa fa-thumbs-o-up'></i>
+                            <p>Ok</p>
+                        </button>
+                        <button type="button" class="o_tms_modal_btn_cancel btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                            <p>Cancel</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
 </template>

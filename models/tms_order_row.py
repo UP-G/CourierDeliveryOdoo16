@@ -2,7 +2,6 @@ from odoo import api, fields, models, _
 from odoo.tools import pytz
 import datetime
 
-
 class TmsOrderRow(models.Model):
     _name = "tms.order.row"
     _description = 'Route Row'
@@ -16,7 +15,14 @@ class TmsOrderRow(models.Model):
     returned_store = fields.Datetime(string='is_returned_store')
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
+    note = fields.Char(string='note for order row')
+    order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
+                                      string='Type of row')
+    comment_driver = fields.Text(string='Comment from driver') #Коментарий водителя
+    cancel_delivery = fields.Datetime(string='Date cancel of delivery') #Дата отмены от выполнения точки
+
     partner_key = fields.Many2one('res.partner', string='counterparty')
+    cancellation_ids = fields.Many2many('tms.order.cancellation') # Теги причины отмены
 
     def show_tms_buttons(self):
 
@@ -39,7 +45,7 @@ class TmsOrderRow(models.Model):
                 'delivered': points.delivered,
                 'complaint': points.complaint,
                 'phone': points.route_point_id.res_partner_id.phone,
-                'impl_num': points.impl_num
+                'impl_num': points.impl_num,
                 }
 
     # @api.model
@@ -93,23 +99,33 @@ class TmsOrderRow(models.Model):
         return 'Success'
 
     @api.model
-    def saveDatesTmsOrderRow(self, dataTmsOrderRow):
+    def saveDatesTmsOrderRow(self, dataTmsOrderRow, user_id):
         for dataAction in dataTmsOrderRow:
+            record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
+            #Вынести в метод
+            if not record.order_id.departed_on_route: #Если дата начала маршрута пустая, то при выполненном заказе проставляем её.
+                record.order_id.departed_on_route = dataAction['tms_date']
+            if not record.order_id.driver_id: #Если не назначен водитель, то заполняем его
+                record.order_id.driver_id = user_id
+
             if dataAction['action'] == 'arrival':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.arrival_date = dataAction['tms_date']
             elif dataAction['action'] == 'returned_client':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.returned_client = dataAction['tms_date']
             elif dataAction['action'] == 'delivered':
-                record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
                 record.delivered = dataAction['tms_date']
             elif dataAction['action'] == 'complaint':
                 pass
-            else:
-                raise Exception()
+            elif dataAction['action'] == 'cancelOrderRow': #Отмена точки маршрута
+                record.update({
+                    'cancel_delivery': dataAction['tms_date'],
+                    'cancellation_ids': [(6, 0, [dataAction['tagCanceledId']])],
+                    'comment_driver': dataAction['driverComment'],
+                })
+            # else:
+            #     raise Exception()
         return 'Success'
-
+    
     @api.model
     def getRoutesPoints(self, orderId):
         points = self.search([('order_id.id', '=', orderId)])
@@ -127,8 +143,8 @@ class TmsOrderRow(models.Model):
              'phone': point.comment.split(';')[0],
              'returned_client': point.returned_client,
              'returned_store': point.returned_store,
-             'delivered': point.delivered,
-             'complaint': point.complaint
+             'delivered': point.delivered, #Время доставки заказа
+             'complaint': point.complaint,
              }
             for point in points
         ]

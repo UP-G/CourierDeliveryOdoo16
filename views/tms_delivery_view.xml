@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_delivery_tree" model="ir.ui.view">
+        <field name="name">Delivery</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="id" string="Id"/>
+                <field name="name" string="Name"/>
+                <field name="date_create_1c" string="Order date"/>
+                <field name="route_id" string="Route id"/>
+                <field name="order_num" string="Order num"/>
+                <field name="loaded_in_orders" string="Loaded in orders"/>
+                <field name="carrier_driver_id" string="carrier_driver_id"/>
+                <field name="carrier_id" string="carrier id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_delivery_form" model="ir.ui.view">
+        <field name="name">Delivery</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="name" string="Name"/>
+                        <field name="order_num" string="Order num"/>
+                        <field name="carrier_driver_id" string="carrier_driver_id"/>
+                        <field name="loaded_in_orders" string="Loaded in orders"/>
+                    </group>
+                    <notebook>
+                        <page string="Carriers">
+                            <field name="carrier_id">
+                                <tree string="Tree String" default_order="name">
+                                    <field name="name" string="Name"/>
+                                    <field name="tc_type" string="Type of transport"/>
+                                    <field name="code" string="Code"/>
+                                    <field name="carrier_route_ids" string="Route"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name" string="Name" nolabel="0"/>
+                                        <field name="tc_type" string="Type of transport" nolabel="0"/>
+                                        <field name="code" string="Code" nolabel="0"/>
+                                        <field name="carrier_route_ids" string="Route" nolabel="0"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Route">
+                            <field name="route_id">
+                                <tree string="Tree String" default_order="name">
+                                    <field name="name" string="Name"/>
+                                    <field name="start_time" string="Start time"/>
+                                    <field name="end_time" string="End time"/>
+                                    <field name="stock_id" string="Route"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name" string="Name" nolabel="0"/>
+                                        <field name="start_time" string="Start time" nolabel="0"/>
+                                        <field name="end_time" string="End time" nolabel="0"/>
+                                        <field name="stock_id" string="Stock" nolabel="0"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_delivery_search" model="ir.ui.view">
+        <field name="name">delivery.search</field>
+        <field name="model">tms.delivery</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_num"/>
+                <field name="name"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Date create in 1c" name='group_by_date_create_1c' context="{'group_by': 'date_create_1c'}"/>
+                    <filter string="Driver" name="group_by_carrier_driver_id" context="{'group_by': 'carrier_driver_id'}"/>
+                    <filter string="Route" name="group_by_route" context="{'group_by': 'route_id'}"/>
+                    <filter string="Loaded in orders" name='group_by_loaded_in_orders' context="{'group_by': 'loaded_in_orders'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tms_delivery_tree" model="ir.actions.act_window" >
+        <field name="name">TMS Delivery</field>
+        <field name="res_model">tms.delivery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
