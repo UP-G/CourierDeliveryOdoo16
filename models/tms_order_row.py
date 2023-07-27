@@ -16,8 +16,9 @@ class TmsOrderRow(models.Model):
     delivered = fields.Datetime(string='delivered')
     complaint = fields.Datetime(string='complaint')
     note = fields.Char(string='note for order row')
+    selected = fields.Boolean(string='selected')#Поле выбрать
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
-                                      string='Type of row')
+                                      string='Type of row')#Тип точки
     comment_driver = fields.Text(string='Comment from driver') #Коментарий водителя
     cancel_delivery = fields.Datetime(string='Date cancel of delivery') #Дата отмены от выполнения точки
 

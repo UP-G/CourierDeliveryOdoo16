@@ -16,6 +16,7 @@
                 <field name="delivery_id" string="Delivery id"/>
                 <field name="impl_num" string="Implemention number"/>
                 <field name="comment" string="Comment"/>
+                <field name="notes" string="notes"/>
                 <field name="selected_1c" string="Selected 1c"/>
             </tree>
         </field>
@@ -53,6 +54,7 @@
                     <field name="delivery_id" string="Delivery id"/>
                     <field name="impl_num" string="Implemention number"/>
                     <field name="comment" string="Comment"/>
+                    <field name="notes" string="notes"/>
                     <field name="selected_1c" string="Selected 1c"/>
                     <field name="carrier_driver_id" string="Carrier driver"/>
                         <!-- <field name="driver_key"/> -->

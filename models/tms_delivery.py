@@ -1,6 +1,5 @@
 from odoo import api, fields, models, _
 
-
 class TmsDelivery(models.Model):
     _name = "tms.delivery"
     _description = 'Delivery'
@@ -48,6 +47,8 @@ class TmsDelivery(models.Model):
                     'order_id': order_tms.id,
                     'impl_num': row.impl_num,
                     'comment': row.comment,
+                    'selected': row.selected_1c,
+                    'note': row.notes,
                 })
 
                 row.order_row_id = tms_order_row.id
