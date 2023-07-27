@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tms_route_point_tree" model="ir.ui.view">
+        <field name="name">Points</field>
+        <field name="model">tms.route.point</field>
+        <field name="arch" type="xml">
+            <tree string="Tms Route Sheet">
+                <field name="id" string="ID"/>
+                <field name="res_partner_id" string="Company"/>
+                <field name="route_id" string="Route"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_tms_route_point_tree" model="ir.actions.act_window">
+        <field name="name">Points</field>
+        <field name="res_model">tms.route.point</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_tms_route_point_form" model="ir.ui.view">
+        <field name="name">Points form</field>
+        <field name="model">tms.route.point</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="id" string="Id"/>
+                        <field name="res_partner_id" string="Company"/>
+                        <field name="route_id" string="Route"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
+

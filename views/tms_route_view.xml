@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_tms_route_tree" model="ir.ui.view">
+        <field name="name">Routes</field>
+        <field name="model">tms.route</field>
+        <field name="arch" type="xml">
+            <tree string="Tms Route Sheet">
+                <field name="id" string="ID"/>
+                <field name="name" string="Name"/>
+                <field name="start_time" string="Start time"/>
+                <field name="end_time" string="End time"/>
+                <field name="stock_id" string="Store"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_tms_route" model="ir.actions.act_window">
+        <field name="name">Routes</field>
+        <field name="res_model">tms.route</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_tms_route_form" model="ir.ui.view">
+        <field name="name">Route form</field>
+        <field name="model">tms.route</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="id" string="ID"/>
+                        <field name="name" string="Name"/>
+                        <field name="start_time" string="Start time"/>
+                        <field name="end_time" string="End time"/>
+                        <field name="stock_id" string="Store"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_action_route_buttons" model="ir.actions.client">
+        <field name="name">Routes</field>
+        <field name="tag">tms_route_buttons</field>
+        <field name="target">fullscreen</field>
+    </record>
+</odoo>
+

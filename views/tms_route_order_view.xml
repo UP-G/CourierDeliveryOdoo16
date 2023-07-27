@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_route_order_tree" model="ir.ui.view">
+        <field name="name">Routes order</field>
+        <field name="model">tms.order</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="route_id" string="Route"/>
+                <field name="order_num" string="Order number"/>
+                <field name="arrived_for_loading" string="Arrived for loading"/>
+                <field name="departed_on_route" string="Departed on route"/>
+                <field name="finished_the_route" string="Finished the route"/>
+                <field name="returned_to_the_store" string="Returned to the store"/>
+                <!-- <button name="getRows" type="object" class="oe_stat_button" icon="fa-car"></button> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_route_order_form" model="ir.ui.view">
+        <field name="name">Route order form</field>
+        <field name="model">tms.order</field>
+        <field name="arch" type="xml">
+            <form string="Tms form">
+                <sheet>
+                    <group>
+                        <field name="driver_id" string="ID"/>
+                        <field name="route_id" string="route"/>
+                        <field name="arrived_for_loading" string="arrived for load date"/>
+                        <field name="departed_on_route" string="departed on route date"/>
+                        <field name="finished_the_route" string="finish date"/>
+                        <field name="returned_to_the_store" string="return to store"/>
+                        <field name="order_num" string="order number"/>
+                    </group>
+                    <notebook>
+                        <page string="orders rows">
+                            <field name="order_row_ids">
+                                <tree string="Tree String">
+                                    <field name="route_point_id" string="Point"/>
+                                    <field name="impl_num" string="Implemention number"/>
+                                    <field name="delivered" string="Date deliver"/>
+                                    <field name="arrival_date" string="Date arrival"/>
+                                    <field name="comment" string="Comment"/>
+                                </tree>
+                                <form>
+                                    <field name="route_point_id" string="Point"/>
+                                    <field name="impl_num" string="Implemention number"/>
+                                    <field name="delivered" string="Date deliver"/>
+                                    <field name="arrival_date" string="Date arrival"/>
+                                    <field name="comment" string="Comment"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tms_action_route_buttons" model="ir.actions.client">
+        <field name="name">Routes order buttons</field>
+        <field name="tag">tms_route_buttons</field>
+        <field name="target">main</field>
+    </record>
+
+    <record id="action_tms_route_order_tree" model="ir.actions.act_window" >
+        <field name="name">TMS Routes order</field>
+        <field name="res_model">tms.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

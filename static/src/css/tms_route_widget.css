@@ -1,0 +1,333 @@
+/* body {
+    overflow: scroll;
+  } */
+
+.container {
+    max-width: max-content;
+    flex: 1 0 auto;
+    overflow-y: auto;
+}
+
+.o_tms_card_point {
+    /* flex: 1 0 auto; */
+}
+
+.o_tms_action_start,
+.o_tms_action_nav {
+    position: sticky;
+    bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-around;
+    background-color: #f8f9fa;
+    /* margin-bottom: 2%; */
+}
+
+.o_tms_route_point_btn {
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+    background-color: #f8f9fa;
+}
+
+.o_tms_btn_Arrival,
+.o_tms_btn_Returned,
+.o_tms_btn_Delivered,
+.o_tms_btn_Claims,
+.o_tms_btn_RouteList,
+.o_tms_btn_PointList,
+.o_tms_btn_Checkin,
+.o_tms_btn_Checkout,
+.o_tms_btn_Departed,
+.o_tms_btn_Finished_Route,
+.o_tms_btn_Returned_Store
+{
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: normal;
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    width: 600px;
+    margin: 2px;
+    max-width: 23%;
+    max-height: 140px;
+    min-height: 60px;
+    min-width: 60px;
+}
+
+@media (max-width: 440px) {
+    button p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Фикс скролла */
+html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll) { 
+    overflow: auto;
+}
+
+
+.tms-card-header{
+    display:flex;
+    justify-content: space-between;
+}
+
+.o_tms_btn_Arrival {
+}
+
+.o_tms_btn_Returned {
+}
+
+.o_tms_btn_Delivered {
+}
+
+.o_tms_btn_Claims {
+}
+
+.o_tms_btn_RouteList {
+}
+
+.o_tms_btn_PointListt {
+}
+
+.o_tms_btn_Checkin {
+}
+
+.o_tms_btn_Checkiout {
+}
+
+/* .o_tms_action_start {
+    max-width: 100%;
+    max-height: 150px;
+    min-height: 125px;
+    position: relative;
+    overflow-y: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 16px;
+} */
+
+.card.route.route-complete{
+    background-color: #132046;
+}
+
+.card-group.route {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.card-group.point-route {
+        /* margin-bottom: 20%; */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+
+
+.o_tms_card-group.hepler {
+    margin-top: 10px;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+    .card.route {
+        flex-basis: 100%;
+        border: 1px solid #dee2e6;
+        background-color: #48bd75;
+        max-width: 450px;
+        min-width: 350px;
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-left: 0px;
+        margin-bottom: 0px;
+        min-width: 230px;
+        white-space: normal;
+        overflow: hidden;
+    }
+
+    .card-title.route,
+    .card-title.point-route{
+            color: #212529;
+            font-size: 1.3rem;
+            font-weight: 500;
+            /*margin-bottom: 0;*/
+            /*margin-top: 0;*/
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            padding-top: 2px;
+            padding-left: 2px;
+    }
+
+    .card-body.route {
+        padding: 0px;
+        height: 100%;
+        max-height: 240px;
+        min-height: 90px;
+    }
+
+    .card-info.route,
+    .card-info.point-route {
+        height: 100%;
+    }
+
+    .card-driver.route {
+        padding-left: 2px;
+        font-size: 1.2rem;
+    }
+
+    .o_tms_card-description.route {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        flex-direction: column;
+        margin: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+        word-wrap: break-word;
+    }
+
+    .o_tms_card-text.route {
+        margin-right: 2px;
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+        margin-left: 2px;
+    }
+
+    .card.point-route {
+        flex-basis: 100%;
+        border: 1px solid #dee2e6;
+        /* background-color: #48bd75; */
+        /* margin: 10px; */
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-left: 0px;
+        white-space: normal;
+        overflow: hidden;
+        max-height: 360px;
+        max-width: 340px;
+        min-width: 240px;
+    }
+
+    .o_tms_card-street.point-route {
+        padding-right: 2px;
+    }
+
+    .card-description.point-route {
+        display: flex;
+        padding-top: 1px;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0;
+        padding-left: 2px;
+        padding-right: 2px;
+        word-wrap: break-word;
+    }
+
+    .o_tms_card-text.point-route {
+        margin-right: 2px;
+        font-size: 1.1rem;
+    }
+
+    p.o_tms_card-text.point-route {
+        margin-bottom: 0px;
+    }
+
+    .card-body.point-route {
+        height: 100%;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    a {
+        height: 100%; 
+        /* Костыль переписат! */
+    }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 5px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.o_tms_filter_routes {
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: normal;
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    /* width: 600px; */
+    margin: 2px;
+    max-width: 23%;
+    max-height: 140px;
+    min-height: 50px;
+    min-width: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.o_tms_update_routes.event {
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: normal;
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    /* width: 600px; */
+    margin: 2px;
+    max-width: 23%;
+    max-height: 140px;
+    min-height: 50px;
+    min-width: 60px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+    /* table {
+        table-layout:fixed; width:450px;
+    }
+    table td,
+    table th {
+        overflow:hidden;
+    }
+    table td:nth-of-type(1),
+    table th:nth-of-type(1) {
+        width:200px;
+    }
+    table td:nth-of-type(2),
+    table th:nth-of-type(2) {
+        width:75px;
+    }
+    table td:nth-of-type(3),
+    table th:nth-of-type(3) {
+        width:175px;
+    } */
+    
+
