@@ -5,17 +5,16 @@ class TmsDeliveryRow(models.Model):
     _name = "tms.delivery.row"
     _description = 'Delivery row'
 
-    name = fields.Char(string='Name', tracking=True)
-    impl_num = fields.Char(string='Implemention Number', tracking=True, required=True)
-    comment = fields.Char(string='Comment', tracking=True, required=True)
+    name = fields.Char(string='Name')
+    impl_num = fields.Char(string='Implemention Number', required=True) #Номер реализации
+    comment = fields.Char(string='Comment', required=True)#Примечание
     selected_1c = fields.Boolean(string='Selected by 1C')
     order_row_id = fields.Many2one('tms.order.row', string='Order row id')
     delivery_id = fields.Many2one('tms.delivery', string='Delivery id')
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
                                       string='Type of row')
-
+    notes = fields.Char(string="notes")
     carrier_driver_id = fields.Char(string='Carrier driver id', compute='_compute_driver_id', store=True)
-    
 
     @api.depends('delivery_id.carrier_driver_id')
     def _compute_driver_id(self):

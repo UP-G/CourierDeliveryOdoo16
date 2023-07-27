@@ -81,7 +81,8 @@ class TmsOrder(models.Model):
         result = []
 
         for record in records:
-            points = self.env['tms.order.row'].search([('order_id.id', '=', record.id)])
+            points = self.env['tms.order.row'].search(['&', ('order_id.id', '=', record.id),
+                                                       ('selected', '=', True)])
 
             record_points = [
                 {'id': point.id,
