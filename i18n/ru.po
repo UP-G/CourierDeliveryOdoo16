@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20221202\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-20 14:30+0000\n"
-"PO-Revision-Date: 2023-07-20 14:30+0000\n"
+"POT-Creation-Date: 2023-07-31 15:46+0000\n"
+"PO-Revision-Date: 2023-07-31 15:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -97,16 +97,21 @@ msgstr "Отмена заказа"
 #. module: tms
 #: model:ir.model,name:tms.model_tms_carrier
 #: model_terms:ir.ui.view,arch_db:tms.create_tms_order_wizard
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
 msgid "Carrier"
 msgstr "Перевозчик"
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_carrier_driver
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_row_form
 msgid "Carrier driver"
 msgstr "Водитель перевозчика"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier_route__driver_id
+#: model:ir.model.fields,field_description:tms.field_tms_delivery__carrier_driver_id
+#: model:ir.model.fields,field_description:tms.field_tms_delivery_row__carrier_driver_id
+#: model:ir.model.fields,field_description:tms.field_tms_order__carrier_driver_id
 msgid "Carrier driver id"
 msgstr "Водитель перевозчика id"
 
@@ -115,6 +120,11 @@ msgstr "Водитель перевозчика id"
 #: model:ir.model.fields,field_description:tms.field_tms_order_wizard__carrier_id
 msgid "Carrier id"
 msgstr "Перевозчик id"
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_order__carrier_id
+msgid "Carrier ids"
+msgstr ""
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_carrier_route
@@ -138,6 +148,39 @@ msgstr "Нажмите \"<b>Начало смены</b>\", чтобы отобр
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Client"
+msgstr "Клиент"
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery_row__client_name
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__client_name
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_tree
+msgid "Client name"
+msgstr "Название клиента"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Client not specified"
+msgstr "Клиент не указан"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Client:"
+msgstr "Клиент:"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Close"
 msgstr ""
@@ -156,6 +199,11 @@ msgstr "Комментарий"
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_cancellation__comment_is_required
 msgid "Comment Is Required"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
+msgid "Comment driver"
 msgstr ""
 
 #. module: tms
@@ -244,7 +292,6 @@ msgstr ""
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 #, python-format
@@ -263,6 +310,7 @@ msgstr "Дата отмены заказа"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__cancel_delivery
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Date cancel of delivery"
 msgstr ""
 
@@ -281,6 +329,17 @@ msgstr "Дата жалобы"
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 msgid "Date complaint"
 msgstr "Дата отсутствия жалобы"
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery__date_create_1c
+#: model:ir.model.fields,field_description:tms.field_tms_order__date_create_1c
+msgid "Date create from 1C"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
+msgid "Date create in 1c"
+msgstr ""
 
 #. module: tms
 #. odoo-javascript
@@ -410,11 +469,12 @@ msgstr ""
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.create_tms_order_wizard
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
 msgid "Driver"
 msgstr "Водитель"
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__driver_id
+#: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__user_id
 #: model:ir.model.fields,field_description:tms.field_tms_order_wizard__driver_id
 msgid "Driver id"
 msgstr "Водитель"
@@ -572,6 +632,7 @@ msgid "Load in orders"
 msgstr "Выгружено в заказы"
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
 msgid "Loaded in orders"
@@ -592,6 +653,11 @@ msgstr "Выгружено в заказы"
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
 msgid "Name"
 msgstr "Название"
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
+msgid "Name client"
+msgstr "Название клиента"
 
 #. module: tms
 #. odoo-javascript
@@ -700,6 +766,11 @@ msgid "Order Wizard"
 msgstr "Визард заказа"
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_tree
+msgid "Order date"
+msgstr ""
+
+#. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_wizard__order_name
 #: model_terms:ir.ui.view,arch_db:tms.create_tms_order_wizard
 msgid "Order name"
@@ -779,7 +850,6 @@ msgid "Please confirm the start of the route"
 msgstr "Пожалуйста, подтвердите начала маршрута"
 
 #. module: tms
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 msgid "Point"
@@ -846,7 +916,9 @@ msgstr "Вернулся на склад"
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_route
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_tree
 msgid "Route"
@@ -855,13 +927,12 @@ msgstr "Маршрут"
 #. module: tms
 #: model:ir.model,name:tms.model_tms_order_row
 msgid "Route Row"
-msgstr ""
+msgstr "Маршруты строки"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier_route__route_id
 #: model:ir.model.fields,field_description:tms.field_tms_delivery__route_id
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_tree
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
 msgid "Route id"
 msgstr "Маршрут"
 
@@ -908,6 +979,11 @@ msgid "Select Work Order to display delivery points"
 msgstr "Выберите рабочие заказы, чтобы отобразились точки доставки"
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
+msgid "Selected"
+msgstr ""
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_row_form
 msgid "Selected 1c"
@@ -950,7 +1026,6 @@ msgstr "Время начала"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_search
-#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
 msgid "Stock"
 msgstr "Склад"
 
@@ -1070,6 +1145,11 @@ msgid "Tms Route Sheets"
 msgstr "Маршрутные листы"
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery__carrier_id
+msgid "Tms carrier ids"
+msgstr ""
+
+#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_driver_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_route_form
@@ -1171,14 +1251,25 @@ msgid "carrier drivers"
 msgstr "Водители перевозчиков"
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_tree
+msgid "carrier id"
+msgstr "carrier ids"
+
+#. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_carrier_route
 msgid "carrier routes"
 msgstr "Маршруты перевозчиков"
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_order__carrier_id
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
+msgid "carrier_driver_id"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "carrier_id"
-msgstr "Перевозчик id"
+msgstr ""
 
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_carriers
@@ -1198,6 +1289,11 @@ msgstr ""
 #. module: tms
 #: model:ir.actions.client,name:tms.tms_action_carrier_route_buttons
 msgid "carriers route buttons"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_row_form
+msgid "client_name"
 msgstr ""
 
 #. module: tms
@@ -1231,6 +1327,7 @@ msgid "departed_on_route"
 msgstr ""
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_carrier_driver_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_driver_form
 msgid "dirver_id"
 msgstr "Водитель"
@@ -1249,7 +1346,6 @@ msgstr "ФИО водителя"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__driver_id
-#: model_terms:ir.ui.view,arch_db:tms.tms_carrier_driver_tree
 msgid "driver_id"
 msgstr "Водитель"
 
@@ -1279,12 +1375,6 @@ msgid "implimentions of order"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__inn
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_driver_form
-msgid "inn"
-msgstr "ИНН"
-
-#. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__returned_client
 msgid "is_returned_client"
 msgstr ""
@@ -1305,8 +1395,15 @@ msgid "note for order row"
 msgstr ""
 
 #. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery_row__notes
+#: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_row_form
+msgid "notes"
+msgstr ""
+
+#. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__notes
-msgid "notes ofr order"
+msgid "notes for order"
 msgstr ""
 
 #. module: tms
@@ -1365,10 +1462,9 @@ msgid "route_point_id"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__snils
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_driver_form
-msgid "snils"
-msgstr "СНИЛС"
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__selected
+msgid "selected"
+msgstr ""
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_route__start_time
@@ -1379,13 +1475,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:tms.field_tms_route__stock_id
 msgid "stock_id"
 msgstr "Склад"
-
-#. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__tm_code
-#: model_terms:ir.ui.view,arch_db:tms.tms_carrier_driver_tree
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_carrier_driver_form
-msgid "tm code"
-msgstr ""
 
 #. module: tms
 #: model:ir.model,name:tms.model_tms_order_cancellation
