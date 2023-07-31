@@ -12,7 +12,7 @@
                 <field name="departed_on_route" string="Departed on route"/>
                 <field name="finished_the_route" string="Finished the route"/>
                 <field name="returned_to_the_store" string="Returned to the store"/>
-                <!-- <button name="getRows" type="object" class="oe_stat_button" icon="fa-car"></button> -->
+                <!-- <button name="getRows" type="object" cla1ss="oe_stat_button" icon="fa-car"></button> -->
             </tree>
         </field>
     </record>
@@ -36,22 +36,31 @@
                     <notebook>
                         <page string="orders rows">
                             <field name="order_row_ids">
-                                <tree string="Tree String" default_order="delivered, impl_num, id">
-                                    <field name="route_point_id" string="Point"/>
+                                <tree string="Tree String" default_order="delivered, impl_num, id"
+                                decoration-danger="selected == False"
+                                decoration-success="selected == True"
+                                >
+                                    <!-- <field name="route_point_id" string="Point"/> -->
                                     <field name="impl_num" string="Implemention number"/>
                                     <field name="delivered" string="Date deliver"/>
                                     <field name="returned_client" string="Date return from client"/>
+                                    <field name="cancel_delivery" string="Date cancel of delivery"/>
                                     <field name="comment" string="Comment"/>
+                                    <field name="selected" string="Selected"/>
                                 </tree>
                                 <form>
                                     <group>
-                                        <field name="route_point_id" string="Point" nolabel="0"/>
+                                        <!-- <field name="route_point_id" string="Point" nolabel="0"/> -->
                                         <field name="impl_num" string="Implemention number" nolabel="0"/>
-                                        <field name="arrival_date" string="Date arrival" nolabel="0"/>
+                                        <field name="client_name" string="Name client" nolabel="0"/>
+                                        <!-- <field name="arrival_date" string="Date arrival" nolabel="0"/> -->
                                         <field name="delivered" string="Date deliver" nolabel="0"/>
                                         <field name="returned_client" string="Date return from client" nolabel="0"/>
                                         <field name="returned_store" string="Date return to store" nolabel="0"/>
                                         <field name="comment" string="Comment" widget="text" nolabel="0"/>
+                                        <field name="cancel_delivery" string="Date cancel of delivery"/>
+                                        <field name="comment_driver" string="Comment driver"/>
+                                        <field name="selected" string="Selected"/>
                                     </group>
                                 </form>
                             </field>

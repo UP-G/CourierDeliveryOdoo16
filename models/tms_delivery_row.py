@@ -8,6 +8,7 @@ class TmsDeliveryRow(models.Model):
     name = fields.Char(string='Name')
     impl_num = fields.Char(string='Implemention Number', required=True) #Номер реализации
     comment = fields.Char(string='Comment', required=True)#Примечание
+    client_name = fields.Char(string='Client name') #Имя клиента
     selected_1c = fields.Boolean(string='Selected by 1C')
     order_row_id = fields.Many2one('tms.order.row', string='Order row id')
     delivery_id = fields.Many2one('tms.delivery', string='Delivery id')

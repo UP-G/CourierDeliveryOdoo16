@@ -29,45 +29,9 @@
                         <field name="order_num" string="Order num"/>
                         <field name="carrier_driver_id" string="carrier_driver_id"/>
                         <field name="loaded_in_orders" string="Loaded in orders"/>
+                        <field name="carrier_id" string="Carrier"/>
+                        <field name="route_id" string="Route"/>
                     </group>
-                    <notebook>
-                        <page string="Carriers">
-                            <field name="carrier_id">
-                                <tree string="Tree String" default_order="name">
-                                    <field name="name" string="Name"/>
-                                    <field name="tc_type" string="Type of transport"/>
-                                    <field name="code" string="Code"/>
-                                    <field name="carrier_route_ids" string="Route"/>
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="name" string="Name" nolabel="0"/>
-                                        <field name="tc_type" string="Type of transport" nolabel="0"/>
-                                        <field name="code" string="Code" nolabel="0"/>
-                                        <field name="carrier_route_ids" string="Route" nolabel="0"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Route">
-                            <field name="route_id">
-                                <tree string="Tree String" default_order="name">
-                                    <field name="name" string="Name"/>
-                                    <field name="start_time" string="Start time"/>
-                                    <field name="end_time" string="End time"/>
-                                    <field name="stock_id" string="Route"/>
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="name" string="Name" nolabel="0"/>
-                                        <field name="start_time" string="Start time" nolabel="0"/>
-                                        <field name="end_time" string="End time" nolabel="0"/>
-                                        <field name="stock_id" string="Stock" nolabel="0"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>

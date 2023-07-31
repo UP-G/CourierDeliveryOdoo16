@@ -5,11 +5,11 @@ class TmsDelivery(models.Model):
     _description = 'Delivery'
 
     name = fields.Char(string='Name')
-    order_num = fields.Char(string='Order Num')
-    notes = fields.Char(string='Notes')
+    order_num = fields.Char(string='Order Num') #Номер ЗН
+    notes = fields.Char(string='Notes')# Примечание
     order_date = fields.Char(string='Order Date')
-    route_id = fields.Many2one('tms.route', string='Route id')
-    date_create_1c = fields.Datetime(string='Date create from 1C')
+    route_id = fields.Many2one('tms.route', string='Route id') # Маршрут
+    date_create_1c = fields.Datetime(string='Date create from 1C') # Дата создания в 1С
     carrier_driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
 
     carrier_id = fields.Many2one('tms.carrier', string="Tms carrier ids")
@@ -49,6 +49,7 @@ class TmsDelivery(models.Model):
                     'comment': row.comment,
                     'selected': row.selected_1c,
                     'note': row.notes,
+                    'name_client': row.name_client,
                 })
 
                 row.order_row_id = tms_order_row.id

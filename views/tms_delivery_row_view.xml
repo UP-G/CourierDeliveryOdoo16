@@ -12,6 +12,7 @@
                 </header>
                 <field name="id" string="Id"/>
                 <field name="name" string="Name"/>
+                <field name="client_name" string="Client name"/>
                 <field name="order_row_id" string="Order row id"/>
                 <field name="delivery_id" string="Delivery id"/>
                 <field name="impl_num" string="Implemention number"/>

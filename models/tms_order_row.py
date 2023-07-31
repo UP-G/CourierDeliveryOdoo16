@@ -8,14 +8,15 @@ class TmsOrderRow(models.Model):
 
     route_point_id = fields.Many2one('tms.route.point', index=True, string='route_point_id')
     order_id = fields.Many2one('tms.order', string='order_id')
+    client_name = fields.Char(string='Client name') #Имя клиента
     arrival_date = fields.Datetime(string='arrival_time')
-    impl_num = fields.Char(string='impl_num')
+    impl_num = fields.Char(string='impl_num') # Номер заказа
     comment = fields.Char(string='Comment', default='phone;address')
     returned_client = fields.Datetime(string='is_returned_client')
     returned_store = fields.Datetime(string='is_returned_store')
-    delivered = fields.Datetime(string='delivered')
+    delivered = fields.Datetime(string='delivered')# Время доставки
     complaint = fields.Datetime(string='complaint')
-    note = fields.Char(string='note for order row')
+    note = fields.Char(string='note for order row')# Заметки
     selected = fields.Boolean(string='selected')#Поле выбрать
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
                                       string='Type of row')#Тип точки
