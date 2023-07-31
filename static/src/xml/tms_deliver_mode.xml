@@ -103,6 +103,9 @@
                                     <p class="o_tms_card-text point-route">
                                         <t t-esc="point.note" t-if="point.note"></t>
                                     </p>
+                                    <p class="o_tms_card-text point-route" t-if="point.client_name">
+                                        Organization: <t t-esc="point.client_name" />
+                                    </p>
                                 </div>
                             </div>
                         </a>
@@ -138,6 +141,13 @@
                                 <th title="Delivery Address" scope="row">Delivery Address</th>
                                 <td>
                                     <t t-esc="context.concretePoint.deliveryAddress" t-if="context.concretePoint.deliveryAddress"></t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th title="Organization" scope="row">Organization</th>
+                                <td>
+                                    <t t-esc="context.concretePoint.point.client_name" t-if="context.concretePoint.point.client_name"></t>
+                                    <t t-elif="!context.concretePoint.point.client_name">Not indicated</t>
                                 </td>
                             </tr>
                             <tr>

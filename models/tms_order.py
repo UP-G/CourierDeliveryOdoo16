@@ -14,7 +14,7 @@ class TmsOrder(models.Model):
     departed_on_route = fields.Datetime(string='departed_on_route')
     finished_the_route = fields.Datetime(string='finished_the_route')
     returned_to_the_store = fields.Datetime(string='returned_to_the_store')
-    notes = fields.Char(string='notes ofr order')
+    notes = fields.Char(string='notes for order')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
     carrier_id = fields.Many2one('tms.carrier', index=True, string='Carrier ids')
@@ -99,6 +99,7 @@ class TmsOrder(models.Model):
                  'complaint': point.complaint,
                  'order_row_type': point.order_row_type if point.order_row_type else ('return' if 'Возврат' in point.impl_num else False),
                  'cancel_delivery': point.cancel_delivery.astimezone(current_timezone) if point.cancel_delivery else False, #Время отмены заказа
+                 'client_name': point.client_name,
                  }
                 for point in points
             ]
