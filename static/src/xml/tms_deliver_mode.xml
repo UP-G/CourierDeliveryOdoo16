@@ -345,7 +345,7 @@
                         </form>
                     </div>
                     <div class="o_tms_modal_feedback modal-footer">
-                    <p class="col-form-label">Comment is necessarily</p>
+                    <p class="col-form-label" style="display: none">Comment is necessarily</p>
                         <div class="o_tms_modal_feedback buttons">
                             <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
                             <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
