@@ -8,10 +8,11 @@
             <tree multi_edit="1">
                 <field name="route_id" string="Route"/>
                 <field name="order_num" string="Order number"/>
-                <field name="arrived_for_loading" string="Arrived for loading"/>
+                <!-- <field name="arrived_for_loading" string="Arrived for loading"/> -->
                 <field name="departed_on_route" string="Departed on route"/>
                 <field name="finished_the_route" string="Finished the route"/>
                 <field name="returned_to_the_store" string="Returned to the store"/>
+                <field name="driver_id" string="Designated Driver"/>
                 <!-- <button name="getRows" type="object" cla1ss="oe_stat_button" icon="fa-car"></button> -->
             </tree>
         </field>
@@ -24,9 +25,9 @@
             <form string="Tms form">
                 <sheet>
                     <group>
-                        <field name="driver_id" string="ID"/>
+                        <field name="driver_id" string="Driver"/>
                         <field name="route_id" string="route"/>
-                        <field name="arrived_for_loading" string="arrived for load date"/>
+                        <!-- <field name="arrived_for_loading" string="arrived for load date"/> -->
                         <field name="departed_on_route" string="departed on route date"/>
                         <field name="finished_the_route" string="finish date"/>
                         <field name="returned_to_the_store" string="return to store"/>
@@ -59,6 +60,7 @@
                                         <field name="returned_store" string="Date return to store" nolabel="0"/>
                                         <field name="comment" string="Comment" widget="text" nolabel="0"/>
                                         <field name="cancel_delivery" string="Date cancel of delivery"/>
+                                        <field name="cancellation_ids" string="Tag for cancellation" widget="many2many_tags"/>
                                         <field name="comment_driver" string="Comment driver"/>
                                         <field name="selected" string="Selected"/>
                                     </group>
@@ -68,6 +70,24 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="tms_order_search" model="ir.ui.view">
+        <field name="name">order.search</field>
+        <field name="model">tms.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_num"/>
+                <filter string="Driver assigned" name='filetre_have_driver_id' domain="[('driver_id','!=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Date create" name='group_by_create_date' context="{'group_by': 'create_date'}"/>
+                    <filter string="Driver" name="group_by_driver_id" context="{'group_by': 'driver_id'}"/>
+                    <filter string="Route" name="group_by_route" context="{'group_by': 'route_id'}"/>
+                    <filter string="Departed on route" name='group_by_departed_on_route' context="{'group_by': 'departed_on_route'}"/>
+                    <filter string="Finished on route" name='group_by_finished_on_route' context="{'group_by': 'finished_the_route'}"/>
+                </group>
+            </search>
         </field>
     </record>
 
@@ -82,5 +102,9 @@
         <field name="res_model">tms.order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_group_by_route': 1,
+            'search_default_group_by_driver_id': 1
+            }</field>
     </record>
 </odoo>

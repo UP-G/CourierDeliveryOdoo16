@@ -826,6 +826,23 @@ odoo.define('tms.deliver_mode', function (require) {
             } else {
                 this.tmsContext.filter.showClosedRouteRow = true
             }
+            this.tmsContext.routePoints.points.sort(function(a, b) {
+                if (a.delivered !== false && b.delivered === false) {
+                  return -1;
+                } else if (a.delivered === false && b.delivered !== false) {
+                  return 1;
+                } else if (a.returned_store !== false && b.returned_store === false) {
+                  return -1;
+                } else if (a.returned_store === false && b.returned_store !== false) {
+                  return 1;
+                } else if (a.returned_client !== false && b.returned_client === false) {
+                  return -1;
+                } else if (a.returned_client === false && b.returned_client !== false) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
             this.showInterfaceActual()
         },
 
@@ -835,7 +852,6 @@ odoo.define('tms.deliver_mode', function (require) {
             } else {
                 this.tmsContext.filter.showClosedRoute = true
             }
-
             this.showInterfaceActual();
         },
 

@@ -9,6 +9,7 @@ class TmsCarrierRoute(models.Model):
     carrier_id = fields.Many2one('tms.carrier', string='Carrier id')
     driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
     route_id = fields.Many2one('tms.route', string='Route id')
+    is_consolidated_cargo = fields.Boolean(string="Is consolidated cargo")
 
     def create_carrier_route(self, carrier_id, carrier_name, route_ids):
         carrier = self.search([('carrier_id', '=', carrier_id)])
