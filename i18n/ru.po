@@ -6,14 +6,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20221202\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-31 15:46+0000\n"
-"PO-Revision-Date: 2023-07-31 15:46+0000\n"
+"POT-Creation-Date: 2023-08-02 10:36+0000\n"
+"PO-Revision-Date: 2023-08-02 13:49+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. module: tms
 #: model:ir.model.fields.selection,name:tms.selection__tms_delivery_row__order_row_type__delivery
@@ -28,7 +31,6 @@ msgstr "Добавить заказ"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid ""
@@ -46,17 +48,9 @@ msgstr "Номер заказа должен быть уникальным!"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Arrival"
 msgstr "Прибыл"
-
-#. module: tms
-#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
-msgid "Arrived for loading"
-msgstr "Прибыл на погрузку"
 
 #. module: tms
 #: model:ir.model,name:tms.model_hr_attendance
@@ -66,16 +60,12 @@ msgstr "Присутствие"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Cancel"
 msgstr ""
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Cancel the order"
@@ -88,7 +78,6 @@ msgstr ""
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Cancellations"
@@ -139,16 +128,12 @@ msgstr "Маршруты перевозчика ids"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Click \"Start shift\" to display orders"
 msgstr "Нажмите \"<b>Начало смены</b>\", чтобы отобразить маршрутные листы"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Client"
@@ -164,7 +149,6 @@ msgstr "Название клиента"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Client not specified"
 msgstr "Клиент не указан"
@@ -172,14 +156,12 @@ msgstr "Клиент не указан"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Client:"
 msgstr "Клиент:"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Close"
@@ -204,7 +186,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Comment driver"
-msgstr ""
+msgstr "Комментарий водителя"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__comment_driver
@@ -214,7 +196,6 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Comment is necessarily"
 msgstr "Комментарий обязателен"
@@ -222,10 +203,9 @@ msgstr "Комментарий обязателен"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Comment:"
-msgstr "Коментарий"
+msgstr "Комментарий:"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
@@ -242,14 +222,12 @@ msgstr "Название компании"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Confirm the cancellation"
 msgstr "Подтвердить отмену заказа"
 
 #. module: tms
 #. odoo-python
-#: code:addons/tms/models/tms_delivery_row.py:0
 #: code:addons/tms/models/tms_delivery_row.py:0
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_tree
 #, python-format
@@ -289,9 +267,6 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 #, python-format
@@ -301,9 +276,6 @@ msgstr "Дата прибытия"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Date cancel for order"
 msgstr "Дата отмены заказа"
@@ -312,13 +284,10 @@ msgstr "Дата отмены заказа"
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__cancel_delivery
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Date cancel of delivery"
-msgstr ""
+msgstr "Дата отмены заказа"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Date claim"
@@ -329,6 +298,11 @@ msgstr "Дата жалобы"
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
 msgid "Date complaint"
 msgstr "Дата отсутствия жалобы"
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
+msgid "Date create"
+msgstr ""
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_delivery__date_create_1c
@@ -344,9 +318,6 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
@@ -357,9 +328,6 @@ msgstr "Дата доставки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_tree
@@ -369,9 +337,6 @@ msgstr "Дата возврата от клиента"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Date return from store"
@@ -387,7 +352,6 @@ msgstr "Дата возврата в склад"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Default select example"
 msgstr ""
@@ -395,16 +359,12 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Delivered"
 msgstr ""
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Delivered to client"
@@ -423,9 +383,6 @@ msgstr "Номер доставки"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Delivery Address"
@@ -446,11 +403,16 @@ msgstr "Точка доставки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
 msgid "Departed on route"
 msgstr "На маршруте"
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+msgid "Designated Driver"
+msgstr "Назначенный водитель"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier__display_name
@@ -470,8 +432,15 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.create_tms_order_wizard
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Driver"
 msgstr "Водитель"
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
+msgid "Driver assigned"
+msgstr "Водитель назначен"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__user_id
@@ -488,7 +457,6 @@ msgstr "Время окончания"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Estimated end date of the route:"
 msgstr "Завершить до: "
@@ -496,14 +464,17 @@ msgstr "Завершить до: "
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Estimated start date of the route:"
 msgstr "Начать до: "
 
 #. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
+msgid "Finished on route"
+msgstr "Закончил маршрут"
+
+#. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
@@ -513,7 +484,6 @@ msgstr "Закончил маршрут"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "For this user, an employee is not created. Please contact your manager"
 msgstr ""
@@ -522,6 +492,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_search
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "Group By"
 msgstr ""
 
@@ -538,7 +509,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:tms.field_tms_route__id
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__id
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_form
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_row_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_tree
@@ -574,12 +544,14 @@ msgstr "Реализация доставки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Information about the order"
 msgstr "Информация о заказе"
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_carrier_route__is_consolidated_cargo
+msgid "Is consolidated cargo"
+msgstr ""
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier____last_update
@@ -662,9 +634,6 @@ msgstr "Название клиента"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No claims"
 msgstr "Нет жалоб"
@@ -672,14 +641,12 @@ msgstr "Нет жалоб"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No end time for the route"
 msgstr "Завершить до: не указано"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No route sheets"
@@ -693,7 +660,6 @@ msgstr "Не выбран в 1с и без водителя"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "No start time for the route"
 msgstr "Начать до: не указано"
@@ -701,16 +667,12 @@ msgstr "Начать до: не указано"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Not assigned"
 msgstr "Водитель не назначен"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Note"
@@ -724,14 +686,12 @@ msgstr "Заметки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Number of hours worked during the current shift:"
 msgstr "Количество часов работы прошедших во время смены"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Ok"
@@ -802,16 +762,12 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Phone"
 msgstr "Телефон"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Please confirm the delivery of the order"
@@ -820,14 +776,12 @@ msgstr "Пожалуйста, подтвердите доставку заказ
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Please confirm the end of the route"
 msgstr "Пожалуйста, подтвердите завершение маршрута"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Please confirm the returned of the order"
@@ -836,14 +790,12 @@ msgstr "Пожалуйста, подтвердите возрат заказа"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Please confirm the returned to the store"
 msgstr "Пожалуйста, подтвердите возвращение на склад"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Please confirm the start of the route"
@@ -863,7 +815,6 @@ msgstr "Точки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Points list"
 msgstr "Список адресов"
@@ -871,14 +822,12 @@ msgstr "Список адресов"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Points of the route"
 msgstr "Точки маршрута"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Points of the route \""
@@ -898,16 +847,12 @@ msgstr ""
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Return from client"
 msgstr "Возврат принят"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #, python-format
@@ -917,6 +862,7 @@ msgstr "Вернулся на склад"
 #. module: tms
 #: model:ir.model,name:tms.model_tms_route
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_search
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_form
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_point_form
@@ -960,7 +906,6 @@ msgstr "Маршруты"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Routes list"
 msgstr "Список маршрутов"
@@ -973,7 +918,6 @@ msgstr "Заказы маршрутов"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Select Work Order to display delivery points"
 msgstr "Выберите рабочие заказы, чтобы отобразились точки доставки"
@@ -981,7 +925,7 @@ msgstr "Выберите рабочие заказы, чтобы отобраз�
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Selected"
-msgstr ""
+msgstr "Выбрано"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_delivery_row_tree
@@ -1013,7 +957,6 @@ msgstr "Настройки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Start shift"
 msgstr "Начало смены"
@@ -1036,7 +979,6 @@ msgstr ""
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Stop shift"
@@ -1090,12 +1032,12 @@ msgstr "Маршруты перевозчиков"
 
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_order_cancellation
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Tag for cancellation"
-msgstr ""
+msgstr "Теги причины отмены"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "The reason for the cancellation"
@@ -1165,21 +1107,19 @@ msgstr ""
 #. module: tms
 #. odoo-python
 #: code:addons/tms/models/tms_order_row.py:0
-#: code:addons/tms/models/tms_order_row.py:0
 #, python-format
 msgid "TmsOrderButtons"
 msgstr ""
 
 #. module: tms
 #. odoo-python
-#: code:addons/tms/models/tms_order.py:0 code:addons/tms/models/tms_order.py:0
+#: code:addons/tms/models/tms_order.py:0
 #, python-format
 msgid "TmsTreePython"
 msgstr ""
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Today's closed routes"
@@ -1200,14 +1140,12 @@ msgstr "Тип точки"
 #. module: tms
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Undelivered"
 msgstr "Недоставленные"
 
 #. module: tms
 #. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Your closed orders for today"
@@ -1216,11 +1154,6 @@ msgstr "Ваши сегодняшние закрытые маршруты"
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__arrival_date
 msgid "arrival_time"
-msgstr ""
-
-#. module: tms
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
-msgid "arrived for load date"
 msgstr ""
 
 #. module: tms
@@ -1269,7 +1202,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "carrier_id"
-msgstr ""
+msgstr "Транспортная компания"
 
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_tms_carriers
@@ -1289,11 +1222,6 @@ msgstr ""
 #. module: tms
 #: model:ir.actions.client,name:tms.tms_action_carrier_route_buttons
 msgid "carriers route buttons"
-msgstr ""
-
-#. module: tms
-#: model_terms:ir.ui.view,arch_db:tms.view_tms_delivery_row_form
-msgid "client_name"
 msgstr ""
 
 #. module: tms
@@ -1319,7 +1247,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "departed on route date"
-msgstr ""
+msgstr "Дата начало маршрута"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__departed_on_route
@@ -1357,7 +1285,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "finish date"
-msgstr ""
+msgstr "Дата завершение маршрута"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__finished_the_route
@@ -1372,6 +1300,18 @@ msgstr "Номер реализации"
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__order_row_ids
 msgid "implimentions of order"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery__interval_from
+#: model:ir.model.fields,field_description:tms.field_tms_order__interval_from
+msgid "interval from"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_delivery__interval_to
+#: model:ir.model.fields,field_description:tms.field_tms_order__interval_to
+msgid "interval to"
 msgstr ""
 
 #. module: tms
@@ -1409,7 +1349,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "order number"
-msgstr ""
+msgstr "Номер заказа"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__order_id
@@ -1429,7 +1369,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "return to store"
-msgstr ""
+msgstr "Дата возращения на склад"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__returned_to_the_store

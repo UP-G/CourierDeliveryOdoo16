@@ -7,7 +7,7 @@ class TmsOrder(models.Model):
     _name = "tms.order"
     _description = 'Route order'
 
-    driver_id = fields.Many2one('res.users', index=True, string='driver_id')
+    driver_id = fields.Many2one('res.users', index=True, string='driver_id', compute='_compute_driver_id', store=True)
     route_id = fields.Many2one('tms.route', index=True, string='route_id')
     date_create_1c = fields.Datetime(string='Date create from 1C')
     arrived_for_loading = fields.Datetime(string='arrived_for_loading')
@@ -15,6 +15,8 @@ class TmsOrder(models.Model):
     finished_the_route = fields.Datetime(string='finished_the_route')
     returned_to_the_store = fields.Datetime(string='returned_to_the_store')
     notes = fields.Char(string='notes for order')
+    interval_from = fields.Datetime(string='interval from')
+    interval_to = fields.Datetime(string='interval to')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
     carrier_id = fields.Many2one('tms.carrier', index=True, string='Carrier ids')
@@ -24,6 +26,14 @@ class TmsOrder(models.Model):
     _sql_constraints = [
         ('unique_order_num', 'UNIQUE (order_num)', 'An Order Number must be unique!'),
     ]
+
+    @api.depends('carrier_driver_id.user_id')
+    def _compute_driver_id(self):
+        for order in self:
+            if order.carrier_driver_id and order.carrier_driver_id.user_id:
+                order.driver_id = order.carrier_driver_id.user_id
+            else:
+                order.driver_id = False
 
     def getRows(self):
         return {
