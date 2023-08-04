@@ -42,6 +42,7 @@
                         <field name="cancellation_ids" widget="many2many_tags"/>
                         <field name="cancel_delivery"/>
                         <field name="comment_driver"/>
+                        <field name="order_row_type"/>
                     </group>
                 </sheet>
             </form>

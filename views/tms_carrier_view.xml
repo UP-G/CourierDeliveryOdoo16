@@ -31,8 +31,10 @@
                                     <field name="carrier_id" string="carrier company"/>
                                 </tree>
                                 <form>
-                                    <field name="name" string="route name"/>
-                                    <field name="carrier_id" string="carrier company"/>
+                                    <group>
+                                        <field name="name" string="route name"/>
+                                        <field name="carrier_id" string="carrier company"/>
+                                    </group>
                                 </form>
                             </field>
                         </page>

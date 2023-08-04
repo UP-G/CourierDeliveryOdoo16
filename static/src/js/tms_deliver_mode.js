@@ -83,7 +83,7 @@ odoo.define('tms.deliver_mode', function (require) {
                     showClosedRoute: false,
                     showClosedRouteRow: true, //Скрытие обработанных точек маршрута
                 },
-                cancellation: [] //Список причин отказа
+                cancellation: [], //Список причин отказа
             };
 
             this.widget = {
@@ -98,6 +98,11 @@ odoo.define('tms.deliver_mode', function (require) {
 
             this.routes = [];
 
+            this.browse = {
+                'id': null,
+                'browse_uid': ''
+            }
+
             this.database = {
                 idb: null,
                 idb_name: 'tms_idb',
@@ -105,7 +110,9 @@ odoo.define('tms.deliver_mode', function (require) {
                     'tms_routes_cache': 'tms_routes_cache',
                     'tms_order': 'tms_order',
                     'tms_order_row': 'tms_order_row',
-                    'tms_state_cache': 'tms_state_cache'},
+                    'tms_state_cache': 'tms_state_cache',
+                    'tms_browser_uid': 'tms_browser_uid', //Уникальный индефикатор пользователя
+                },
             }
         },
 
@@ -116,7 +123,7 @@ odoo.define('tms.deliver_mode', function (require) {
             await this.loadEmployee();
             await this.loadRoutes();
             await this.loadCancellationOrderRow()
-
+            await this.loadBrowseUidUser()
             this.showInterfaceActual();
         },
 
@@ -149,23 +156,42 @@ odoo.define('tms.deliver_mode', function (require) {
             console.log(cancellation)
         },
 
-        loadRoutesCache: function() {
+        loadCache: function(storeName) {
             return new Promise((resolve, reject) => {
-                var transaction = this.database.idb.transaction(this.database.idb_stores.tms_routes_cache, 'readonly');
-                var objectStore = transaction.objectStore(this.database.idb_stores.tms_routes_cache);
-                var getRequest = objectStore.getAll();
-
-                getRequest.onsuccess = (event) => {
-                    var data = event.target.result;
-                    this.cacheLoadTime = new Date();
-                    let result = data[0] !== undefined ? data[0] : [];
-                    resolve(result);
-                };
-
-                getRequest.onerror = function (event) {
-                    reject(event.target.error);
-                };
+              var transaction = this.database.idb.transaction(storeName, 'readonly');
+              var objectStore = transaction.objectStore(storeName);
+              var getRequest = objectStore.getAll();
+          
+              getRequest.onsuccess = (event) => {
+                var data = event.target.result;
+                this.cacheLoadTime = new Date();
+                let result = data[0] !== undefined ? data[0] : [];
+                resolve(result);
+              };
+          
+              getRequest.onerror = function (event) {
+                reject(event.target.error);
+              };
             });
+          },
+
+        loadRoutesCache: function() {
+            return this.loadCache(this.database.idb_stores.tms_routes_cache);
+        },
+
+        loadBrowseUidUserCache: function() {
+            return this.loadCache(this.database.idb_stores.tms_browser_uid);
+        },
+
+        loadBrowseUidUser: async function() {
+            let cache_browse_uid = await this.loadBrowseUidUserCache()
+            let browse_uid = await this.getBrowseUidUserByController(cache_browse_uid.browse_uid)
+            if (browse_uid.browse_uid == cache_browse_uid.browse_uid) {
+                await this.setBrowseUidUser(cache_browse_uid)
+            } else {
+                await this.saveBrowseUidUserInCache()
+                await this.setBrowseUidUser(browse_uid)
+            }
         },
 
         loadEmployee: async function (){
@@ -233,6 +259,10 @@ odoo.define('tms.deliver_mode', function (require) {
             this.tmsContext.routes = routes;
         },
 
+        setBrowseUidUser: function(browser){
+            this.browse = browser
+        },
+
         setAttendanceState: function(attendance){
             this.tmsContext.attendance = attendance;
         },
@@ -256,38 +286,45 @@ odoo.define('tms.deliver_mode', function (require) {
             this.$el.html(QWeb.render('TmsBase', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
         },
 
+        display_message: function() {
+
+        },
+
+        display_content: function() {
+
+        },
+
+        display_menu: function() {
+
+        },
+
         tryToAction: function () {
 
-            if (this.action.type == null){
-
-            } else if (this.action.type === 'departed') {
-                    this.routes.forEach((route)=> {
-                    if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.departed_on_route = this.getDateTranformByTz();
-                        this.tmsContext.routePoints.departedOnRoute = this.getDateTranformByTz();
-                    }
-                });
+            if (this.action.type === 'departed') {
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.departed_on_route = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.departedOnRoute = route.departed_on_route;
+                }
             } else if (this.action.type === 'finished') {
-                this.routes.forEach((route)=> {
-                    if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.finished_the_route = this.getDateTranformByTz();
-                        this.tmsContext.routePoints.finishedTheRoute = this.getDateTranformByTz();
-                        this.showInterfaceActual();
-                    }
-                });
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.finished_the_route = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.finishedTheRoute = route.finished_the_route;
+                    this.showInterfaceActual();
+                }
             } else if (this.action.type === 'returned_store') {
-                this.routes.forEach((route)=> {
-                    if (route.id === parseInt(this.tmsContext.routePoints.routeId)) {
-                        route.returned_to_the_store = this.getDateTranformByTz();
-                        this.tmsContext.routePoints.returnedToTheStore= this.getDateTranformByTz();
-                        this.showInterfaceActual();
-                    }
-                });
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.returned_to_the_store = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.returnedToTheStore = route.returned_to_the_store;
+                    this.showInterfaceActual();
+                }
             } else if (this.action.type === 'cancelOrderRow') {
-                let date = this.getDataForFeedBack()
-
+                const date = this.getDataForFeedBack();
                 if (!date) {
-                    return //Выводить варнинг
+                    // Выводить варнинг
+                    return;
                 }
             }
 
@@ -350,14 +387,6 @@ odoo.define('tms.deliver_mode', function (require) {
                 if (foundPoint) {
                     if(foundPoint.delivered){
                         foundPoint.delivered = this.getDateForValid(foundPoint.delivered, this.tmsContext.attendance.tz_user)
-                        // if (/^\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}:\d{2}$/.test(foundPoint.delivered)) {
-                        //     console.log('Дата доставки уже в нужном формате');
-                        // } else if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(foundPoint.delivered)) {
-                        //     let new_deliver_date = new Date(foundPoint.delivered);
-                        //     foundPoint.delivered = new_deliver_date.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
-                        // } else {
-                        //     console.log("Некорректный формат даты доставки");
-                        // }
                     }
                     if(foundPoint.returned_client){
                         foundPoint.returned_client = this.getDateForValid(foundPoint.returned_client, this.tmsContext.attendance.tz_user)
@@ -404,6 +433,7 @@ odoo.define('tms.deliver_mode', function (require) {
 
                    this.setSendTmsCronv2();
                    this.setDeleteTmsCron();
+                   this.setUpdateCacheCron();
                    //this.setDeleteNoActualRoutesCron();
             });
        },
@@ -491,7 +521,7 @@ odoo.define('tms.deliver_mode', function (require) {
             });
         },
 
-        setSendTmsCronv2:  function(){
+        setSendTmsCronv2: function(){
             setTimeout(() => {
                  this.sendSavedRoutesv2();
                  this.setSendTmsCronv2();
@@ -510,6 +540,21 @@ odoo.define('tms.deliver_mode', function (require) {
                 this.deleteNoActualRoutes();
                 this.setDeleteNoActualRoutesCron();
             }, 30000);
+        },
+
+        setUpdateCacheCron: function() {
+            setTimeout(() => {
+                 this.updateRoutesCache();
+                 this.setUpdateCacheCron();
+            },  15 * 60 * 1000);
+        },
+
+        updateRoutesCache: async function(){
+            await this.putRoutesInCache();
+            await this.loadRoutes();
+            await this.loadCancellationOrderRow();
+            console.log('Кеш обновлен');
+            this.showInterfaceActual();
         },
 
         deleteNoActualRoutes: function(){
@@ -573,7 +618,6 @@ odoo.define('tms.deliver_mode', function (require) {
                     console.error(error);
             });
         },
-
 
         deleteSentFieldsInIndexedDb: function(){
             Object.values(this.database.idb_stores).forEach((storeName) => {
@@ -649,6 +693,29 @@ odoo.define('tms.deliver_mode', function (require) {
             };
         },
 
+        saveBrowseUidUserInCache: function() {
+            var transaction = this.database.idb.transaction(this.database.idb_stores.tms_browser_uid, 'readwrite');
+            var objectStore = transaction.objectStore(this.database.idb_stores.tms_browser_uid);
+
+            var clearRequest = objectStore.clear();
+
+            clearRequest.onsuccess = function (event) {
+                console.log(this.browse)
+                var putRequest = objectStore.put(this.browse);
+                putRequest.onsuccess = function (event) {
+                    console.log('Uid пользователя успешно записан в кеш');
+                }.bind(this);
+
+                putRequest.onerror = function (event) {
+                    console.error('Ошибка при записи в кеш uid пользователя', event.target.error);
+                };
+            }.bind(this);
+
+            clearRequest.onerror = function (event) {
+                console.error('Ошибка при очистке uid пользователя', event.target.error);
+            };
+        },
+
         getDateForValid: function(dateString, tz) {
             if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(dateString)) {
                 const date = new Date(dateString);
@@ -679,6 +746,20 @@ odoo.define('tms.deliver_mode', function (require) {
                     return result.action.attendance;
                 });
                 return def
+        },
+
+        getBrowseUidUserByController: function(cur_browse_uid) {
+            console.log("User ID: " + session.uid)
+            console.log("UID: " + cur_browse_uid)
+            let def = this._rpc({
+                model: 'tms.driver.browser',
+                method: 'get_unique_key_on_user_id',
+                args: [session.uid, cur_browse_uid] //Взятие browse_uid по user_id
+            })
+                .then((res) => {
+                    return res;
+                });
+            return def;
         },
 
         getEmployeeByController: async function() {
@@ -725,7 +806,7 @@ odoo.define('tms.deliver_mode', function (require) {
             var def = await this._rpc({
                 model: 'tms.order.row',
                 method: 'saveDatesTmsOrderRow',
-                args: [datesTmsOrderRow, session.uid]
+                args: [datesTmsOrderRow, session.uid, this.browse.id]
             })
                 .then((done) => {
                     return done;
@@ -762,19 +843,9 @@ odoo.define('tms.deliver_mode', function (require) {
                     'point_id': this.tmsContext.concretePoint.point['id'],
                     'tms_date': this.tmsContext.concretePoint.point['arrival_date'],
                     'sent': false,
-                }};
+                }
+            };
             this.showInterfaceActual();
-            /*
-            this.tmsContext.concretePoint.point['arrival_date'] = this.getDateForOdoo();
-            await this.saveIndexedDbv2(this.database.idb_stores.tms_order_row,
-                {
-                    'action': 'arrival',
-                    'point_id': this.tmsContext.concretePoint.point['id'],
-                    'tms_date': this.tmsContext.concretePoint.point['arrival_date'],
-                    'sent': false,
-                });
-            this.showInterfaceActual();
-            */
         },
 
         async onReturnedStoreButtonClick(){
@@ -799,18 +870,6 @@ odoo.define('tms.deliver_mode', function (require) {
                     'sent': false,
                 }};
             this.showInterfaceActual();
-            
-                // this.tmsContext.concretePoint.point['returned_client'] = this.getDateTranformByTz();
-                // await this.saveIndexedDbv2(this.database.idb_stores.tms_order_row,
-                //     {
-                //         'action': 'returned_client',
-                //         'point_id': this.tmsContext.concretePoint.point['id'],
-                //         'tms_date': this.getDateForOdoo(),
-                //         'sent': false,
-                //     });
-                // this.showInterfaceActual();
-                // this.tmsContext.concretePoint.routeReturnClientClick = true;
-            
         },
 
         async onUpdateCacheClick(){
@@ -866,16 +925,8 @@ odoo.define('tms.deliver_mode', function (require) {
                     'point_id': this.tmsContext.concretePoint.point['id'],
                     'tms_date': this.getDateForOdoo(),
                     'sent': false,
-                }};
-            
-                // this.tmsContext.concretePoint.point['delivered'] = this.getDateTranformByTz();
-                // await this.saveIndexedDbv2(this.database.idb_stores.tms_order_row,
-                //     {
-                //         'action': 'delivered',
-                //         'point_id': this.tmsContext.concretePoint.point['id'],
-                //         'tms_date': this.getDateForOdoo(),
-                //         'sent': false,
-                //     });
+                }
+            };
                 
                 this.showInterfaceActual();
                 this.tmsContext.concretePoint.routeDeliverClick = true;
@@ -900,16 +951,6 @@ odoo.define('tms.deliver_mode', function (require) {
             this.widget.feedBack = true
             this.showInterfaceActual()
         },
-
-        // async onCancelRowClick(){
-        //     this.showInterfaceActual()
-        //     this.tmsContext.concretePoint.point[this.action.typeDate] = this.getDateTranformByTz();
-        //     this.saveIndexedDbv2(this.action.object.row, this.action.object.field).then(() => {
-        //         this.action = {}
-        //         this.widget = {}
-        //         this.showInterfaceActual()
-        //     })
-        // },
 
         async onPointListButtonClick(){
             this.setConcretePointState({});
@@ -959,16 +1000,6 @@ odoo.define('tms.deliver_mode', function (require) {
                     }};
                 
                 this.showInterfaceActual();
-
-                // await this.saveIndexedDbv2(this.database.idb_stores.tms_order,
-                // {
-                //     'action': 'departed',
-                //     'route_id': this.tmsContext.routePoints.routeId,
-                //     'tms_date': this.getDateForOdoo(),
-                //     'sent': false,
-                // });
-
-                //this.tmsContext.routePoints.routeDepartClick = true;
 
         },
 
@@ -1020,16 +1051,6 @@ odoo.define('tms.deliver_mode', function (require) {
 
                     this.showInterfaceActual();
 
-                // await this.saveIndexedDbv2(this.database.idb_stores.tms_order,
-                //     {
-                //         'action': 'finished',
-                //         'route_id': this.tmsContext.routePoints.routeId,
-                //         'tms_date': this.getDateForOdoo(),
-                //         'sent': false,
-                //     });
-                // this.tmsContext.routePoints.routeFinishClick = true;
-
-
         },
 
         async onReturnedStore(){
@@ -1045,15 +1066,6 @@ odoo.define('tms.deliver_mode', function (require) {
                     'sent': false,
                 }};
                 this.showInterfaceActual();
-
-                // await this.saveIndexedDbv2(this.database.idb_stores.tms_order,
-                //     {
-                //         'action': 'returned_store',
-                //         'route_id': this.tmsContext.routePoints.routeId,
-                //         'tms_date': this.getDateForOdoo(),
-                //         'sent': false,
-                //     });
-                // this.tmsContext.routePoints.routeReturnClick = true;
         },
 
     });

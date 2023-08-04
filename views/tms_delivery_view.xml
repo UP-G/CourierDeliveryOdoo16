@@ -31,6 +31,9 @@
                         <field name="loaded_in_orders" string="Loaded in orders"/>
                         <field name="carrier_id" string="Carrier"/>
                         <field name="route_id" string="Route"/>
+                        <field name="interval_from" string="interval from"/>
+                        <field name="interval_to" string="interval to"/>
+                        <field name="car_departure_date" string="car_departure_date"/>
                     </group>
                 </sheet>
             </form>

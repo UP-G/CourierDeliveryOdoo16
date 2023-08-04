@@ -6,6 +6,7 @@
     'depends': ["web", "bus", "base", "mail", "hr_attendance"],
     'data': [
         'security/ir.model.access.csv',
+        'report/tms_delivery_report_view.xml',
         'wizard/tms_create_tms_order.xml',
         'views/tms_route_view.xml',
         'views/tms_carrier_view.xml',

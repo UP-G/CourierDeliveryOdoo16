@@ -5,7 +5,10 @@
         <field name="name">Routes order</field>
         <field name="model">tms.order</field>
         <field name="arch" type="xml">
-            <tree multi_edit="1">
+            <tree multi_edit="1"
+            decoration-danger="type_warning == 'driver_late' or type_warning == 'no_end_date_order'"
+            decoration-success="type_warning == 'no_warning'"
+            >
                 <field name="route_id" string="Route"/>
                 <field name="order_num" string="Order number"/>
                 <!-- <field name="arrived_for_loading" string="Arrived for loading"/> -->
@@ -13,6 +16,7 @@
                 <field name="finished_the_route" string="Finished the route"/>
                 <field name="returned_to_the_store" string="Returned to the store"/>
                 <field name="driver_id" string="Designated Driver"/>
+                <field name="type_warning" string="Warning"/>
                 <!-- <button name="getRows" type="object" cla1ss="oe_stat_button" icon="fa-car"></button> -->
             </tree>
         </field>
@@ -33,6 +37,8 @@
                         <field name="returned_to_the_store" string="return to store"/>
                         <field name="order_num" string="order number"/>
                         <field name="carrier_id" string="carrier_id"/>
+                        <field name="interval_from" string="interval from"/>
+                        <field name="interval_to" string="interval to"/>
                     </group>
                     <notebook>
                         <page string="orders rows">
