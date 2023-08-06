@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 
 from datetime import date, datetime, timedelta
 import pytz
-#self.env['tms.delivery'].add_orders_from_delivery()
+
 class TmsOrder(models.Model):
     _name = "tms.order"
     _description = 'Route order'
@@ -17,15 +17,38 @@ class TmsOrder(models.Model):
     notes = fields.Char(string='notes for order')
     interval_from = fields.Datetime(string='interval from')
     interval_to = fields.Datetime(string='interval to')
+    car_departure_date = fields.Datetime(string='car departure date')
     order_num = fields.Char(string='Order Number', required=True, index=True)
     order_date = fields.Char(string='Order Date')
     carrier_id = fields.Many2one('tms.carrier', index=True, string='Carrier ids')
     carrier_driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
     order_row_ids = fields.One2many('tms.order.row', 'order_id', string='implimentions of order') #ondelete='cascade'
 
+    type_warning = fields.Selection([('driver_late', 'The driver is running late'), 
+                                     ('no_end_date_order', 'There is no end date for the route'),
+                                     ('no_warning', 'No warning')],
+                                      string='Warning', compute='_compute_type_warning')#Типы предупреждения
+
     _sql_constraints = [
         ('unique_order_num', 'UNIQUE (order_num)', 'An Order Number must be unique!'),
     ]
+
+    def _compute_type_warning(self):
+        cur_date = datetime.now()
+
+        for rec in self:
+            if not rec.interval_to:
+                rec.type_warning = 'no_end_date_order'
+            elif not rec.finished_the_route:
+                if cur_date > rec.interval_to:
+                    rec.type_warning = 'driver_late'
+                else:
+                    rec.type_warning = 'no_warning'
+            else:
+                if rec.finished_the_route > rec.interval_to:
+                    rec.type_warning = 'driver_late'
+                else:
+                    rec.type_warning = 'no_warning'
 
     @api.depends('carrier_driver_id.user_id')
     def _compute_driver_id(self):
@@ -74,7 +97,7 @@ class TmsOrder(models.Model):
                         '|',('driver_id','=',user_id),
                             '&',('driver_id', '=', None),
                                 ('carrier_id.id', 'in', carrier_ids), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
-         		"|", ('returned_to_the_store', '>=', today_start),
+         		"|", ('returned_to_the_store', '>=', today_start), #если driver_id = пользователю которому нужно дать ЗН или если driver_id = False, то вернется если пользователи назначен на ТК, которая указанна в маршруте
          		('returned_to_the_store', '=', None)])
         # records = self.search([('create_date', '>=',today_start - timedelta(days=10)),
         #                 '|',('driver_id','=',user_id),
@@ -117,14 +140,16 @@ class TmsOrder(models.Model):
             record_routes = {
                 'id': record.id,
                 'name': record.order_num + ", " + record.route_id.name if record.route_id.name else record.order_num,
-                'start_time': record.route_id.start_time.astimezone(current_timezone) if record.route_id.start_time else False,
-                'end_time': record.route_id.end_time.astimezone(current_timezone) if record.route_id.end_time else False,
+                #'start_time': record.route_id.start_time.astimezone(current_timezone) if record.route_id.start_time else False,
+                #'end_time': record.route_id.end_time.astimezone(current_timezone) if record.route_id.end_time else False,
                 'arrived_for_loading': record.arrived_for_loading,
                 'departed_on_route': record.departed_on_route,
                 'returned_to_the_store': record.returned_to_the_store,
                 'finished_the_route': record.finished_the_route,
                 'driver_id': record.driver_id.id if record.driver_id else '',
                 'driver_name': record.driver_id.name if record.driver_id else '',
+                'interval_from': record.interval_from.astimezone(current_timezone) if record.interval_from else False,
+                'interval_to': record.interval_to.astimezone(current_timezone) if record.interval_to else False,
                 'points': record_points,
             }
 

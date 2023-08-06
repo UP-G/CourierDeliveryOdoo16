@@ -45,16 +45,14 @@
                                 <h3 data-name="name" class="card-title route" t-esc="route.name"></h3>
                                 <p data-name="id" style="display: none;" t-esc="route.id"></p>
                                 <div class="card-description route">
-                                    <p class="o_tms_card-text route" t-if="route.start_time">Estimated start date of the route: 
-                                        
-                                        <t t-esc="route.start_time"/>
+                                    <p class="o_tms_card-text route" t-if="route.interval_from">Estimated start date of the route: 
+                                        <t t-esc="route.interval_from"/>
                                     </p>
-                                    <p class="o_tms_card-text route" t-if="!route.start_time">No start time for the route</p>
-                                    <p class="o_tms_card-text route" t-if="route.end_time">Estimated end date of the route: 
-                                        
-                                        <t t-esc="route.end_time"/>
+                                    <p class="o_tms_card-text route" t-if="!route.interval_from">No start time for the route</p>
+                                    <p class="o_tms_card-text route" t-if="route.interval_to">Estimated end date of the route: 
+                                        <t t-esc="route.interval_to"/>
                                     </p>
-                                    <p class="o_tms_card-text route" t-if="!route.end_time">No end time for the route</p>
+                                    <p class="o_tms_card-text route" t-if="!route.interval_to">No end time for the route</p>
                                 </div>
                                 <div class="card-driver route">
                                     <p class="mb-1" t-if="route.driver_id" t-esc="route.driver_name"></p>

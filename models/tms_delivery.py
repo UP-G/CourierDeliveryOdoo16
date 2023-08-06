@@ -11,7 +11,10 @@ class TmsDelivery(models.Model):
     route_id = fields.Many2one('tms.route', string='Route id') # Маршрут
     date_create_1c = fields.Datetime(string='Date create from 1C') # Дата создания в 1С
     carrier_driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
-
+    interval_from = fields.Datetime(string='interval from')#интервал доставки
+    interval_to = fields.Datetime(string='interval to')
+    car_departure_date = fields.Datetime(string='car departure date')
+    
     carrier_id = fields.Many2one('tms.carrier', string="Tms carrier ids")
     delivery_row_ids = fields.One2many('tms.delivery.row', 'delivery_id', string='Implemention of Delivery')
     loaded_in_orders = fields.Boolean(string='Load in orders')
@@ -37,6 +40,9 @@ class TmsDelivery(models.Model):
                 'date_create_1c': record.date_create_1c,
                 'carrier_driver_id': record.carrier_driver_id.id,
                 'carrier_id': record.carrier_id.id,
+                'interval_from': record.interval_from,
+                'interval_to': record.interval_to,
+                'car_departure_date': record.car_departure_date,
             })     
 
             rows = self.env['tms.delivery.row'].search([('delivery_id', '=', record.id)])

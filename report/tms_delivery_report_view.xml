@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="tms_delivery_report_view_pivot" model="ir.ui.view">
+            <field name="name">tms.delivery.report.pivot</field>
+            <field name="model">tms.delivery.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Driver Analysis" sample="1">
+                    <field name="driver_name" type="row"/>
+                    <field name="route" type="row"/>
+                    <field name="order_num" type="row"/>
+                    <field name="not_delivered_per" type="measure" widget="percentage" invisible="1"/>
+                    <field name="not_returned_per" type="measure" widget="percentage" invisible="1"/>
+                    <field name="not_delivered_on_time_per" type="measure" widget="percentage" invisible="1"/>
+                    <field name="order_row_count" type="measure"/>
+                    <field name="delivered_count" type="measure"/>
+                    <field name="returned_count" type="measure"/>
+                    <field name="not_delivered_count" type="measure"/>
+                    <field name="not_returned_count" type="measure"/>
+                    <field name="completed_on_time_count" type="measure"/>
+                    <field name="not_completed_on_time_count" type="measure"/>
+                    <field name="not_returned_to_store_count" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+         <record id="tms_delivery_report_search" model="ir.ui.view">
+        <field name="name">tms.delivery.report.search</field>
+        <field name="model">tms.delivery.report</field>
+        <field name="arch" type="xml">
+            <search>
+<!--                <field name="impl_num"/>-->
+                <filter name="filter_driver" string="Orders with drivers"
+                        domain="[('driver_name', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'order_create_date'}"/>
+                    <filter string="Driver" name="group_by_driver" context="{'group_by': 'driver_name'}"/>
+                    <filter string="Route" name="group_by_route" context="{'group_by': 'route'}"/>
+                    <filter string="Order number" name="group_by_order" context="{'group_by': 'order_num'}"/>
+                    <filter string="Implemention" name="group_by_impl" context="{'group_by': 'impl_num'}"/>
+<!--                    <filter string="Delivery" name="group_by_delivery" context="{'group_by': 'delivery_id'}"/>-->
+                </group>
+            </search>
+        </field>
+        </record>
+
+        <record id="tms_delivery_report_view_tree" model="ir.ui.view">
+            <field name="name">tms.delivery.report.tree</field>
+            <field name="model">tms.delivery.report</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="driver_name" optional="show" string="Водитель" />
+                    <field name="carrier_name" optional="show" string="Перевозчик"/>
+                    <field name="client_name" optional="show" string="Клиент"/>
+                    <field name="route" optional="show" string="Маршрут"/>
+                    <field name="stock" optional="show" string="Склад"/>
+                    <field name="order_num" optional="show" string="Номер заказа"/>
+                    <field name="impl_num" optional="show" string="Номер реализации"/>
+                    <field name="order_row_type" optional="show" string="Тип точки"/>
+                    <field name="order_create_date" optional="show" string="Дата создания заказа"/>
+                    <field name="order_completed_date" optional="show" string="Дата выполнения заказа"/>
+                    <field name="start_route_date" optional="show" string="Дата начала маршрута"/>
+                    <field name="finish_route_date" optional="show" string="Дата конца маршрута"/>
+                    <field name="returned_to_store" optional="show" string="Дата возврата на склад"/>
+<!--                    <field name="interval_from_date" optional="show" string="Интервал С"/>-->
+<!--                    <field name="interval_to_date" optional="hide" string="Интервал По"/>-->
+                    <field name="order_row_count" optional="show" string="Количество заказов"/>
+                    <field name="delivered_count" optional="show" string="Количество доставленных"/>
+                    <field name="returned_count" optional="show" string="Количество возвращенных"/>
+                    <field name="not_delivered_count" optional="show" string="Количество недоставленных"/>
+                    <field name="not_returned_count" optional="show" string="Количество невернутых"/>
+                    <field name="completed_on_time_count" optional="show" string="Завершенных вовремя"/>
+                    <field name="not_completed_on_time_count" optional="show" string="Незавершенных вовремя"/>
+                    <field name="not_returned_to_store_count" optional="show"/>
+                    <field name="not_delivered_per" optional="show" widget="percentage"/>
+                    <field name="not_returned_per" optional="show" widget="percentage"/>
+                    <field name="not_delivered_on_time_per" optional="show" widget="percentage"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="efficiency_saler_report_view_graph" model="ir.ui.view">-->
+<!--            <field name="name">efficiency.saler.report.graph</field>-->
+<!--            <field name="model">efficiency.saler.report</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <graph string="Saller Report" sample="1">-->
+<!--                    <field name="team_id"/>-->
+<!--                    <field name="manager_name"/>-->
+<!--                    <field name="client_name"/>-->
+<!--                    <field name="plan" type="measure"/>-->
+<!--                </graph>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="efficiency_saler_report_view_form" model="ir.ui.view">-->
+<!--            <field name="name">efficiency.saler.report.form</field>-->
+<!--            <field name="model">efficiency.saler.report</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form>-->
+<!--                    <sheet>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="date"/>-->
+<!--                                <field name="team_id"/>-->
+<!--                                <field name="manager_name" class="o_text_overflow" />-->
+<!--                                <field name="type_client"/>-->
+<!--                                <field name="type_debts"/>-->
+<!--                                <field name="client_name" class="o_text_overflow" />-->
+<!--                                <field name="business_type" class="o_text_overflow" />-->
+<!--                                <field name="price_level" />-->
+<!--                                <field name="requests_limit" />-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="plan"/>-->
+<!--                                <field name="prediction"/>-->
+<!--                                <field name="plan_predicted_percentage" widget="percentage"/>-->
+<!--                                <field name="turnover_lacking"/>-->
+<!--                                <field name="turnover_lacking_percent"/>-->
+<!--                                <field name="turnover_this_mounth"/>-->
+<!--                                <field name="turnover_previous_mounth"/>-->
+<!--                                <field name="debt"/>-->
+<!--                                <field name="overdue_debt"/>-->
+<!--                                <field name="task_count"/>-->
+<!--                                <field name="interaction_count"/>-->
+<!--                                <field name="calls_in_count"/>-->
+<!--                                <field name="calls_out_count"/>-->
+<!--                                <field name="calls_minute"/>-->
+<!--                                <field name="sonder_calls_count"/>-->
+<!--                                <field name="capacity"/>-->
+<!--                                <field name="capacity_percentage" widget="percentage"/>-->
+<!--                                <field name="our_share" widget="percentage"/>-->
+<!--                                <field name="capacity_lacking"/>-->
+<!--                                <field name="type_capacity" optional="show"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record model="ir.ui.view" id="efficiency_saler_report_search">-->
+<!--            <field name="name">efficiency.saler.report.search</field>-->
+<!--            <field name="model">efficiency.saler.report</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Report search">-->
+<!--                    <field name="manager_name" string="Manager or Client" filter_domain="['|', ('manager_name', 'ilike', self), ('client_name', 'ilike', self)]"/>-->
+<!--                    <field name="manager_name" class="o_text_overflow" />-->
+<!--                    <field name="client_name" class="o_text_overflow" />-->
+<!--                    <field name="team_id"/>-->
+<!--                    <field name="client_1c_id"/>-->
+<!--                    <field name="business_type"/>-->
+<!--                    <field name="price_level"/>-->
+<!--                    <field name="requests_limit"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="Key clients" name="filter_is_main" domain="[('type_client', '=', '4_main')]"/>-->
+<!--                    <filter string="Key+meaningfull clients" name="filter_is_main_second" domain="[('type_client', 'in', ['4_main','5_mean'])]"/>-->
+<!--                    <filter string="Key+meaningfull clients by capacity" name="filter_is_key_capacity" domain="[('type_capacity', 'in', ['4_main','5_mean'])]"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="Plan Outsiders" name="filter_outsider" domain="[('plan_predicted_percentage','&lt;=','0.9')]"/>-->
+<!--                    <filter string="Capacity Outsiders" name="filter_capacity_outsider" domain="[('capacity_percentage','&lt;=','0.3')]"/>-->
+<!--                    <filter string="Our Share Outsiders" name="filter_capacity_outsider" domain="[('our_share','&lt;=','0.3')]"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="No communication" name="filter_no_communication" domain="[('task_count','=','0'),('interaction_count','=','0'),('calls_minute','=','0')]"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="Overdued debts" name="filter_is_main" domain="[('overdue_debt', '>', '0')]"/>-->
+<!--                    <separator/>-->
+<!--                    <filter string="Last 31 days" name="filter_last_month_creation" domain="[('date','&gt;', (context_today() - datetime.timedelta(days=31)).strftime('%Y-%m-%d'))]"/>-->
+<!--                    <filter string="Low limit for daily requests" name="filter_low_requests_limit" domain="[('requests_limit','&gt;', '10')]"/>-->
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Sales Team" name="team_id" domain="[]" context="{'group_by':'team_id'}"/>-->
+<!--                        <filter string="Manager" name="manager" domain="[]" context="{'group_by':'manager_name'}"/>-->
+<!--                        <filter string="Client" name="client" domain="[]" context="{'group_by':'client_name'}"/>-->
+<!--                        <filter string="Client Type" name="client_type" domain="[]" context="{'group_by':'type_client'}"/>-->
+<!--                        <filter string="Capacity Type" name="capacity_type" domain="[]" context="{'group_by':'type_capacity'}"/>-->
+<!--                        <filter string="Business Type" name="business_type" domain="[]" context="{'group_by':'business_type'}"/>-->
+<!--                        <filter string="Price Level" name="price_level" domain="[]" context="{'group_by':'price_level'}"/>-->
+<!--                        <filter string="Period" name="date" domain="[]" context="{'group_by':'date:month'}"/>-->
+<!--                   </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="tms_delivery_report_action" model="ir.actions.act_window">
+            <field name="name">Efficiency Drivers</field>
+            <field name="res_model">tms.delivery.report</field>
+            <field name="view_mode">pivot,tree</field>
+<!--            <field name="context">{-->
+<!--                'group_by': ['type_client'],-->
+<!--                'pivot_row_groupby': ['date:month', 'team_id', 'manager_name', 'type_client', 'client_name']-->
+<!--                'pivot_measures':  ['__count', 'plan', 'prediction', 'turnover_lacking', 'capacity', 'capacity_lacking', 'turnover_this_mounth', 'turnover_previous_mounth', 'debt', 'overdue_debt',-->
+<!--                    'task_count', 'interaction_count', 'calls_in_count', 'calls_out_count', 'calls_minute', 'sonder_calls_count'],-->
+<!--                'pivot_column_groupby': [],-->
+<!--                'search_default_filter_outsider': 1,-->
+<!--                'search_default_filter_no_communication': 1,-->
+<!--                }</field>-->
+            <field name="domain">[]</field>
+            <field name="context">{
+                    'search_default_filter_driver': 1,
+                    'search_default_group_by_date': 1
+                }</field>
+<!--        <field name="search_view_id" ref="efficiency_saler_report_search"/>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                    No data yet!-->
+<!--                </p><p>-->
+<!--                    Start scheduling activities on your opportunities-->
+<!--                </p>-->
+<!--            </field>-->
+        </record>
+</odoo>

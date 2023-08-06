@@ -8,5 +8,8 @@ access_tms_carrier_route,access_tms_carrier_route,model_tms_carrier_route,,1,1,1
 access_tms_carrier_driver,access_tms_carrier_driver,model_tms_carrier_driver,,1,1,1,1
 access_tms_delivery,access_tms_delivery,model_tms_delivery,,1,1,1,1
 access_tms_delivery_row,access_tms_delivery_row,model_tms_delivery_row,,1,1,1,1
+access_tms_driver_browser,access_tms_driver_browser,model_tms_driver_browser,,1,1,1,1
 access_tms_order_wizard,access_tms_order_wizard,model_tms_order_wizard,,1,1,1,1
 access_tms_order_cancellation,access_tms_order_cancellation,model_tms_order_cancellation,,1,1,1,1
+access_tms_delivery_report,access_tms_delivery_report,model_tms_delivery_report,,1,1,1,1
+

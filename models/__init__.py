@@ -8,3 +8,4 @@ from . import tms_carrier_route
 from . import tms_delivery
 from . import tms_delivery_row
 from . import tms_order_cancellation
+from . import tms_driver_browser

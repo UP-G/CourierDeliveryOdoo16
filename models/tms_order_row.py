@@ -25,6 +25,7 @@ class TmsOrderRow(models.Model):
 
     partner_key = fields.Many2one('res.partner', string='counterparty')
     cancellation_ids = fields.Many2many('tms.order.cancellation') # Теги причины отмены
+    driver_browser_id = fields.Many2many('tms.driver.browser') #Uid уникальных пользователей
 
     def show_tms_buttons(self):
 
@@ -101,10 +102,14 @@ class TmsOrderRow(models.Model):
         return 'Success'
 
     @api.model
-    def saveDatesTmsOrderRow(self, dataTmsOrderRow, user_id):
+    def saveDatesTmsOrderRow(self, dataTmsOrderRow, user_id, browse_id):
         for dataAction in dataTmsOrderRow:
             record = self.env['tms.order.row'].search([('id', '=', dataAction['point_id'])], limit=1)
             #Вынести в метод
+            if browse_id:
+                record.update({
+                    'driver_browser_id': [(4, browse_id)],
+                })
             if not record.order_id.departed_on_route: #Если дата начала маршрута пустая, то при выполненном заказе проставляем её.
                 record.order_id.departed_on_route = dataAction['tms_date']
             if not record.order_id.driver_id: #Если не назначен водитель, то заполняем его
