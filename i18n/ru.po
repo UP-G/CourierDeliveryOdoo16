@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20221202\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-04 16:44+0000\n"
-"PO-Revision-Date: 2023-08-04 19:50+0300\n"
+"POT-Creation-Date: 2023-08-07 16:03+0000\n"
+"PO-Revision-Date: 2023-08-07 19:04+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -477,6 +477,11 @@ msgstr "Водитель назначен"
 #. module: tms
 #: model:ir.model,name:tms.model_tms_driver_browser
 msgid "Driver browser"
+msgstr ""
+
+#. module: tms
+#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
+msgid "Driver do`nt have accounting"
 msgstr ""
 
 #. module: tms
@@ -1187,6 +1192,16 @@ msgid "Tag for cancellation"
 msgstr "Теги причины отмены"
 
 #. module: tms
+#: model:ir.model.fields.selection,name:tms.selection__tms_order__type_warning__driver_finish_completed
+msgid "The driver completed the route on time"
+msgstr "Водитель вовремя закончил маршрут"
+
+#. module: tms
+#: model:ir.model.fields.selection,name:tms.selection__tms_order__type_warning__driver_finish_late
+msgid "The driver finished the route but was late"
+msgstr "Водитель закончил маршрут, но опоздал"
+
+#. module: tms
 #: model:ir.model.fields.selection,name:tms.selection__tms_order__type_warning__driver_late
 msgid "The driver is running late"
 msgstr "Водитель опоздал"
@@ -1302,11 +1317,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:tms.field_tms_order_row__order_row_type
 msgid "Type of row"
 msgstr "Тип точки"
-
-#. module: tms
-#: model_terms:ir.ui.view,arch_db:tms.tms_order_search
-msgid "Types warning"
-msgstr "Типы предупреждений"
 
 #. module: tms
 #. odoo-javascript

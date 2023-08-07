@@ -26,7 +26,9 @@ class TmsOrder(models.Model):
 
     type_warning = fields.Selection([('driver_late', 'The driver is running late'), 
                                      ('no_end_date_order', 'There is no end date for the route'),
-                                     ('no_warning', 'No warning')],
+                                     ('no_warning', 'No warning'),
+                                     ('driver_finish_late', 'The driver finished the route but was late'),
+                                     ('driver_finish_completed', 'The driver completed the route on time')],
                                       string='Warning', compute='_compute_type_warning')#Типы предупреждения
 
     _sql_constraints = [
@@ -46,9 +48,9 @@ class TmsOrder(models.Model):
                     rec.type_warning = 'no_warning'
             else:
                 if rec.finished_the_route > rec.interval_to:
-                    rec.type_warning = 'driver_late'
+                    rec.type_warning = 'driver_finish_late'
                 else:
-                    rec.type_warning = 'no_warning'
+                    rec.type_warning = 'driver_finish_completed'
 
     @api.depends('carrier_driver_id.user_id')
     def _compute_driver_id(self):
@@ -166,8 +168,8 @@ class TmsOrder(models.Model):
             elif dataAction['action'] == 'departed':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.departed_on_route = dataAction['tms_date']
-                if not record.driver_id:
-                    record.driver_id = user_id
+                # if not record.driver_id:
+                #     record.driver_id = user_id
             elif dataAction['action'] == 'finished':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.finished_the_route = dataAction['tms_date']
