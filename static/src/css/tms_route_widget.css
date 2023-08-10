@@ -6,15 +6,33 @@
     max-width: max-content;
     flex: 1 0 auto;
     overflow-y: auto;
+    margin-bottom: 20%;
 }
 
 .o_tms_card_point {
     /* flex: 1 0 auto; */
+    display: none;
+}
+
+.o_tms_cards_route_points {
+    /* flex: 1 0 auto; */
+    display: none;
+}
+
+.o_tms_btn_point {
+    display: none;
+}
+
+.o_tms_route {
+    display: block;
 }
 
 .o_tms_action_start,
+.o_tms_action_nav_point,
 .o_tms_action_nav {
-    position: sticky;
+    position: absolute;
+    left: 0;
+    right: 0;
     bottom: 0px;
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +43,8 @@
 }
 
 .o_tms_route_point_btn {
-    position: sticky;
+    display: none;
+    /*position: sticky;*/
     width: 100%;
     bottom: 0;
     background-color: #f8f9fa;

@@ -2,19 +2,29 @@
 <template xml:space="preserve">
     <!-- Base templates. Структуру не менять (Разве что в TmsMessage можно подключить другие шаблоны или разделить их)  -->
     <t t-name="TmsBase">
-        <t t-call="TmsMessage"/>
         <t t-call="TmsContent"/>
-        <t t-call="TmsButtons"/></t>
+        <t t-call="TmsMessage"/>
+    </t>
     <t t-name="TmsMessage">
-        <t t-call="TmsMessageSmth"/></t>
-    <t t-name="TmsButtons">
-        <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPointButtons"/>
-        <t t-elif="context.routePoints.points.length" t-call="TmsRoutePointsButtons"/>
-        <t t-elif="context.routes.length >= 0" t-call="TmsRouteButtons"/></t>
+        <t t-call="TmsMessageSmth"/>
+    </t>
     <t t-name="TmsContent">
-        <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPoint"/>
-        <t t-elif="context.routePoints.points.length" t-call="TmsRoutePoints"/>
-        <t t-elif="context.routes.length >= 0" t-call="TmsRoute"/></t>
+        <div class="o_tms_card_point">
+        <t t-call="TmsPoint"/>
+        </div>
+        <div class="o_tms_cards_route_points">
+        <t t-call="TmsRoutePoints"/>
+        </div>
+        <div class="o_tms_route">
+        <t t-call="TmsRoute"/>
+        </div>
+        <t t-call="TmsButtons"/>
+    </t>
+    <t t-name="TmsButtons">
+        <t t-call="TmsPointButtons"/>
+        <t t-call="TmsRoutePointsButtons"/>
+        <t t-call="TmsRouteButtons"/>
+    </t>
     <!--  Data and card templates   -->
     <t t-name="TmsRoute">
         <div class="container">
@@ -64,6 +74,7 @@
                 </t>
             </div>
         </div>
+
     </t>
     <t t-name="TmsRoutePoints">
         <div class="container">
@@ -123,11 +134,10 @@
         </div>
     </t>
     <t t-name="TmsPoint">
-        <div class="container o_tms_card_point">
+        <div class="container">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h2 class="card-title" title="Information about the order ">Information about the order 
-                        
+                    <h2 class="card-title" title="Information about the order ">Information about the order
                         <t t-esc="context.concretePoint.pointOrderName"></t>
                     </h2>
                 </div>
@@ -207,8 +217,7 @@
     <!--  Buttons templates   -->
     <t t-name="TmsRouteButtons">
         <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today"
-            >Number of hours worked during the current shift: 
-            
+            >Number of hours worked during the current shift:
             <t t-esc="context.attendance.hours_today"/>
         </p>
         <div class="o_tms_action_start">
@@ -268,8 +277,8 @@
         </div>
     </t>
     <t t-name="TmsPointButtons">
-        <div class="d-flex justify-content-center">
-            <div class="o_tms_action_nav" style="width: 100%;">
+        <div class="justify-content-center o_tms_btn_point">
+            <div class="o_tms_action_nav_point" style="width: 100%;">
                 <button
                             class="o_tms_btn_PointList btn btn-lg btn-block btn-secondary border">
                     <i class='fa fa-mail-reply'></i>
@@ -310,15 +319,15 @@
     </t>
     <!--  Message templates  -->
     <t t-name="TmsMessageSmth">
-        <div t-if="widget.confirmation">
+        <div class="o_tms_modal_confirm">
             <t t-call="TmsModalConfirm"/>
         </div>
-        <div t-if="widget.feedBack">
+        <div class="o_tms_modal_feedback">
             <t t-call="TmsModalFeedBack" />
         </div>
     </t>
     <t t-name="TmsModalFeedBack">
-        <div t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-{{ widget.feedBack ? 'block' : 'none' }}" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+        <div t-if="widget.feedBack" t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
             <div class="o_tms_feedback modal-dialog">
                 <div class="o_tms_feedback modal-content w-100">
                     <div class="o_tms_feedback modal-header">
@@ -355,7 +364,7 @@
     </t>
     <!-- Модальное окно для потверждения действий -->
     <t t-name="TmsModalConfirm">
-        <div t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-{{ widget.confirmation ? 'block' : 'none' }}" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
+        <div t-if="widget.confirmation" t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-block" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
             <div class="o_tms_modal_confirmation modal-dialog modal-dialog-centered" role="document">
                 <div class="o_tms_modal_confirmation modal-content w-100">
                     <div class="o_tms_modal_confirmation modal-header">
