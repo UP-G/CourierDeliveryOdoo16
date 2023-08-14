@@ -1,6 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.tools import pytz
-import datetime
+from datetime import datetime
 
 class TmsOrderRow(models.Model):
     _name = "tms.order.row"
@@ -14,7 +14,7 @@ class TmsOrderRow(models.Model):
     comment = fields.Char(string='Comment', default='phone;address')
     returned_client = fields.Datetime(string='is_returned_client')
     returned_store = fields.Datetime(string='is_returned_store')
-    delivered = fields.Datetime(string='delivered')# Время доставки
+    delivered = fields.Datetime(string='delivered')# Время доставкии
     complaint = fields.Datetime(string='complaint')
     note = fields.Char(string='note for order row')# Заметки
     selected = fields.Boolean(string='selected')#Поле выбрать
@@ -26,6 +26,26 @@ class TmsOrderRow(models.Model):
     partner_key = fields.Many2one('res.partner', string='counterparty')
     cancellation_ids = fields.Many2many('tms.order.cancellation') # Теги причины отмены
     driver_browser_id = fields.Many2many('tms.driver.browser') #Uid уникальных пользователей
+
+    type_warning = fields.Selection([('delivered_on_time', 'Delivered on time'),
+                                     ('not_delivered_on_time', 'Not delivered on time'),
+                                     ('no_end_date_order', 'There is no end date for the route'),
+                                     ('no_warning', 'No warning')],
+                                    string='Type Warning', compute='_compute_warning_for_row')
+
+    @api.depends('delivered')
+    def _compute_warning_for_row(self):
+        now = datetime.now()
+        for record in self:
+            if record.order_id.interval_to:
+                if (record.delivered and record.order_id.interval_to >= record.delivered) or (record.returned_client and record.order_id.interval_to >= record.returned_client) or (record.cancel_delivery and record.order_id.interval_to >= record.cancel_delivery):
+                    record.type_warning = 'delivered_on_time'
+                elif (record.delivered and record.order_id.interval_to < record.delivered) or (record.returned_client and record.order_id.interval_to < record.returned_client) or (record.cancel_delivery and record.order_id.interval_to < record.cancel_delivery) or (record.order_id.interval_to < now and not record.delivered and not record.returned_client):
+                    record.type_warning = 'not_delivered_on_time'
+                else:
+                    record.type_warning = 'no_warning'
+            else:
+                record.type_warning = 'no_end_date_order'
 
     def show_tms_buttons(self):
 
@@ -50,22 +70,6 @@ class TmsOrderRow(models.Model):
                 'phone': points.route_point_id.res_partner_id.phone,
                 'impl_num': points.impl_num,
                 }
-
-    # @api.model
-    # def showPoint(self, pointId):
-    #     points = self.search([('id', '=', pointId)])
-
-    #     return [ {
-    #             'id': point.id,
-    #              'arrival_date': point.arrival_date,
-    #              'returned_client': point.returned_client,
-    #              'returned_store': point.returned_store,
-    #              'delivered': point.delivered,
-    #              'complaint': point.complaint,
-    #              'phone': point.route_point_id.res_partner_id.phone,
-    #              'impl_num': point.impl_num
-    #              } for point in points
-    #     ]
 
     @api.model
     def saveInDB(self, dataTms): #Отрефакторить
@@ -129,8 +133,19 @@ class TmsOrderRow(models.Model):
                     'cancellation_ids': [(6, 0, [dataAction['tagCanceledId']])],
                     'comment_driver': dataAction['driverComment'],
                 })
-            # else:
-            #     raise Exception()
+
+            if 'switch_status_row' in dataAction:
+                vals = {
+                    'delivered': False,
+                    'returned_client': False,
+                    'cancel_delivery': False
+                }
+                if dataAction['action'] == 'clear_date_row':
+                    for key, value in vals.items():
+                        if key in record:
+                            if value != record[key]:
+                                record.order_id.message_post(body=record.impl_num + ' reset old data ' + key + ' ' + format(record[key]) + 'UTC+0')
+                    record.update(vals)
         return 'Success'
     
     @api.model
@@ -180,4 +195,18 @@ class TmsOrderRow(models.Model):
 
     def name_get(self):
         return [(record.id, '{order_num}'.format(order_num=record.order_id.order_num)) for record in self]
+    
+    def _get_action_interface_order_row(self):
+        return {
+        'returned_client': {
+            'model': 'tms.order.row',
+            'field': 'returned_client',
+            'id_field': 'id'
+        },
+        'delivered': {
+            'model': 'tms.order.row',
+            'field': 'delivered',
+            'id_field': 'id'
+        },
+    }
 

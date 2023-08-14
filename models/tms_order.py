@@ -6,6 +6,7 @@ import pytz
 class TmsOrder(models.Model):
     _name = "tms.order"
     _description = 'Route order'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     driver_id = fields.Many2one('res.users', index=True, string='driver_id', compute='_compute_driver_id', store=True)
     route_id = fields.Many2one('tms.route', index=True, string='route_id')
@@ -23,6 +24,7 @@ class TmsOrder(models.Model):
     carrier_id = fields.Many2one('tms.carrier', index=True, string='Carrier ids')
     carrier_driver_id = fields.Many2one('tms.carrier.driver', string='Carrier driver id')
     order_row_ids = fields.One2many('tms.order.row', 'order_id', string='implimentions of order') #ondelete='cascade'
+    interval_route = fields.Char(string='Time range of the route', compute='_compute_interval')
 
     type_warning = fields.Selection([('driver_late', 'The driver is running late'), 
                                      ('no_end_date_order', 'There is no end date for the route'),
@@ -59,6 +61,37 @@ class TmsOrder(models.Model):
                 order.driver_id = order.carrier_driver_id.user_id
             else:
                 order.driver_id = False
+
+    is_late_finish = fields.Boolean(string='is late finish', compute='_compute_late_after_finish', store=True)
+
+    @api.depends('interval_to', 'finished_the_route')
+    def _compute_late_after_finish(self):
+        for order in self:
+            if order.interval_to and order.finished_the_route and order.interval_to < order.finished_the_route:
+                order.is_late_finish = True
+            else:
+                order.is_late_finish = False
+    
+    is_not_late_finish = fields.Boolean(string='is not late finish', compute='_compute_no_late_after_finish', store=True)
+
+    @api.depends('interval_to', 'finished_the_route')   
+    def _compute_no_late_after_finish(self):
+        for order in self:
+            if order.interval_to and order.finished_the_route and order.interval_to > order.finished_the_route:
+                order.is_not_late_finish = True
+            else:
+                order.is_not_late_finish = False
+
+    @api.onchange('interval_to', 'interval_from')
+    def _compute_interval(self):
+        user_tz = pytz.timezone(self.env.user.tz or 'UTC')
+        for record in self:
+            if record.interval_from and record.interval_to:
+                interval_from = record.interval_from.astimezone(user_tz).strftime("%d.%m.%Y %H:%M")
+                interval_to = record.interval_to.astimezone(user_tz).strftime("%H:%M")
+                record.interval_route = f"{interval_from} - {interval_to}"
+            else:
+                record.interval_route = 'Interval not reported'
 
     def getRows(self):
         return {
@@ -168,8 +201,9 @@ class TmsOrder(models.Model):
             elif dataAction['action'] == 'departed':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.departed_on_route = dataAction['tms_date']
-                # if not record.driver_id:
-                #     record.driver_id = user_id
+                if not record.driver_id:
+                    carrier_driver_id = self.env['tms.carrier_driver'].search('user_id', '=', user_id).id
+                    record.carrier_driver_id = carrier_driver_id
             elif dataAction['action'] == 'finished':
                 record = self.env['tms.order'].search([('id', '=', dataAction['route_id'])], limit=1)
                 record.finished_the_route = dataAction['tms_date']

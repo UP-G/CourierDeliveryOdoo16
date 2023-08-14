@@ -14,6 +14,9 @@ odoo.define('tms.deliver_mode', function (require) {
             "click .o_tms_btn_Returned": function () {this.onReturnedClientButtonClick();}, //Кнопка Возрат принят
             "click .o_tms_btn_PointList": function () {this.onPointListButtonClick();},
             "click .o_tms_btn_Cancel_row": function () {this.onPointCancelRowClick();}, // Кнопка отмены заказа
+            "click .o_tms_btn_change_status_row": function() {this.onPointChangeStatusRow();},
+
+             "click .o_tms_modal_switch_order_send": function() { this.tryToAction()},
 
             "click .o_tms_btn_RouteList": function () {this.onRouteListClick();},
             "click .o_tms_btn_Departed": function () {this.onDeparted();},
@@ -84,11 +87,15 @@ odoo.define('tms.deliver_mode', function (require) {
                     showClosedRouteRow: true, //Скрытие обработанных точек маршрута
                 },
                 cancellation: [], //Список причин отказа
+                statusOrder: [
+                    {'id': 3, 'action_type': 'clear_date_row', 'name': 'Сбросить'},
+                ]
             };
 
             this.widget = {
                 confirmation: false, // Окно потверждение
                 feedBack: false, // Окно с возможностью оставить коментарий
+                switchOrder: false, //Окно для смены статуса заказа
                 viewType: null,
             }
 
@@ -255,12 +262,29 @@ odoo.define('tms.deliver_mode', function (require) {
             return Object.keys(obj).length === 0;
         },
 
-        isLastCloseRoutePoint() {
+        isLastCloseRoutePoint: function() {
           let route = this.routes.find((route) => {
                 return route.id === parseInt(this.tmsContext.routePoints.routeId);
             });
             this.tmsContext.routePoints.checkAllFinishOrder = route.points.every(obj => obj.returned_client || obj.delivered || obj.cancel_delivery);
             return this.tmsContext.routePoints.checkAllFinishOrder
+        },
+
+        setSwitchState: function() {
+            let select = document.getElementById("selectionSwitch");
+            this.action.type = select.value
+
+            this.action.object = {
+                'row': this.database.idb_stores.tms_order_row,
+                'field': {
+                    'action': this.action.type,
+                    'point_id': this.tmsContext.concretePoint.point['id'],
+                    'switch_status_row': true,
+                    'tms_date': this.getDateForOdoo(),
+                    'sent': false,
+                }};
+            this.widget.switchOrder = false
+            this.display_message('switchStatusOrder')
         },
 
         setRoutesState: function(routes){
@@ -285,9 +309,40 @@ odoo.define('tms.deliver_mode', function (require) {
             this.tmsContext.concretePoint.point = point;
         },
 
-        setViewType: function(viewType) {
-            this.widget.viewType = viewType
-            this.showInterfaceActual()
+        setDateOrderInOrderRow: function() {
+
+            if (this.action.type === 'departed') {
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.departed_on_route = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.departedOnRoute = route.departed_on_route;
+                }
+            } else if (this.action.type === 'finished') {
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.finished_the_route = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.finishedTheRoute = route.finished_the_route;
+                }
+            } else if (this.action.type === 'returned_store') {
+                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
+                if (route) {
+                    route.returned_to_the_store = this.getDateTranformByTz();
+                    this.tmsContext.routePoints.returnedToTheStore = route.returned_to_the_store;
+                }
+            } else if (this.action.type === 'cancelOrderRow') {
+                const date = this.getDataForFeedBack();
+                if (!date) {
+                    // Выводить варнинг
+                    return;
+                }
+            } else if (this.action.type === 'clear_date_row') {
+                const fieldsToClear = ['returned_client', 'delivered', 'cancel_delivery'];
+
+                fieldsToClear.forEach(field => {
+                console.log(this.tmsContext.concretePoint.point[field])
+                this.tmsContext.concretePoint.point[field] = false;
+                });
+            }
         },
 
         showInterfaceActual: function() {
@@ -300,6 +355,9 @@ odoo.define('tms.deliver_mode', function (require) {
             }
             if (viewTypeMessage === 'feedback') {
                 this.$(".o_tms_modal_feedback").html(QWeb.render('TmsModalFeedBack', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
+            }
+            if (viewTypeMessage === 'switchStatusOrder') {
+                this.$(".o_tms_modal_switch_s_order").html(QWeb.render('TmsModalSwitchStatusOrder', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
             }
         },
 
@@ -340,6 +398,14 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         render_menu: function (viewTypeMenu) {
+            console.log(this.action.type)
+            console.log(viewTypeMenu)
+            console.log(this.tmsContext.routePoints.checkAllFinishOrder)
+            if (viewTypeMenu === 'cards_route_points' || 
+            this.tmsContext.routePoints.checkAllFinishOrder ||
+            this.action.type === 'clear_date_row') {
+                this.$(".o_tms_route_point_btn").html(QWeb.render('TmsRoutePointsButtons', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
+            }
             if (this.action.type === 'delivered' ||
             this.action.type === 'returned' ||
             this.action.type === 'cancelOrderRow' || Object.keys(this.tmsContext.concretePoint.point).length !== 0) {
@@ -348,9 +414,6 @@ odoo.define('tms.deliver_mode', function (require) {
             } else {
                 this.$(".o_tms_route_point_btn").html(QWeb.render('TmsRoutePointsButtons', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
                 this.display_menu('cards_route_points')
-            }
-            if (viewTypeMenu === 'cards_route_points') {
-                this.$(".o_tms_route_point_btn").html(QWeb.render('TmsRoutePointsButtons', {'context': this.tmsContext, 'widget': this.widget, 'action': this.action}));
             }
         },
 
@@ -368,30 +431,10 @@ odoo.define('tms.deliver_mode', function (require) {
 
         tryToAction: function () {
 
-            if (this.action.type === 'departed') {
-                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
-                if (route) {
-                    route.departed_on_route = this.getDateTranformByTz();
-                    this.tmsContext.routePoints.departedOnRoute = route.departed_on_route;
-                }
-            } else if (this.action.type === 'finished') {
-                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
-                if (route) {
-                    route.finished_the_route = this.getDateTranformByTz();
-                    this.tmsContext.routePoints.finishedTheRoute = route.finished_the_route;
-                }
-            } else if (this.action.type === 'returned_store') {
-                const route = this.routes.find(route => route.id === parseInt(this.tmsContext.routePoints.routeId));
-                if (route) {
-                    route.returned_to_the_store = this.getDateTranformByTz();
-                    this.tmsContext.routePoints.returnedToTheStore = route.returned_to_the_store;
-                }
-            } else if (this.action.type === 'cancelOrderRow') {
-                const date = this.getDataForFeedBack();
-                if (!date) {
-                    // Выводить варнинг
-                    return;
-                }
+            this.setDateOrderInOrderRow()
+
+            if (this.action.type === 'clear_date_row') {
+                this.setSwitchState()
             }
 
             if (!this.tmsContext.routePoints.departedOnRoute) { //Если кнопка в ТЗ уже нажата, но дата начала маршрута ещё не стоит, то проставляем её
@@ -400,7 +443,7 @@ odoo.define('tms.deliver_mode', function (require) {
                 this.tmsContext.routePoints.departedOnRoute = this.action.object.field.tms_date;
                 this.setRoutesState(this.routes);
                 this.saveRoutesInCache(this.routes);
-                this.render_content('cards_route_points')
+                // this.render_content('cards_route_points')
             }
 
             if (this.action.type === 'departed' || 
@@ -611,9 +654,10 @@ odoo.define('tms.deliver_mode', function (require) {
 
         setSendTmsCronv2: function(){
             setTimeout(() => {
-                 this.sendSavedRoutesv2();
-                 this.setSendTmsCronv2();
-            }, 6000);
+                this.sendSavedRoutesv2()
+                this.setSendTmsCronv2();
+            }, 12000);
+            
         },
 
         setDeleteTmsCron: function() {
@@ -676,7 +720,7 @@ odoo.define('tms.deliver_mode', function (require) {
 
                         req.onsuccess = (event) => {
                             const evlist = event.target.result;
-                            this.handleSendRoutes(evlist);
+                            this.handleSendRoutes(evlist)
                         };
                     });
                 }).catch((error) => {
@@ -690,9 +734,8 @@ odoo.define('tms.deliver_mode', function (require) {
 
                     req.onsuccess = (event) => {
                         const evlist = event.target.result;
-                        this.handleSendRoutes(storeName, evlist);
+                        this.handleSendRoutes(storeName, evlist)
                     };
-
                 });
             }
         },
@@ -815,10 +858,6 @@ odoo.define('tms.deliver_mode', function (require) {
 
         getDateForOdoo: function() {
             const currentDate = new Date();
-            // console.log(currentDate);
-            // console.log(this.tmsContext.attendance.tz_user);
-            // console.log(currentDate.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user}));
-            // return currentDate.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
             return currentDate.toISOString().slice(0, 19).replace('T', ' ');
         },
 
@@ -922,6 +961,10 @@ odoo.define('tms.deliver_mode', function (require) {
             if (this.widget.feedBack) {
                 this.widget = {}
                 this.display_message('feedback')
+            }
+            if (this.widget.switchOrder) {
+                this.widget = {}
+                this.display_message('switchStatusOrder')
             }
             this.action = {}
         },
@@ -1038,6 +1081,12 @@ odoo.define('tms.deliver_mode', function (require) {
 //            this.showInterface('TmsRoute');
         },
 
+        async onPointChangeStatusRow() {
+            this.widget.switchOrder = true
+            this.action.type = 'clear_date_row'
+            this.display_message('switchStatusOrder')
+        },
+
         async onPointCancelRowClick() {
             this.action.type = 'cancelOrderRow';
             this.action.typeDate = 'cancel_delivery'
@@ -1099,12 +1148,12 @@ odoo.define('tms.deliver_mode', function (require) {
             let optionId = selectedOption.id;
             let commentIs = JSON.parse(selectedOption.value)
 
-            if (commentIs) { //Если коментарий обязателен
-                if (text.trim() == '') {
-                    console.log('no')
-                    return false;
-                }
-            }
+            // if (commentIs) { //Если коментарий обязателен
+            //     if (text.trim() == '') {
+            //         console.log('no')
+            //         return false;
+            //     }
+            // }
 
             this.action.object = {
                 'row': this.database.idb_stores.tms_order_row,

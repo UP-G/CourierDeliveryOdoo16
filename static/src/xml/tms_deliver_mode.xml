@@ -74,7 +74,6 @@
                 </t>
             </div>
         </div>
-
     </t>
     <t t-name="TmsRoutePoints">
         <div class="container">
@@ -212,6 +211,11 @@
                     </div>
                 </div>
             </div>
+            <div t-if="!context.filter.showClosedRouteRow" class="text-center">
+            <button type="button" class="o_tms_btn_change_status_row btn btn-primary" aria-expanded="false">
+                    Change order status
+            </button>
+            </div>
         </div>
     </t>
     <!--  Buttons templates   -->
@@ -325,16 +329,56 @@
         <div class="o_tms_modal_feedback">
             <t t-call="TmsModalFeedBack" />
         </div>
+        <div class="o_tms_modal_switch_s_order">
+            <t t-call="TmsModalSwitchStatusOrder" />
+        </div>
+    </t>
+    <t t-name="TmsModalSwitchStatusOrder">
+        <div t-if="widget.switchOrder" t-attf-class="o_tms_modal_switch_s_order modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+            <div class="o_tms_switch_s_order modal-dialog">
+                <div class="o_tms_switch_s_order modal-content w-100">
+                    <div class="o_tms_switch_s_order modal-header">
+                        <h1 class="o_tms_switch_s_order modal-title fs-5" id="exampleModalLabel">Switch status order</h1>
+                    </div>
+                    <div class="modal-body text-center">
+                    <!-- context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client -->
+                        <h4>Current status: 
+                        <t t-if="context.concretePoint.point.delivered">Delivered</t>
+                        <t t-if="context.concretePoint.point.cancel_delivery">cancel_delivery</t>
+                        <t t-if="context.concretePoint.point.returned_client">returned_client</t>
+                        </h4>
+                        <i class="fa fa-arrow-down display-5"></i>
+                        <div class="d-flex">
+                        <h4 style="margin-top: 4px">Change on: </h4>
+                        <select class="form-select h-10 w-50" id="selectionSwitch" aria-label="Default select example">
+                            <t t-foreach="context.statusOrder" t-as="item">
+                                <option t-attf-value="{{item.action_type}}">
+                                    <t t-esc="item.name" />
+                                </option>
+                            </t>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="o_tms_modal_feedback modal-footer">
+                    <p class="col-form-label" style="display: none">Comment is necessarily</p>
+                        <div class="o_tms_modal_feedback buttons">
+                            <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
+                            <button t-if="widget.switchOrder" class="o_tms_modal_switch_order_send btn btn-primary" type="button">Switch status order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </t>
     <t t-name="TmsModalFeedBack">
         <div t-if="widget.feedBack" t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
             <div class="o_tms_feedback modal-dialog">
                 <div class="o_tms_feedback modal-content w-100">
                     <div class="o_tms_feedback modal-header">
-                        <h1 class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
+                        <h1 t-if="widget.feedBack" class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form t-if="widget.feedBack">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">The reason for the cancellation</label>
                                 <select class="form-select" id="selectionList" aria-label="Default select example">
@@ -355,7 +399,7 @@
                     <p class="col-form-label" style="display: none">Comment is necessarily</p>
                         <div class="o_tms_modal_feedback buttons">
                             <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
-                            <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
+                            <button t-if="widget.feedBack" class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
                         </div>
                     </div>
                 </div>

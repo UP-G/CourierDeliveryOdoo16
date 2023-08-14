@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="tms_driver_browser_tree" model="ir.ui.view">
+        <field name="name">Driver Browser</field>
+        <field name="model">tms.driver.browser</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="id" string="Id"/>
+                <field name="user_id" string="user_id"/>
+                <field name="unique_key" string="unique_key"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tms_driver_browser_form" model="ir.ui.view">
+        <field name="name">Driver Browser</field>
+        <field name="model">tms.driver.browser</field>
+        <field name="arch" type="xml">
+            <form string="Tms browser">
+                <sheet>
+                    <group>
+                        <field name="id" string="Id"/>
+                        <field name="user_id" string="user_id"/>
+                        <field name="unique_key" string="unique_key"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_tms_driver_browser" model="ir.actions.act_window" >
+        <field name="name">TMS Drivery Browser</field>
+        <field name="res_model">tms.driver.browser</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
