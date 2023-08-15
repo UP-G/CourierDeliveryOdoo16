@@ -435,7 +435,8 @@ odoo.define('tms.deliver_mode', function (require) {
                 this.tmsContext.routePoints.departedOnRoute = this.action.object.field.tms_date;
                 this.setRoutesState(this.routes);
                 this.saveRoutesInCache(this.routes);
-                // this.render_content('cards_route_points')
+                this.render_menu('cards_route_points')
+                this.render_content('routes')
             }
 
             if (this.action.type === 'departed' || 
