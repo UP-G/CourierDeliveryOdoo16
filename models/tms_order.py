@@ -133,7 +133,7 @@ class TmsOrder(models.Model):
                             '&',('driver_id', '=', None),
                                 ('carrier_id.id', 'in', carrier_ids), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
          		"|", ('returned_to_the_store', '>=', today_start), #если driver_id = пользователю которому нужно дать ЗН или если driver_id = False, то вернется если пользователи назначен на ТК, которая указанна в маршруте
-         		('returned_to_the_store', '=', None)])
+         		('returned_to_the_store', '=', None)], order="interval_from asc")
         # records = self.search([('create_date', '>=',today_start - timedelta(days=10)),
         #                 '|',('driver_id','=',user_id),
         #                     '&',('driver_id', '=', None),
