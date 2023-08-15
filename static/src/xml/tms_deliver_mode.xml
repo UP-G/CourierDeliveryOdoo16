@@ -212,8 +212,8 @@
                 </div>
             </div>
             <div t-if="!context.filter.showClosedRouteRow" class="text-center">
-            <button type="button" class="o_tms_btn_change_status_row btn btn-primary" aria-expanded="false">
-                    Change order status
+            <button type="button" t-attf-class="o_tms_btn_change_status_row w-50 p-3 btn btn-primary {{context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client ? '' : 'disabled'}}" aria-expanded="false">
+                    Reset order
             </button>
             </div>
         </div>
@@ -329,9 +329,9 @@
         <div class="o_tms_modal_feedback">
             <t t-call="TmsModalFeedBack" />
         </div>
-        <div class="o_tms_modal_switch_s_order">
+        <!-- <div class="o_tms_modal_switch_s_order">
             <t t-call="TmsModalSwitchStatusOrder" />
-        </div>
+        </div> -->
     </t>
     <t t-name="TmsModalSwitchStatusOrder">
         <div t-if="widget.switchOrder" t-attf-class="o_tms_modal_switch_s_order modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
@@ -418,6 +418,7 @@
                             <t t-if="action.type == 'departed'">Please confirm the start of the route</t>
                             <t t-if="action.type == 'finished'">Please confirm the end of the route</t>
                             <t t-if="action.type == 'returned_store'">Please confirm the returned to the store</t>
+                            <t t-if="action.type == 'clear_date_row'">Please confirm the cancellation of the order</t>
                         </h5>
                     </div>
                     <div class="o_tms_modal_confirmation modal-body">

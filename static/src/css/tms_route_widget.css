@@ -25,6 +25,7 @@
 
 .o_tms_route {
     display: block;
+    height: 100%;
 }
 
 .o_tms_action_start,

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20221202\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 17:26+0000\n"
-"PO-Revision-Date: 2023-08-14 20:31+0300\n"
+"POT-Creation-Date: 2023-08-15 10:32+0000\n"
+"PO-Revision-Date: 2023-08-15 13:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:tms.selection__tms_delivery_row__order_row_type__delivery
 #: model:ir.model.fields.selection,name:tms.selection__tms_order_row__order_row_type__delivery
 msgid " Delivery"
-msgstr ""
+msgstr "Доставка"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__message_needaction
@@ -160,13 +160,6 @@ msgstr "Маршруты перевозчика ids"
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
 msgid "Change on:"
-msgstr ""
-
-#. module: tms
-#. odoo-javascript
-#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
-#, python-format
-msgid "Change order status"
 msgstr ""
 
 #. module: tms
@@ -1099,6 +1092,13 @@ msgstr "Телефон"
 #. odoo-javascript
 #: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
 #, python-format
+msgid "Please confirm the cancellation of the order"
+msgstr "Пожалуйста подтвердите сброс заказа"
+
+#. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
 msgid "Please confirm the delivery of the order"
 msgstr "Пожалуйста, подтвердите доставку заказа"
 
@@ -1168,6 +1168,13 @@ msgid "Reasons for cancellation"
 msgstr ""
 
 #. module: tms
+#. odoo-javascript
+#: code:addons/tms/static/src/xml/tms_deliver_mode.xml:0
+#, python-format
+msgid "Reset order"
+msgstr "Сбросить заказ"
+
+#. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -1176,7 +1183,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:tms.selection__tms_delivery_row__order_row_type__return
 #: model:ir.model.fields.selection,name:tms.selection__tms_order_row__order_row_type__return
 msgid "Return"
-msgstr ""
+msgstr "Возврат"
 
 #. module: tms
 #. odoo-javascript
@@ -1546,10 +1553,9 @@ msgid "Tree String"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_order_row__type_warning
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
-msgid "Type Warning"
-msgstr ""
+msgid "Type"
+msgstr "Тип"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_delivery_report__order_row_type
@@ -1582,7 +1588,9 @@ msgstr ""
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_order__type_warning
+#: model:ir.model.fields,field_description:tms.field_tms_order_row__type_warning
 #: model_terms:ir.ui.view,arch_db:tms.tms_route_order_tree
+#: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "Warning"
 msgstr "Предупреждение"
 
@@ -1843,7 +1851,7 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.view_tms_route_order_form
 msgid "orders rows"
-msgstr ""
+msgstr "Маршрутный лист"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_route_point__res_partner_id

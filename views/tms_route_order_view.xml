@@ -55,8 +55,9 @@
                                     <field name="returned_client" string="Date return from client" />
                                     <field name="cancel_delivery" string="Date cancel of delivery" />
                                     <field name="comment" string="Comment" />
+                                    <field name="order_row_type" string="Type"/>
                                     <field name="selected" string="Selected" />
-                                    <field name="type_warning" string="Type Warning" />
+                                    <field name="type_warning" string="Warning" />
                                 </tree>
                                 <form>
                                     <group>
@@ -66,11 +67,12 @@
                                         <!-- <field name="arrival_date" string="Date arrival" nolabel="0"/> -->
                                         <field name="delivered" string="Date deliver" nolabel="0"/>
                                         <field name="returned_client" string="Date return from client" nolabel="0"/>
+                                        <field name="cancel_delivery" string="Date cancel of delivery"/>
                                         <field name="returned_store" string="Date return to store" nolabel="0"/>
                                         <field name="comment" string="Comment" widget="text" nolabel="0"/>
-                                        <field name="cancel_delivery" string="Date cancel of delivery"/>
                                         <field name="cancellation_ids" string="Tag for cancellation" widget="many2many_tags"/>
                                         <field name="comment_driver" string="Comment driver"/>
+                                        <field name="order_row_type" string="Type"/>
                                         <field name="selected" string="Selected"/>
                                     </group>
                                 </form>

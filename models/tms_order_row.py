@@ -31,7 +31,7 @@ class TmsOrderRow(models.Model):
                                      ('not_delivered_on_time', 'Not delivered on time'),
                                      ('no_end_date_order', 'There is no end date for the route'),
                                      ('no_warning', 'No warning')],
-                                    string='Type Warning', compute='_compute_warning_for_row')
+                                    string='Warning', compute='_compute_warning_for_row')
 
     @api.depends('delivered')
     def _compute_warning_for_row(self):
@@ -144,7 +144,7 @@ class TmsOrderRow(models.Model):
                     for key, value in vals.items():
                         if key in record:
                             if value != record[key]:
-                                record.order_id.message_post(body=record.impl_num + ' reset old data ' + key + ' ' + format(record[key]) + 'UTC+0')
+                                record.order_id.message_post(body=record.impl_num + ' сброс старых данных: ' + key + ' ' + format(record[key]) + 'UTC+0')
                     record.update(vals)
         return 'Success'
     

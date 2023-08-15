@@ -270,22 +270,22 @@ odoo.define('tms.deliver_mode', function (require) {
             return this.tmsContext.routePoints.checkAllFinishOrder
         },
 
-        setSwitchState: function() {
-            let select = document.getElementById("selectionSwitch");
-            this.action.type = select.value
+        // setSwitchState: function() {
+        //     let select = document.getElementById("selectionSwitch");
+        //     this.action.type = select.value
 
-            this.action.object = {
-                'row': this.database.idb_stores.tms_order_row,
-                'field': {
-                    'action': this.action.type,
-                    'point_id': this.tmsContext.concretePoint.point['id'],
-                    'switch_status_row': true,
-                    'tms_date': this.getDateForOdoo(),
-                    'sent': false,
-                }};
-            this.widget.switchOrder = false
-            this.display_message('switchStatusOrder')
-        },
+        //     this.action.object = {
+        //         'row': this.database.idb_stores.tms_order_row,
+        //         'field': {
+        //             'action': this.action.type,
+        //             'point_id': this.tmsContext.concretePoint.point['id'],
+        //             'switch_status_row': true,
+        //             'tms_date': this.getDateForOdoo(),
+        //             'sent': false,
+        //         }};
+        //     this.widget.switchOrder = false
+        //     this.display_message('switchStatusOrder')
+        // },
 
         setRoutesState: function(routes){
             this.tmsContext.routes = routes;
@@ -339,7 +339,6 @@ odoo.define('tms.deliver_mode', function (require) {
                 const fieldsToClear = ['returned_client', 'delivered', 'cancel_delivery'];
 
                 fieldsToClear.forEach(field => {
-                console.log(this.tmsContext.concretePoint.point[field])
                 this.tmsContext.concretePoint.point[field] = false;
                 });
             }
@@ -398,9 +397,6 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         render_menu: function (viewTypeMenu) {
-            console.log(this.action.type)
-            console.log(viewTypeMenu)
-            console.log(this.tmsContext.routePoints.checkAllFinishOrder)
             if (viewTypeMenu === 'cards_route_points' || 
             this.tmsContext.routePoints.checkAllFinishOrder ||
             this.action.type === 'clear_date_row') {
@@ -432,10 +428,6 @@ odoo.define('tms.deliver_mode', function (require) {
         tryToAction: function () {
 
             this.setDateOrderInOrderRow()
-
-            if (this.action.type === 'clear_date_row') {
-                this.setSwitchState()
-            }
 
             if (!this.tmsContext.routePoints.departedOnRoute) { //Если кнопка в ТЗ уже нажата, но дата начала маршрута ещё не стоит, то проставляем её
                 let index_cur_route = this.routes.findIndex(obj => obj.id === parseInt(this.tmsContext.routePoints.routeId))
@@ -1082,9 +1074,18 @@ odoo.define('tms.deliver_mode', function (require) {
         },
 
         async onPointChangeStatusRow() {
-            this.widget.switchOrder = true
+            this.widget.confirmation = true
             this.action.type = 'clear_date_row'
-            this.display_message('switchStatusOrder')
+            this.action.object = {
+                'row': this.database.idb_stores.tms_order_row,
+                'field': {
+                    'action': this.action.type,
+                    'point_id': this.tmsContext.concretePoint.point['id'],
+                    'switch_status_row': true,
+                    'tms_date': this.getDateForOdoo(),
+                    'sent': false,
+                }};
+            this.display_message('confirm')
         },
 
         async onPointCancelRowClick() {
