@@ -2,19 +2,29 @@
 <template xml:space="preserve">
     <!-- Base templates. Структуру не менять (Разве что в TmsMessage можно подключить другие шаблоны или разделить их)  -->
     <t t-name="TmsBase">
-        <t t-call="TmsMessage"/>
         <t t-call="TmsContent"/>
-        <t t-call="TmsButtons"/></t>
+        <t t-call="TmsMessage"/>
+    </t>
     <t t-name="TmsMessage">
-        <t t-call="TmsMessageSmth"/></t>
-    <t t-name="TmsButtons">
-        <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPointButtons"/>
-        <t t-elif="context.routePoints.points.length" t-call="TmsRoutePointsButtons"/>
-        <t t-elif="context.routes.length >= 0" t-call="TmsRouteButtons"/></t>
+        <t t-call="TmsMessageSmth"/>
+    </t>
     <t t-name="TmsContent">
-        <t t-if="Object.keys(context.concretePoint.point).length != 0" t-call="TmsPoint"/>
-        <t t-elif="context.routePoints.points.length" t-call="TmsRoutePoints"/>
-        <t t-elif="context.routes.length >= 0" t-call="TmsRoute"/></t>
+        <div class="o_tms_card_point">
+        <t t-call="TmsPoint"/>
+        </div>
+        <div class="o_tms_cards_route_points">
+        <t t-call="TmsRoutePoints"/>
+        </div>
+        <div class="o_tms_route">
+        <t t-call="TmsRoute"/>
+        </div>
+        <t t-call="TmsButtons"/>
+    </t>
+    <t t-name="TmsButtons">
+        <t t-call="TmsPointButtons"/>
+        <t t-call="TmsRoutePointsButtons"/>
+        <t t-call="TmsRouteButtons"/>
+    </t>
     <!--  Data and card templates   -->
     <t t-name="TmsRoute">
         <div class="container">
@@ -123,11 +133,10 @@
         </div>
     </t>
     <t t-name="TmsPoint">
-        <div class="container o_tms_card_point">
+        <div class="container">
             <div class="card mt-2">
                 <div class="card-header">
-                    <h2 class="card-title" title="Information about the order ">Information about the order 
-                        
+                    <h2 class="card-title" title="Information about the order ">Information about the order
                         <t t-esc="context.concretePoint.pointOrderName"></t>
                     </h2>
                 </div>
@@ -202,13 +211,17 @@
                     </div>
                 </div>
             </div>
+            <div t-if="!context.filter.showClosedRouteRow" class="text-center">
+            <button type="button" t-attf-class="o_tms_btn_change_status_row w-50 p-3 btn btn-primary {{context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client ? '' : 'disabled'}}" aria-expanded="false">
+                    Reset order
+            </button>
+            </div>
         </div>
     </t>
     <!--  Buttons templates   -->
     <t t-name="TmsRouteButtons">
         <p class='text-center' t-if="!context.attendance.check_out and context.attendance.hours_today"
-            >Number of hours worked during the current shift: 
-            
+            >Number of hours worked during the current shift:
             <t t-esc="context.attendance.hours_today"/>
         </p>
         <div class="o_tms_action_start">
@@ -268,8 +281,8 @@
         </div>
     </t>
     <t t-name="TmsPointButtons">
-        <div class="d-flex justify-content-center">
-            <div class="o_tms_action_nav" style="width: 100%;">
+        <div class="justify-content-center o_tms_btn_point">
+            <div class="o_tms_action_nav_point" style="width: 100%;">
                 <button
                             class="o_tms_btn_PointList btn btn-lg btn-block btn-secondary border">
                     <i class='fa fa-mail-reply'></i>
@@ -310,22 +323,62 @@
     </t>
     <!--  Message templates  -->
     <t t-name="TmsMessageSmth">
-        <div t-if="widget.confirmation">
+        <div class="o_tms_modal_confirm">
             <t t-call="TmsModalConfirm"/>
         </div>
-        <div t-if="widget.feedBack">
+        <div class="o_tms_modal_feedback">
             <t t-call="TmsModalFeedBack" />
+        </div>
+        <!-- <div class="o_tms_modal_switch_s_order">
+            <t t-call="TmsModalSwitchStatusOrder" />
+        </div> -->
+    </t>
+    <t t-name="TmsModalSwitchStatusOrder">
+        <div t-if="widget.switchOrder" t-attf-class="o_tms_modal_switch_s_order modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+            <div class="o_tms_switch_s_order modal-dialog">
+                <div class="o_tms_switch_s_order modal-content w-100">
+                    <div class="o_tms_switch_s_order modal-header">
+                        <h1 class="o_tms_switch_s_order modal-title fs-5" id="exampleModalLabel">Switch status order</h1>
+                    </div>
+                    <div class="modal-body text-center">
+                    <!-- context.concretePoint.point.cancel_delivery or context.concretePoint.point.delivered or context.concretePoint.point.returned_client -->
+                        <h4>Current status: 
+                        <t t-if="context.concretePoint.point.delivered">Delivered</t>
+                        <t t-if="context.concretePoint.point.cancel_delivery">cancel_delivery</t>
+                        <t t-if="context.concretePoint.point.returned_client">returned_client</t>
+                        </h4>
+                        <i class="fa fa-arrow-down display-5"></i>
+                        <div class="d-flex">
+                        <h4 style="margin-top: 4px">Change on: </h4>
+                        <select class="form-select h-10 w-50" id="selectionSwitch" aria-label="Default select example">
+                            <t t-foreach="context.statusOrder" t-as="item">
+                                <option t-attf-value="{{item.action_type}}">
+                                    <t t-esc="item.name" />
+                                </option>
+                            </t>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="o_tms_modal_feedback modal-footer">
+                    <p class="col-form-label" style="display: none">Comment is necessarily</p>
+                        <div class="o_tms_modal_feedback buttons">
+                            <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
+                            <button t-if="widget.switchOrder" class="o_tms_modal_switch_order_send btn btn-primary" type="button">Switch status order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </t>
     <t t-name="TmsModalFeedBack">
-        <div t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-{{ widget.feedBack ? 'block' : 'none' }}" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
+        <div t-if="widget.feedBack" t-attf-class="o_tms_modal_feedback modal w-100 h-100 position-fixed d-block" id="feedBackModal" tabindex="-1" aria-labelledby="feedBackModalLabel" aria-hidden="true">
             <div class="o_tms_feedback modal-dialog">
                 <div class="o_tms_feedback modal-content w-100">
                     <div class="o_tms_feedback modal-header">
-                        <h1 class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
+                        <h1 t-if="widget.feedBack" class="o_tms_feedback modal-title fs-5" id="exampleModalLabel">Cancellations</h1>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form t-if="widget.feedBack">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">The reason for the cancellation</label>
                                 <select class="form-select" id="selectionList" aria-label="Default select example">
@@ -346,7 +399,7 @@
                     <p class="col-form-label" style="display: none">Comment is necessarily</p>
                         <div class="o_tms_modal_feedback buttons">
                             <button class="o_tms_modal_btn_cancel btn btn-secondary" type="button">Close</button>
-                            <button class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
+                            <button t-if="widget.feedBack" class="o_tms_modal_feedback_send btn btn-primary" type="button">Confirm the cancellation</button>
                         </div>
                     </div>
                 </div>
@@ -355,7 +408,7 @@
     </t>
     <!-- Модальное окно для потверждения действий -->
     <t t-name="TmsModalConfirm">
-        <div t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-{{ widget.confirmation ? 'block' : 'none' }}" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
+        <div t-if="widget.confirmation" t-attf-class="o_tms_modal_confirmation modal w-100 h-100 position-fixed d-block" data-bs-backdrop="static" data-bs-keyboard="false" id="confirmationModal" tabindex="-1">
             <div class="o_tms_modal_confirmation modal-dialog modal-dialog-centered" role="document">
                 <div class="o_tms_modal_confirmation modal-content w-100">
                     <div class="o_tms_modal_confirmation modal-header">
@@ -365,6 +418,7 @@
                             <t t-if="action.type == 'departed'">Please confirm the start of the route</t>
                             <t t-if="action.type == 'finished'">Please confirm the end of the route</t>
                             <t t-if="action.type == 'returned_store'">Please confirm the returned to the store</t>
+                            <t t-if="action.type == 'clear_date_row'">Please confirm the cancellation of the order</t>
                         </h5>
                     </div>
                     <div class="o_tms_modal_confirmation modal-body">

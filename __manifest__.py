@@ -19,6 +19,7 @@
         'views/tms_route_point.xml',
         'views/tms_deliver_view.xml',
         'views/tms_order_cancellation_view.xml',
+        'views/tms_driver_browser.xml',
         'views/tms_menu_views.xml',
     ],
     'assets': {

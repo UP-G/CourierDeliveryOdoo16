@@ -16,7 +16,9 @@
                 <field name="finished_the_route" string="Finished the route"/>
                 <field name="returned_to_the_store" string="Returned to the store"/>
                 <field name="carrier_driver_id" string="Designated Driver"/>
+                <field name="interval_route"/>
                 <field name="type_warning" string="Warning"/>
+                
                 <!-- <button name="getRows" type="object" cla1ss="oe_stat_button" icon="fa-car"></button> -->
             </tree>
         </field>
@@ -53,7 +55,9 @@
                                     <field name="returned_client" string="Date return from client" />
                                     <field name="cancel_delivery" string="Date cancel of delivery" />
                                     <field name="comment" string="Comment" />
+                                    <field name="order_row_type" string="Type"/>
                                     <field name="selected" string="Selected" />
+                                    <field name="type_warning" string="Warning" />
                                 </tree>
                                 <form>
                                     <group>
@@ -63,11 +67,12 @@
                                         <!-- <field name="arrival_date" string="Date arrival" nolabel="0"/> -->
                                         <field name="delivered" string="Date deliver" nolabel="0"/>
                                         <field name="returned_client" string="Date return from client" nolabel="0"/>
+                                        <field name="cancel_delivery" string="Date cancel of delivery"/>
                                         <field name="returned_store" string="Date return to store" nolabel="0"/>
                                         <field name="comment" string="Comment" widget="text" nolabel="0"/>
-                                        <field name="cancel_delivery" string="Date cancel of delivery"/>
                                         <field name="cancellation_ids" string="Tag for cancellation" widget="many2many_tags"/>
                                         <field name="comment_driver" string="Comment driver"/>
+                                        <field name="order_row_type" string="Type"/>
                                         <field name="selected" string="Selected"/>
                                     </group>
                                 </form>
@@ -75,6 +80,11 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -85,8 +95,20 @@
         <field name="arch" type="xml">
             <search>
                 <field name="order_num"/>
+
                 <filter string="Driver assigned" name='filetre_have_driver_id' domain="[('carrier_driver_id','!=',False)]"/>
                 <filter string="Driver do`nt have accounting" name='filetre_driver_not_have_acc' domain="[('carrier_driver_id.user_id','=',False)]"/>
+                <separator/>
+                <filter string="No end date order" name='no_end_date_order' 
+                        domain="[('interval_to','=',False)]"/>
+                <filter string="Driver late" name="driver_late"
+                        domain="[('interval_to','!=',False),('finished_the_route','=',False),('interval_to','&lt;', datetime.datetime.now())]"/>
+                <filter string="No warning" name="no_warning"
+                        domain="[('interval_to','!=',False),('finished_the_route','=',False),('interval_to','&gt;=', datetime.datetime.now())]"/>
+                <filter string="Driver finish late" name="driver_finish_late"
+                        domain="[('is_late_finish','=',True)]"/>
+                <filter string="Driver finish completed" name="driver_finish_completed"
+                        domain="[('is_not_late_finish','=', True)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Date create" name='group_by_create_date' context="{'group_by': 'create_date'}"/>
                     <filter string="Driver" name="group_by_driver_id" context="{'group_by': 'driver_id'}"/>

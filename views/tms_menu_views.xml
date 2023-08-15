@@ -94,5 +94,12 @@
             action="tms_delivery_report_action"
             sequence="10"/>
 
+        <menuitem
+            id="tms_driver_browser"
+            name="Driver browser"
+            parent="menu_tms_settings"
+            action="action_tms_driver_browser"
+            sequence="10"/>    
+
     </data>
 </odoo>

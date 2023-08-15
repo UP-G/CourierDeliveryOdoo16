@@ -6,15 +6,34 @@
     max-width: max-content;
     flex: 1 0 auto;
     overflow-y: auto;
+    margin-bottom: 20%;
 }
 
 .o_tms_card_point {
     /* flex: 1 0 auto; */
+    display: none;
+}
+
+.o_tms_cards_route_points {
+    /* flex: 1 0 auto; */
+    display: none;
+}
+
+.o_tms_btn_point {
+    display: none;
+}
+
+.o_tms_route {
+    display: block;
+    height: 100%;
 }
 
 .o_tms_action_start,
+.o_tms_action_nav_point,
 .o_tms_action_nav {
-    position: sticky;
+    position: absolute;
+    left: 0;
+    right: 0;
     bottom: 0px;
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +44,8 @@
 }
 
 .o_tms_route_point_btn {
-    position: sticky;
+    display: none;
+    /*position: sticky;*/
     width: 100%;
     bottom: 0;
     background-color: #f8f9fa;
@@ -343,6 +363,7 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
     margin-right: auto;
 }
 
+.o_tms_modal_switch_s_order.modal-header,
 .o_tms_feedback.modal-header{
     padding: 16px 16px 0px;
     border-bottom: 0;
@@ -383,6 +404,10 @@ html .o_web_client > .o_action_manager > .o_action:not(.o_action_delegate_scroll
 
 .o_tms_modal_btn_ok {
     display: flex;
+}
+
+.o_tms_btn_change_status_row {
+    margin-top: 10%;
 }
 
 .o_tms_modal_btn_ok p {
