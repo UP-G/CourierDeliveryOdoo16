@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20221202\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-15 10:32+0000\n"
-"PO-Revision-Date: 2023-08-15 13:34+0300\n"
+"POT-Creation-Date: 2023-08-15 16:00+0000\n"
+"PO-Revision-Date: 2023-08-15 19:22+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -532,17 +532,17 @@ msgstr ""
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "Driver do`nt have accounting"
-msgstr ""
+msgstr "Водитель без учетной записи"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "Driver finish completed"
-msgstr ""
+msgstr "Вовремя законченные маршруты"
 
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "Driver finish late"
-msgstr ""
+msgstr "Законченные маршруты, с опозданием"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_carrier_driver__user_id
@@ -553,7 +553,7 @@ msgstr "Водитель"
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "Driver late"
-msgstr ""
+msgstr "Водитель начал маршрут, опаздывает с его закачиванием"
 
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_delivery_report__driver_name
@@ -869,7 +869,7 @@ msgstr "Нет жалоб"
 #. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_order_search
 msgid "No end date order"
-msgstr ""
+msgstr "Нет даты конца маршрута"
 
 #. module: tms
 #. odoo-javascript
