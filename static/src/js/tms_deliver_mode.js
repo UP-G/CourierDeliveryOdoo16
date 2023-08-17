@@ -33,7 +33,7 @@ odoo.define('tms.deliver_mode', function (require) {
 
             "click .o_tms_modal_feedback_send": function() {this.tryToAction();}, // Кнопка потверждения отмены заказа
             "click .o_tms_modal_btn_ok": function() {this.tryToAction();}, // Кнопка Ок в modal
-            "click .o_tms_modal_btn_cancel": function() { this.onCancelModalClick();} // Кнопка Cancel в modal
+            "click .o_tms_modal_btn_cancel": function() { this.onCancelModalClick();}, // Кнопка Cancel в modal
         },
 
         willStart: async function () {
@@ -129,7 +129,7 @@ odoo.define('tms.deliver_mode', function (require) {
             // await this.loadLastState(); //Закомментить, если нужно возвращаться на главную, а не на последнюю до перезагрузки/выхода страницу
             await this.loadEmployee();
             await this.loadRoutes();
-            await this.loadCancellationOrderRow()
+            await this.loadCancellationOrderRow();
             await this.loadBrowseUidUser()
             this.showInterfaceActual();
         },
@@ -141,15 +141,6 @@ odoo.define('tms.deliver_mode', function (require) {
 
             let routes = cache_routes.map((route) => {
                 let newRoute = Object.assign({}, route);
-
-                if(route.start_time){
-                    let new_start_time = new Date(route.start_time);
-                    newRoute.start_time = new_start_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
-                }
-                if(route.end_time){
-                    let new_end_time = new Date(route.end_time);
-                    newRoute.end_time = new_end_time.toLocaleString("ru-RU", {timeZone: this.tmsContext.attendance.tz_user});
-                }
 
                 delete newRoute.points;
                 return newRoute;
@@ -498,6 +489,7 @@ odoo.define('tms.deliver_mode', function (require) {
         showConcreteRoutePoint: async function(ev) {
 
             this.tmsContext.concretePoint.pointId = ev.currentTarget.getAttribute("id");
+            this.scrollPos = $(".o_action").scrollTop()
 
             console.log(this.routes);
             let routePoint = null;
@@ -677,9 +669,9 @@ odoo.define('tms.deliver_mode', function (require) {
         updateRoutesCache: async function(){
             await this.putRoutesInCache();
             await this.loadRoutes();
-            await this.loadCancellationOrderRow();
+            await this.loadCancellationOrderRow()
+            this.render_content('routes')
             console.log('Кеш обновлен');
-            this.showInterfaceActual();
         },
 
         deleteNoActualRoutes: function(){
@@ -1006,7 +998,6 @@ odoo.define('tms.deliver_mode', function (require) {
             await this.putRoutesInCache();
             await this.loadRoutes();
             await this.loadCancellationOrderRow()
-            this.showInterfaceActual();
         },
 
         async onShowClosedRowRoute() {
@@ -1100,6 +1091,7 @@ odoo.define('tms.deliver_mode', function (require) {
             this.setConcretePointState({});
             this.display_menu('cards_route_points')
             this.display_content('cards_route_points')
+            $(".o_action").scrollTop(this.scrollPos)
         },
 
         async onUpdateAttendanceStatus(){

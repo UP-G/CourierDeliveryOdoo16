@@ -83,6 +83,9 @@
                 </h2>
             </div>
             <div class="o_tms_card-group-route helper">
+                <div t-if="!context.filter.showClosedRouteRow">
+                    These are completed orders. Press the "Delivered" button to display unfulfilled route points
+                </div>
                 <div t-if="context.filter.showClosedRouteRow and context.routePoints.checkAllFinishOrder">
                     All orders are closed. Click the "Undelivered" button to display closed route points
                 </div>
