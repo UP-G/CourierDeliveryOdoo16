@@ -103,94 +103,73 @@ class TmsOrder(models.Model):
         }
 
     @api.model
-    def getRoutesForDriver(self, user_id):
-        records = self.search([('driver_id', '=', user_id)])
-        return [
-                    {
-                        'id': record.id,
-                        'name': record.order_num,
-                        'start_time': record.route_id.start_time,
-                        'end_time': record.route_id.end_time,
-                        'finished_the_route': record.finished_the_route,
-                        'driver_id': record.driver_id.id if record.driver_id else '',
-                        'driver_name': record.driver_id.name if record.driver_id else '',
-                    }  for record in records
-        ]
-
-    @api.model
     def getRoutesAndPoints(self, user_id, tz_user=None):
         if not user_id:
-            return #Если нет user_id ничего не возращять
-        
+            return None
+        records = self._get_records(user_id)
+        if tz_user:
+            current_timezone = pytz.timezone(tz_user) if tz_user else pytz.timezone('Europe/Moscow')
+        result = []
+        for record in records:
+            record_points = self._get_record_points(record, current_timezone)
+            record_routes = self._get_record_routes(record, record_points, current_timezone)
+            result.append(record_routes)
+        return result
+
+    def _get_records(self, user_id):
         today = date.today()
         today_start = datetime.combine(today, datetime.min.time())
         carrier_driver_user = self.env['tms.carrier.driver'].search([('user_id', '=', user_id)])
         company_user = self.env['tms.carrier.route'].search([('driver_id', '=', carrier_driver_user.id)])
         carrier_ids = [r['carrier_id']['id'] for r in company_user]
-
         records = self.env['tms.order'].search([('create_date', '>=',today_start - timedelta(days=10)),
                         '|',('driver_id','=',user_id),
                             '&',('driver_id', '=', None),
-                                ('carrier_id.id', 'in', carrier_ids), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
-         		"|", ('returned_to_the_store', '>=', today_start), #если driver_id = пользователю которому нужно дать ЗН или если driver_id = False, то вернется если пользователи назначен на ТК, которая указанна в маршруте
-         		('returned_to_the_store', '=', None)], order="interval_from asc")
-        # records = self.search([('create_date', '>=',today_start - timedelta(days=10)),
-        #                 '|',('driver_id','=',user_id),
-        #                     '&',('driver_id', '=', None),
-        #                         ('route_id.stock_id.user_ids.id', '=', user_id), #Запрос на взятие маршрутов, у которых возрат скалада проставлен и дата сегодняшня или нет даты возрата в склад
-        #  		"|", ('returned_to_the_store', '>=', today_start),
-        #  		('returned_to_the_store', '=', None)])
-        
-        if tz_user:
-            current_timezone = pytz.timezone(tz_user)
-        else:
-            current_timezone = pytz.timezone('Europe/Moscow')
+                                ('carrier_id.id', 'in', carrier_ids),
+            "|", ('returned_to_the_store', '>=', today_start),
+            ('returned_to_the_store', '=', None)], order="interval_from asc")
+        return records
 
-        result = []
-
-        for record in records:
-            points = self.env['tms.order.row'].search(['&', ('order_id.id', '=', record.id),
-                                                       ('selected', '=', True)])
-
-            record_points = [
-                {'id': point.id,
-                 'company_name': (point.route_point_id.res_partner_id.company_name or point.route_point_id.res_partner_id.name),
-                 'street': point.comment.split(';')[1],
-                 'order_num': point.order_id.order_num,
-                 'arrival_date': point.arrival_date,
-                 'impl_num': point.impl_num,
-                 'note': point.note,
-                 'phone': point.comment.split(';')[0],
-                 'returned_client': point.returned_client.astimezone(current_timezone) if point.returned_client else False,
-                 'returned_store': point.returned_store,
-                 'delivered': point.delivered.astimezone(current_timezone) if point.delivered else False,
-                 'complaint': point.complaint,
-                 'order_row_type': point.order_row_type if point.order_row_type else ('return' if 'Возврат' in point.impl_num else False),
-                 'cancel_delivery': point.cancel_delivery.astimezone(current_timezone) if point.cancel_delivery else False, #Время отмены заказа
-                 'client_name': point.client_name,
-                 }
-                for point in points
-            ]
-
-            record_routes = {
-                'id': record.id,
-                'name': record.order_num + ", " + record.route_id.name if record.route_id.name else record.order_num,
-                #'start_time': record.route_id.start_time.astimezone(current_timezone) if record.route_id.start_time else False,
-                #'end_time': record.route_id.end_time.astimezone(current_timezone) if record.route_id.end_time else False,
-                'arrived_for_loading': record.arrived_for_loading,
-                'departed_on_route': record.departed_on_route,
-                'returned_to_the_store': record.returned_to_the_store,
-                'finished_the_route': record.finished_the_route,
-                'driver_id': record.driver_id.id if record.driver_id else '',
-                'driver_name': record.driver_id.name if record.driver_id else '',
-                'interval_from': record.interval_from.astimezone(current_timezone) if record.interval_from else False,
-                'interval_to': record.interval_to.astimezone(current_timezone) if record.interval_to else False,
-                'points': record_points,
+    def _get_record_points(self, record, current_timezone):
+        points = self.env['tms.order.row'].search(['&', ('order_id.id', '=', record.id),
+                                                    ('selected', '=', True)])
+        record_points = [
+            {
+                'id': point.id,
+                'company_name': (point.route_point_id.res_partner_id.company_name or point.route_point_id.res_partner_id.name),
+                'street': point.comment.split(';')[1],
+                'order_num': point.order_id.order_num,
+                'arrival_date': point.arrival_date,
+                'impl_num': point.impl_num,
+                'note': point.note,
+                'phone': point.comment.split(';')[0],
+                'returned_client': point.returned_client.astimezone(current_timezone) if point.returned_client else False,
+                'returned_store': point.returned_store,
+                'delivered': point.delivered.astimezone(current_timezone) if point.delivered else False,
+                'complaint': point.complaint,
+                'order_row_type': point.order_row_type if point.order_row_type else ('return' if 'Возврат' in point.impl_num else False),
+                'cancel_delivery': point.cancel_delivery.astimezone(current_timezone) if point.cancel_delivery else False,
+                'client_name': point.client_name,
             }
+            for point in points
+        ]
+        return record_points
 
-            result.append(record_routes)
-
-        return result
+    def _get_record_routes(self, record, record_points, current_timezone):
+        record_routes = {
+            'id': record.id,
+            'name': record.order_num + ", " + record.route_id.name if record.route_id.name else record.order_num,
+            'arrived_for_loading': record.arrived_for_loading,
+            'departed_on_route': record.departed_on_route,
+            'returned_to_the_store': record.returned_to_the_store,
+            'finished_the_route': record.finished_the_route,
+            'driver_id': record.driver_id.id if record.driver_id else '',
+            'driver_name': record.driver_id.name if record.driver_id else '',
+            'interval_from': record.interval_from.astimezone(current_timezone) if record.interval_from else False,
+            'interval_to': record.interval_to.astimezone(current_timezone) if record.interval_to else False,
+            'points': record_points,
+        }
+        return record_routes
     
     @api.model
     def saveDatesTmsOrder(self, saveDatesTmsOrder, user_id):
