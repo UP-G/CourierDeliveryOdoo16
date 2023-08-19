@@ -9,7 +9,7 @@ class TmsDeliveryRow(models.Model):
     impl_num = fields.Char(string='Implemention Number', required=True) #Номер реализации
     comment = fields.Char(string='Comment', required=True)#Примечание
     client_name = fields.Char(string='Client name') #Имя клиента
-    selected_1c = fields.Boolean(string='Selected by 1C')
+    selected = fields.Boolean(string='Selected') #Поле выбрать
     order_row_id = fields.Many2one('tms.order.row', string='Order row id')
     delivery_id = fields.Many2one('tms.delivery', string='Delivery id')
     order_row_type = fields.Selection([('return', 'Return'), ('delivery', ' Delivery')],
@@ -48,7 +48,7 @@ class TmsDeliveryRow(models.Model):
                 'name': delivery_row.name,
                 'impl_num': delivery_row.impl_num,
                 'comment': delivery_row.comment,
-                'selected_1c': delivery_row.selected_1c,
+                'selected': delivery_row.selected,
                 'order_row_id': delivery_row.order_row_id.id,
                 'delivery_id': delivery_row.delivery_id.id
             }

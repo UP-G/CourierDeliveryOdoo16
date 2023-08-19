@@ -18,7 +18,7 @@
                 <field name="impl_num" string="Implemention number"/>
                 <field name="comment" string="Comment"/>
                 <field name="notes" string="notes"/>
-                <field name="selected_1c" string="Selected 1c"/>
+                <field name="selected" string="Selected"/>
             </tree>
         </field>
     </record>
@@ -29,8 +29,8 @@
         <field name="arch" type="xml">
             <search>
                 <field name="impl_num"/>
-                <filter name="filter_actual" string="No selected 1C and no driver yet"
-                        domain="['&amp;', ('selected_1c', '=', False),
+                <filter name="filter_actual" string="No selected and no driver yet"
+                        domain="['&amp;', ('selected', '=', False),
                         ('carrier_driver_id', '=', False),
                         ('order_row_id', '=', False),
                         ('create_date', '>=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d')),]"/>
@@ -56,7 +56,7 @@
                     <field name="impl_num" string="Implemention number"/>
                     <field name="comment" string="Comment"/>
                     <field name="notes" string="notes"/>
-                    <field name="selected_1c" string="Selected 1c"/>
+                    <field name="selected" string="Selected"/>
                     <field name="carrier_driver_id" string="Carrier driver"/>
                         <!-- <field name="driver_key"/> -->
                     </group>

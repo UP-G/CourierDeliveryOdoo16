@@ -53,7 +53,7 @@ class TmsDelivery(models.Model):
                     'order_id': order_tms.id,
                     'impl_num': row.impl_num,
                     'comment': row.comment,
-                    'selected': row.selected_1c,
+                    'selected': row.selected,
                     'note': row.notes,
                     'client_name': row.client_name,
                     'order_row_type': row.order_row_type
